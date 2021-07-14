@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox  fx:id="vboxContainer"  id="VBox" spacing="20"  alignment="CENTER"  prefHeight="400.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.asib27.playerdatabaseui.controllers.IntroPageController">
+    <stylesheets>
+        <URL value="@/styles/intropage.css"/>
+    </stylesheets>
+    
+    <children>
+        <Label fx:id="databaseLabel" text="Player Database System" />
+        <TextField fx:id="searchTextField" maxWidth="-Infinity" minWidth="-Infinity" text="Search Tool" />
+      
+   </children>
+</VBox>

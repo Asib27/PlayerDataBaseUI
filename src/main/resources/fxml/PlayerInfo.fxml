@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.asib27.playerdatabaseui.controllers.PlayerInfoController">
+    <stylesheets>
+        <URL value="@/styles/playerinfo.css"/>
+    </stylesheets>
+    
+    <children>
+        <BorderPane>
+            <center>
+                <GridPane alignment="CENTER" >
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0"  />
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0"   />
+                    </columnConstraints>
+                    
+                    <rowConstraints>
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                    <children>
+                        <Label text="Name">
+                           <GridPane.margin>
+                              <Insets left="20.0" />
+                           </GridPane.margin></Label>
+
+                        <Label text="Age" GridPane.rowIndex="1">
+                           <GridPane.margin>
+                              <Insets left="20.0" />
+                           </GridPane.margin></Label>
+
+                        <Label text="Club" GridPane.rowIndex="2">
+                           <padding>
+                              <Insets left="20.0" />
+                           </padding></Label>
+
+                        <Label text="Country" GridPane.rowIndex="3">
+                           <GridPane.margin>
+                              <Insets left="20.0" />
+                           </GridPane.margin></Label>
+
+                        <Label text="Position" GridPane.rowIndex="4">
+                           <GridPane.margin>
+                              <Insets left="20.0" />
+                           </GridPane.margin></Label>
+
+                        <Label text="Salary" GridPane.rowIndex="5">
+                           <GridPane.margin>
+                              <Insets left="20.0" />
+                           </GridPane.margin></Label>
+
+                        <Label text="Number" GridPane.rowIndex="6">
+                           <GridPane.margin>
+                              <Insets left="20.0" />
+                           </GridPane.margin></Label>
+
+                        <TextField fx:id="nameField" prefHeight="25.0" prefWidth="448.0" text="Name" GridPane.columnIndex="1" />
+                        <TextField text="Age" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <TextField text="Club" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <TextField text="Country" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                        <TextField prefHeight="28.0" prefWidth="191.0" text="Position" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                        <TextField text="Salary" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                        <TextField text="Number" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                    </children>
+                </GridPane>
+            </center>
+        </BorderPane>
+        
+    </children>
+</AnchorPane>

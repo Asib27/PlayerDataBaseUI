@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.asib27.playerdatabaseui.controllers.MainController">
+    <stylesheets>
+        <URL value="@/styles/main.css" />
+    </stylesheets>
+   <top>
+      <MenuBar BorderPane.alignment="CENTER">
+        <menus>
+          <Menu mnemonicParsing="true" text="_Search">
+            <items>
+                  <MenuItem mnemonicParsing="false" text="Player Search" />
+                  <MenuItem mnemonicParsing="false" text="Club Search" />
+            </items>
+          </Menu>
+          
+          <Menu mnemonicParsing="true" text="_Statistics" >
+              <items>
+                  <MenuItem mnemonicParsing="false" text="Total" />
+                  <MenuItem mnemonicParsing="false" text="Average" />
+                  <MenuItem mnemonicParsing="false" text="Count Players" />
+              </items>
+          </Menu>
+          
+          <Menu mnemonicParsing="true" text="_Transaction">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Buy Player" />
+              <MenuItem mnemonicParsing="false" text="Sell Player" />
+            </items>
+          </Menu>
+          
+          <Menu mnemonicParsing="true" text="_Help">
+            <items>
+              <Menu mnemonicParsing="false" text="Tutorial">
+                  <items>
+                      <MenuItem mnemonicParsing="false" text="Text" />
+                      <MenuItem mnemonicParsing="false" text="Video" />
+                  </items>
+              </Menu>
+              <SeparatorMenuItem mnemonicParsing="false" />
+              <MenuItem mnemonicParsing="false" text="About" />
+              <MenuItem mnemonicParsing="false" text="Feedback" />
+            </items>
+          </Menu>
+          
+        </menus>
+      </MenuBar>
+   </top>
+   
+</BorderPane>
