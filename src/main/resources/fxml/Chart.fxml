@@ -12,15 +12,13 @@ AnchorPane.topAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.leftAnchor="0
     </stylesheets>
    <children>
       <BorderPane fx:id="borderPane" prefHeight="400.0" prefWidth="600.0" AnchorPane.topAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.bottomAnchor="0.0">
-         <center>
-            <PieChart fx:id="pieChart" BorderPane.alignment="CENTER" />
-         </center>
+         
          
          <bottom>
             <ToolBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
               <items>
                 <Button mnemonicParsing="false" text="Customise Chart" />
-                <ComboBox fx:id="selectChartBox" prefWidth="150.0" promptText="Select Chart Type" />
+                <ComboBox fx:id="selectChartBox" onAction="#selectionChanged"  prefWidth="150.0" promptText="Select Chart Type" />
                 <Button mnemonicParsing="false" text="Download Chart" />
               </items>
             </ToolBar>

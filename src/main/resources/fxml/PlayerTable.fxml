@@ -9,16 +9,8 @@
         <URL value="@/styles/playertable.css" />
     </stylesheets>
    <children>
-      <TableView fx:id="playerTable"  layoutY="1.0" prefHeight="354.0" prefWidth="525.0" AnchorPane.rightAnchor="10.0" >
-        <columns>
-          <TableColumn prefWidth="75.0" text="Name" />
-          <TableColumn prefWidth="75.0" text="Club" />
-          <TableColumn prefWidth="75.0" text="County" />
-          <TableColumn prefWidth="75.0" text="Age" />
-          <TableColumn prefWidth="75.0" text="Position" />
-          <TableColumn prefWidth="75.0" text="Salary" />
-          <TableColumn prefWidth="75.0" text="jursey" />
-        </columns>
+      <TableView fx:id="playerTable"  layoutY="1.0"  AnchorPane.rightAnchor="0.0" >
+        
       </TableView>
    </children>
 </AnchorPane>

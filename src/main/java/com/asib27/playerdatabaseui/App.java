@@ -25,7 +25,7 @@ public class App extends Application implements Service{
     @Override
     public void start(Stage stage) throws IOException {
         BorderPane bp = (BorderPane) loadFXML("/fxml/Main.fxml");
-        Driver dv = new SearchMenu(this);
+        Driver dv = new SearchMenuDriver(this);
         bp.setCenter(dv.getGuiPane());
         
 //        FXMLLoader searchScreenLoader = new FXMLLoader(App.class.getResource("/fxml/SearchScreen.fxml"));

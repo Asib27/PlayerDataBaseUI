@@ -5,19 +5,15 @@
  */
 package com.asib27.playerdatabaseui.controllers;
 
+import com.asib27.playerdatabaseui.StatData;
 import com.asib27.playerdatabasesystem.*;
 import java.io.File;
 import java.net.URL;
 import java.util.*;
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.ReadOnlyDoubleWrapper;
-import javafx.beans.property.ReadOnlyIntegerProperty;
-import javafx.beans.property.ReadOnlyIntegerWrapper;
-import javafx.beans.property.ReadOnlyStringWrapper;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.*;
 import javafx.geometry.Side;
 import javafx.scene.chart.*;
@@ -39,125 +35,159 @@ public class ChartController implements Initializable {
     @FXML
     private BorderPane borderPane;
     
-    @FXML
-    private PieChart pieChart;
+    private Chart chart;
+    private ChartHelper chartHelper;
+    private SimpleStringProperty chartType = new SimpleStringProperty(this, "chart type", "Bar chart");
+    private final String[] allChartType = {"Pie Chart", "Bar Chart", "Area Chart", "Line Chart",
+        "Scatter Chart", "Stacked Area Chart", "Stacked Bar Chart"};
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-        selectChartBox.getItems().addAll("Pie chart");
-        selectChartBox.setValue("Pie chart");
         
-        //borderPane.
-        
-        PlayerDataBaseInt db = new PlayerDataBase(new File("G:\\Java\\PlayerDataBaseSystem\\src\\main\\java\\com\\asib27\\playerdatabasesystem\\playersData.txt"));
-        makePieChart(pieChart, db);
-        TableView<StatData> makeStatTable = makeStatTable();
-        
-        ArrayList<String> columns = new ArrayList<>(Arrays.asList(new String[]{"Liverpool", "Chelsea", "Man U"}));
-        
-        
-        XYChart xy = makeChart(makeStatTable, columns);
-        System.out.println(xy);
-        borderPane.setCenter(xy);
-        borderPane.setTop(makeStatTable);
+        selectChartBox.getItems().addAll(allChartType);
+        selectChartBox.valueProperty().bindBidirectional(chartType);
+        chartHelper = new ChartHelper();
+        borderPane.setCenter(chart);
     }    
     
-    private void makePieChart(PieChart pieChart, PlayerDataBaseInt db){
-        Map<String, Integer> counAlltFields = db.counAlltFields(PlayerAttribute.COUNTRY);
-        counAlltFields.keySet().forEach(country -> {
-            pieChart.getData().add(new PieChart.Data(country, counAlltFields.get(country)));
-        });
-        
-        pieChart.setLegendSide(Side.RIGHT);
+    @FXML
+    private void selectionChanged(ActionEvent event) {
+        chartHelper.setChart();
     }
     
-    private XYChart makeChart(TableView<StatData> tableView, ArrayList<String> columns){
-        CategoryAxis xAxis = new CategoryAxis();
-        xAxis.setLabel("Country");
-        
-        NumberAxis yAxis = new NumberAxis();
-        
-        ObservableList<XYChart.Series> data = FXCollections.observableArrayList();
-        
-        columns.forEach((t) -> {
-            XYChart.Series ser = new XYChart.Series<>();
-            ser.setName(t);
-            
-            tableView.getItems().forEach((statData) -> {
-                ser.getData().add(new XYChart.Data<>(statData.getName(), statData.getValue(t)));
-            });
-            
-            data.add(ser);
-        });
-        
-        XYChart chart = new BarChart(xAxis, yAxis);
-        chart.setData(data);
-        
-        return chart;
+
+    public String getChartType() {
+        return chartType.getValue();
+    }
+
+    public void setChartType(String chartType) {
+        this.chartType.setValue(chartType);
     }
     
-    private TableView<StatData> makeStatTable(){
-        TableView<StatData> tableView = new TableView<>();
+    public SimpleStringProperty chartTypeProperty(){
+        return chartType;
+    }
+
+    public ChartHelper getChartHelper() {
+        return chartHelper;
+    }
+
+    public void setChartHelper(ChartHelper chartHelper) {
+        this.chartHelper = chartHelper;
+    }
+    
+    public class ChartHelper{
+        private CategoryAxis xAxis;
+        private NumberAxis yAxis;
+        private ObservableList<XYChart.Series> seriesData;
+        private String[] dataMapKey;
+        private StatData[] data;
+        private boolean isDataValid; 
+
+        public ChartHelper() {
+            xAxis = new CategoryAxis();
+            yAxis = new NumberAxis();
+            isDataValid = false;
+        }
         
-        StatData data1 = new StatData();
-        data1.setName("Brazil");
-        data1.addValue("Liverpool", 1);
-        data1.addValue("Chelsea", 2);
-        data1.addValue("Man U", 3);
-        
-        StatData data2 = new StatData();
-        data2.setName("England");
-        data2.addValue("Liverpool", 2);
-        data2.addValue("Chelsea", 4);
-        data2.addValue("Man U", 1);
-        
-        StatData data3 = new StatData();
-        data3.setName("Italy");
-        data3.addValue("Liverpool", 1);
-        data3.addValue("Chelsea", 4);
-        data3.addValue("Man U", 1);
-        
-        TableColumn<StatData, String> tc1 = new TableColumn("Country");
-        tc1.setCellValueFactory((p) -> {
-            return p.getValue().NameProperty(); //To change body of generated lambdas, choose Tools | Templates.
-        });
-        tableView.setItems(FXCollections.observableArrayList(data1, data2, data3));
-        //tableView.getColumns().addAll(tc1);
-        
-        
-        TableColumn<StatData, String> tc2= new TableColumn<>("Liverpool");
-        tc2.setCellValueFactory((TableColumn.CellDataFeatures<StatData, String> p) -> {
-            StatData sd = p.getValue();
+        public void setChart(){
+            if(chartType.getValue().equals("Pie Chart")){
+                chart = makePieChart();
+            }else{
+                if(isDataValid)
+                    chart = changeChartType();
+                else
+                    chart = makeChart();
+            }
             
-            System.out.println("Liverpool "+sd.getValue("Liverpool"));
-            ReadOnlyStringWrapper r1 = new ReadOnlyStringWrapper(String.valueOf(sd.getValue("Liverpool")));
-            return r1.getReadOnlyProperty();
-        });
+            borderPane.setCenter(chart);
+        }
+        
+        private XYChart chartFactory(Axis xAxis, Axis yAxis){
+            return switch(chartType.getValue()){
+                case "Bar Chart" -> new BarChart<>(xAxis, yAxis);
+                case "Area Chart" -> new AreaChart<>(xAxis, yAxis);
+                case "Bubble Chart" -> new BubbleChart<>(xAxis, yAxis);
+                case "Line Chart" -> new LineChart<>(xAxis, yAxis);
+                case "Scatter Chart" -> new ScatterChart<>(xAxis, yAxis);
+                case "Stacked Area Chart"-> new StackedAreaChart<>(xAxis, yAxis);
+                case "Stacked Bar Chart"-> new StackedBarChart<>(xAxis, yAxis);
+                default -> new BarChart<>(xAxis, yAxis);
+            };
+        }
+        
+        private XYChart chartFactory(Axis xAxis, Axis yAxis,  ObservableList<XYChart.Series> ol){
+            XYChart c = chartFactory(xAxis, yAxis);
+            c.setData(ol);
+            return c;
+        }
+        
+        private XYChart makeChart(){
+            seriesData = FXCollections.observableArrayList();
+
+            for (String t: dataMapKey) {
+                XYChart.Series ser = new XYChart.Series<>();
+                ser.setName(t);
+
+                for (StatData statData: data) {
+                    ser.getData().add(new XYChart.Data<>(statData.getName(), statData.getValue(t)));
+                }
+
+                seriesData.add(ser);
+            }
+
+            XYChart chart = chartFactory(xAxis, yAxis);
+            chart.setData(seriesData);
+            isDataValid = true;
+            return chart;
+        }
         
         
-        TableColumn<StatData, String> tc3= new TableColumn<>("Chelsea");
-        tc3.setCellValueFactory((TableColumn.CellDataFeatures<StatData, String> p) -> {
-            StatData sd = p.getValue();
+        private XYChart changeChartType(){
+            return chartFactory(xAxis, yAxis, seriesData);
+        }
+        
+        private PieChart makePieChart(){
+            PieChart pieChart = new PieChart();
             
-            System.out.println("Chelsea "+sd.getValue("Chelsea"));
-            return new ReadOnlyStringWrapper(String.valueOf(sd.getValue("Chelsea")));
-        });
-        
-        TableColumn<StatData, String> tc4= new TableColumn<>("Man U");
-        tc4.setCellValueFactory((TableColumn.CellDataFeatures<StatData, String> p) -> {
-            StatData sd = p.getValue();
+            for (var statData : data) {
+                double total = 0;
+                
+                total = statData.getSeriesValues().keySet().stream().map(t -> statData.getValue(t)).reduce(total, Double::sum);
+                
+                pieChart.getData().add(new PieChart.Data(statData.getName(), total));
+            }
             
-            //return new SimpleStringProperty(String.valueOf(sd.getValue("Liverpool")));
-            System.out.println("Man U " + sd.getValue("Man U"));
-            return new ReadOnlyStringWrapper(String.valueOf(sd.getValue("Man U")));
-        });
+            return pieChart;
+        }
+
+        public Axis getxAxis() {
+            return xAxis;
+        }
+
+        public Axis getyAxis() {
+            return yAxis;
+        }
+
+        public StatData[] getData() {
+            return data;
+        }
+
+        public void setData(StatData[] data, String[] dataMapKey) {
+            this.data = data;
+            isDataValid = false;
+            this.dataMapKey = dataMapKey;
+            setChart();
+        }
+
+    
         
-        tableView.getColumns().addAll(tc1,tc2, tc3, tc4);
-        
-        return tableView;
-        
+    }
+    
+    public void clearListener() {
+        selectChartBox.valueProperty().unbindBidirectional(chartType);
     }
 }

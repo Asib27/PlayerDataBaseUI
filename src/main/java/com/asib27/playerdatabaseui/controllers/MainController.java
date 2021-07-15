@@ -7,6 +7,7 @@ package com.asib27.playerdatabaseui.controllers;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -18,7 +19,9 @@ import javafx.scene.layout.VBox;
  * @author USER
  */
 public class MainController implements Initializable {
-    
+    //@FXML
+    //private TabPane tabPane;
+
 
     /**
      * Initializes the controller class.
@@ -29,5 +32,10 @@ public class MainController implements Initializable {
         // TODO
         
     }    
-    
+    /*
+    @FXML
+    void addTab(ActionEvent event) {
+        
+    }
+*/
 }

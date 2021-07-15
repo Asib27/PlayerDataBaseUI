@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.asib27.playerdatabaseui.controllers.StatMenuController">
+    <stylesheets>
+        <URL value="@/styles/statmenu.css" />
+    </stylesheets>
+   <center>
+       <ScrollPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+            <GridPane alignment="CENTER">
+                <columnConstraints>
+                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="122.0" minWidth="10.0" prefWidth="68.0" />
+                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="186.0" minWidth="10.0" prefWidth="186.0" />
+               <ColumnConstraints hgrow="SOMETIMES" maxWidth="186.0" minWidth="10.0" prefWidth="186.0" />
+                </columnConstraints>
+              
+                <rowConstraints>
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                </rowConstraints>
+                
+                <children>
+                  <Label text="1st field" />
+                  <Label text="2nd field" GridPane.rowIndex="1" /> 
+                  <Label text="3rd field" GridPane.rowIndex="2" />
+                  <ComboBox fx:id="rowNameBox" prefWidth="150.0" GridPane.columnIndex="1" />
+                  <ComboBox fx:id="colNameBox"  prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <ComboBox fx:id="statTypeBox"  prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <ComboBox fx:id="whichFieldBox" visible="true" prefWidth="150.0" GridPane.columnIndex="2" GridPane.rowIndex="2" />  
+                    
+                  <Label text="Name" GridPane.rowIndex="3" />
+                  <Label text="Club" GridPane.rowIndex="4" />
+                  <Label text="County" GridPane.rowIndex="5" />
+                  <Label text="Position" GridPane.rowIndex="6" />
+                  <Label text="Salary" GridPane.rowIndex="7" />
+                  <Label text="Age" GridPane.rowIndex="8" />
+                  <Label text="Jursey" GridPane.rowIndex="9" />
+                  <TextField promptText="Enter Name" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                  <TextField promptText="Enter Club Name" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                  <TextField promptText="Enter Country Name" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                  <ComboBox fx:id="positionComboBox" prefHeight="25.0" prefWidth="188.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                  <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="10.0" GridPane.columnIndex="1" GridPane.rowIndex="7">
+                     <children>
+                        <TextField promptText="Lower Range" />
+                        <TextField promptText="Upper Range" />
+                     </children>
+                  </HBox>
+                  <TextField promptText="Enter Jursey Name" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+                  <TextField promptText="Enter Age Here" GridPane.columnIndex="1" GridPane.rowIndex="9" />
+               
+               </children>
+               
+            </GridPane>
+           
+       </ScrollPane>
+   </center>
+   
+   <bottom>
+      <ToolBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+        <items>
+          <Button fx:id="searchButton" mnemonicParsing="false" text="Search"  />
+        </items>
+      </ToolBar>
+   </bottom>
+</BorderPane>

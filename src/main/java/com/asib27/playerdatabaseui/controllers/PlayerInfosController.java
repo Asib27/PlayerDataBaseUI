@@ -63,7 +63,7 @@ public class PlayerInfosController implements Initializable {
         clubField.setText(player.getClub());
         countryField.setText(player.getCountry());
         posField.setText(String.valueOf(player.getPosition()));
-        jurseyField.setText(String.valueOf(player.getJurseyNumber()));
+        jurseyField.setText(String.valueOf(player.getJursey()));
         salaryField.setText(String.valueOf(player.getSalary()));
     }
 

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.asib27.playerdatabaseui.controllers;
+package com.asib27.playerdatabaseui;
 
 import java.util.Map;
 import java.util.TreeMap;
@@ -20,13 +20,14 @@ import javafx.beans.property.StringPropertyBase;
 public class StatData {
     private StringProperty name = null;
     private String nm;
-    private Map<String, Integer> seriesValues;
+    private Map<String, Double> seriesValues;
 
     public StatData() {
         seriesValues = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
     }
 
     public StatData(String name) {
+        this();
         nm = name;
     }
     
@@ -48,15 +49,25 @@ public class StatData {
     
     
 
-    public Map<String, Integer> getSeriesValues() {
+    public Map<String, Double> getSeriesValues() {
         return seriesValues;
     }
 
-    public void setSeriesValues(Map<String, Integer> seriesValues) {
+    public void setSeriesValues(Map<String, Double> seriesValues) {
         this.seriesValues = seriesValues;
     }
     
-    public void addValue(String key, int val){
+    
+    public void setSeriesValuesInt(Map<String, Integer> series) {
+        seriesValues.clear();
+        
+        series.keySet().forEach(string -> {
+            double val = series.get(string);
+            seriesValues.put(string, val);
+        });
+    }
+    
+    public void addValue(String key, double val){
         seriesValues.put(key, val);
     }
     
@@ -67,7 +78,7 @@ public class StatData {
         return new SimpleStringProperty(sp.getValue());
     }
     */
-    public int getValue(String key){
-        return seriesValues.get(key);
+    public double getValue(String key){
+        return seriesValues.getOrDefault(key, 0.0);
     }
 }

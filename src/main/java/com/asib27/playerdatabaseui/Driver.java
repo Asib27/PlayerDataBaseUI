@@ -13,4 +13,5 @@ import javafx.scene.layout.Pane;
  */
 public interface Driver {
     public Pane getGuiPane();
+    public void clearListener();
 }

@@ -5,8 +5,12 @@
  */
 package com.asib27.playerdatabaseui.controllers;
 
+import com.asib27.playerdatabaseui.App;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.SplitPane;
@@ -34,12 +38,17 @@ public class SearchScreenController implements Initializable {
     
     @FXML
     private SplitPane leftSplitPane;
+    
+    
+    @FXML
+    private TitledPane leftDowntitlePane;
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+        leftDowntitlePane.expandedProperty().addListener(this::divisionChangeListener);
     }    
 
     public void setPaneLeftUp(Pane paneLeft) {
@@ -53,14 +62,7 @@ public class SearchScreenController implements Initializable {
     }
 
     public void setPaneLeftDown(Pane paneLeft) {
-        this.paneLeftDown.getChildren().add(paneLeft);
-        //paneLeftDown.setContent(paneLeft);
-        
-        
-        AnchorPane.setRightAnchor(paneLeft, 0.0);
-        AnchorPane.setLeftAnchor(paneLeft, 0.0);
-        AnchorPane.setTopAnchor(paneLeft, 0.0);
-        AnchorPane.setBottomAnchor(paneLeft, 0.0);
+        leftDowntitlePane.setContent(paneLeft);
     }
 
     public void setPaneRight(Pane pane) {
@@ -80,5 +82,15 @@ public class SearchScreenController implements Initializable {
         return leftSplitPane;
     }
     
+    private void divisionChangeListener(ObservableValue<? extends Boolean> cl, Boolean ov, Boolean nv){
+        if(nv){
+            leftSplitPane.setDividerPosition(0, .5);
+        }else{
+            leftSplitPane.setDividerPosition(0, .95);
+        }
+    }
     
+    public void clearListener(){
+        leftDowntitlePane.expandedProperty().removeListener(this::divisionChangeListener);
+    }
 }

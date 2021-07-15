@@ -13,15 +13,17 @@ import java.io.ObjectOutputStream;
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
 import javafx.collections.ListChangeListener;
+import javafx.collections.ObservableList;
 import javafx.fxml.*;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.*;
 
 /**
  *
  * @author USER
  */
-public class SearchMenu implements Driver{
+public class SearchMenuDriver implements Driver{
     private Service service;
     private DatabaseManager database;
     
@@ -31,11 +33,11 @@ public class SearchMenu implements Driver{
     private PlayerTableController playerTableController;
     
     private BorderPane searchScreenPane;
-    private AnchorPane searchMenuPane;
+    private BorderPane searchMenuPane;
     private AnchorPane playerTablePane;
     private AnchorPane playerInfoPane;
 
-    public SearchMenu(Service service) {
+    public SearchMenuDriver(Service service) {
         this.service = service;
         database = service.getDatabase();
        
@@ -62,26 +64,46 @@ public class SearchMenu implements Driver{
         searchScreenController.setPaneRight(playerInfoPane);
         searchScreenController.setPaneLeftUp(playerTablePane);
         searchScreenController.setPaneLeftDown(searchMenuPane);
-        //searchScreenController.setPaneLeftDown(playerInfoPane);
         
-        searchMenuController.SearchStringProperty().addListener((c,ov, nv)->{
-            playerTableController.setData(database.getDataBase().query(PlayerAttribute.POSITION, nv.toString()));
+        initTableView(playerTableController.getPlayerTable());
+        
+        searchMenuController.getSearchButton().setOnAction((t) -> {
+            Player[] players = searchMenuController.getSearchHelper().createData(database.getDataBase());
+            playerTableController.setData(players);
         });
         
         playerTableController.selectionModeProperty().addListener(new ListChangeListener(){
             @Override
             public void onChanged(ListChangeListener.Change change) {
-                Player player = (Player) change.getList().get(0);
-                playerInfoController.setPlayer(player);
+                ObservableList list = change.getList();
+                
+                if(!list.isEmpty())
+                    playerInfoController.setPlayer((Player) list.get(0));
             }
             
             
         });
+        
+        
+    }
+    
+    
+    private void initTableView(TableView table){
+        for (var field : PlayerAttribute.values()) {
+            TableColumn col = new TableColumn(field.toString());
+            col.setCellValueFactory(new PropertyValueFactory<>(field.toString()));
+            table.getColumns().add(col);
+        }
     }
 
     @Override
     public Pane getGuiPane() {
         return searchScreenPane;
+    }
+
+    @Override
+    public void clearListener() {
+        
     }
     
     
