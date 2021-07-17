@@ -5,11 +5,13 @@
  */
 package com.asib27.playerdatabaseui.controllers;
 
+import com.asib27.playerdatabaseui.Driver;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
 
@@ -19,7 +21,7 @@ import javafx.scene.layout.VBox;
  * @author USER
  */
 
-public class IntroPageController implements Initializable {
+public class IntroPageController implements Initializable, Driver{
     @FXML
     private VBox vboxContainer;
 
@@ -37,5 +39,15 @@ public class IntroPageController implements Initializable {
         // TODO
         searchTextField.prefWidthProperty().bind(vboxContainer.widthProperty().divide(2));
     }    
+
+    @Override
+    public Pane getGuiPane() {
+        return vboxContainer;
+    }
+
+    @Override
+    public void clearListener() {
+        ;
+    }
     
 }

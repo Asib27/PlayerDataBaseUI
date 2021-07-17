@@ -10,6 +10,7 @@ import com.asib27.playerdatabasesystem.PlayerAttribute;
 import com.asib27.playerdatabasesystem.PlayerDataBase;
 import com.asib27.playerdatabasesystem.PlayerDataBaseInt;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.ResourceBundle;
 import javafx.beans.property.SimpleStringProperty;
@@ -24,7 +25,7 @@ import javafx.scene.layout.*;
  *
  * @author USER
  */
-public class SearchMenuController implements Initializable {
+public class SearchMenuController extends ObserverUtil<Player> implements Initializable {
     @FXML
     private BorderPane borderPane;
 
@@ -74,15 +75,13 @@ public class SearchMenuController implements Initializable {
         //fieldComboBox.getItems().addAll(Arrays.asList(PlayerAttribute.values()));
         
         fieldComboBox.visibleProperty().bind(choiceComboBox.valueProperty().isNotEqualTo("Search"));
-        
-        //borderPane.prefHeightProperty().bind(anchorPane.heightProperty());
-        //borderPane.prefWidthProperty().bind(anchorPane.widthProperty());
-        
-        //titledPane.
+        addAllListener();
     }    
-
-    public Button getSearchButton() {
-        return searchButton;
+    
+    private void addAllListener(){
+        searchButton.setOnAction((t) -> {
+            updateAll();
+        });
     }
     
     public void clearListener(){
@@ -92,12 +91,17 @@ public class SearchMenuController implements Initializable {
     public SearchHelper getSearchHelper() {
         return searchHelper;
     }
+
+    @Override
+    protected void updator(SearchObserver t) {
+        t.update(searchHelper);
+    }
     
     
     
-    public class SearchHelper{
+    public class SearchHelper implements DataProcessHelper<Player>{
         
-        public Player[] createData(PlayerDataBaseInt db){
+        public Player[] getData(PlayerDataBaseInt db){
             Player[] players = db.getAllRecords();
             
             if(namefield.getText().length() != 0){

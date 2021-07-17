@@ -8,25 +8,21 @@ package com.asib27.playerdatabaseui;
 import com.asib27.playerdatabasesystem.*;
 import com.asib27.playerdatabaseui.controllers.*;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.*;
 import javafx.beans.property.ReadOnlyStringWrapper;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.collections.ListChangeListener;
-import javafx.collections.ObservableList;
+import javafx.beans.value.*;
+import javafx.collections.*;
+import javafx.concurrent.Task;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.Pane;
+import javafx.scene.control.*;
+import javafx.scene.layout.*;
 
 /**
  *
  * @author USER
  */
-public class StatMenuDriver implements Driver{
+
+public class StatMenuDriver  implements Driver, SearchObserver<StatData>{
     private Service service;
     private DatabaseManager database;
     
@@ -40,6 +36,9 @@ public class StatMenuDriver implements Driver{
     private AnchorPane playerTablePane;
     private AnchorPane chartPane;
 
+    private StatMenuDriver() {
+    }
+    
     public StatMenuDriver(Service service) {
         this.service = service;
         database = service.getDatabase();
@@ -68,16 +67,22 @@ public class StatMenuDriver implements Driver{
         searchScreenController.setPaneLeftUp(playerTablePane);
         searchScreenController.setPaneLeftDown(statMenuPane);
         
-        playerTableController.getPlayerTable().itemsProperty().addListener(this::tableDatachanged);
-        
-        statMenuController.getSearchButton().setOnAction((t) -> {
-            StatData[] sd = statMenuController.getDataProcessor().createData(database.getDataBase());
-            //System.out.println(Arrays.toString(sd));
-            initTableView(playerTableController.getPlayerTable(), statMenuController.getDataProcessor().getColumns());
-            playerTableController.setData(sd);
-        });
-        
+        addListener();
     }
+    
+    private void addListener(){
+        playerTableController.getPlayerTable().itemsProperty().addListener(this::tableDatachanged);
+        statMenuController.addSearchListener(this);
+    }
+
+    @Override
+    public void update(DataProcessHelper<StatData> dataProcessor) {
+        StatData[] sd = dataProcessor.getData(database.getDataBase());
+        initTableView(playerTableController.getPlayerTable(), statMenuController.getDataProcessor().getColumns());
+        playerTableController.setData(sd);
+    }
+    
+    
     
     private void initTableView(TableView table, ArrayList<String> colName){
         table.getColumns().removeAll(table.getColumns());
@@ -120,4 +125,82 @@ public class StatMenuDriver implements Driver{
         searchScreenController.clearListener();
     }
     
+    public static Task getLoader(Service service){
+        return new StatMenuLoader(service);
+    }
+    
+    public static class StatMenuLoader extends Task<StatMenuDriver>{
+        Service serviceName;
+
+        public StatMenuLoader(Service serviceName) {
+            this.serviceName = serviceName;
+            updateTitle("Loading Stat Menu");
+        }
+        
+        @Override
+        protected StatMenuDriver call() throws Exception {
+            StatMenuDriver result = new StatMenuDriver();
+            
+            result.service = serviceName;
+            result.database = serviceName.getDatabase();
+            
+            try {
+                FXMLLoader loader = App.getFXMLLoader("SearchScreen.fxml");
+                result.searchScreenPane = loader.load();
+                result.searchScreenController = loader.getController();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+            
+            updateMessage("loading");
+            updateProgress(1, 4);
+            
+            try {
+                FXMLLoader loader = App.getFXMLLoader("statMenu.fxml");
+                result.statMenuPane = loader.load();
+                result.statMenuController = loader.getController();
+                result.searchScreenController.setPaneLeftDown(result.statMenuPane);
+
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+            
+            
+            updateMessage("loading..");
+            updateProgress(2, 4);
+            
+            try {
+                FXMLLoader loader = App.getFXMLLoader("PlayerTable.fxml");
+                result.playerTablePane = loader.load();
+                result.playerTableController = loader.getController();
+                result.searchScreenController.setPaneLeftUp(result.playerTablePane);
+                
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+            
+            
+            updateMessage("Almost Done");
+            updateProgress(3, 4);
+            
+            try {
+                FXMLLoader loader = App.getFXMLLoader("chart.fxml");
+                result.chartPane = loader.load();
+                result.chartController = loader.getController();
+                result.searchScreenController.setPaneRight(result.chartPane);
+            
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+            
+            
+            updateMessage("Complete");
+            updateProgress(4, 4);
+            
+            result.addListener();
+            
+            return result;
+        }
+        
+    }
 }

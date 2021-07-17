@@ -13,16 +13,16 @@
         <menus>
           <Menu mnemonicParsing="true" text="_Search">
             <items>
-                  <MenuItem mnemonicParsing="false" text="Player Search" />
-                  <MenuItem mnemonicParsing="false" text="Club Search" />
+                  <MenuItem mnemonicParsing="false" onAction="#openSearchMenu" text="Player Search" />
+                  <MenuItem mnemonicParsing="false" onAction="#openSearchMenu" text="Club Search" />
             </items>
           </Menu>
           
           <Menu mnemonicParsing="true" text="_Statistics">
               <items>
-                  <MenuItem mnemonicParsing="false" text="Total" />
-                  <MenuItem mnemonicParsing="false" text="Average" />
-                  <MenuItem mnemonicParsing="false" text="Count Players" />
+                  <MenuItem mnemonicParsing="false" onAction="#openStatMenu" text="Total" />
+                  <MenuItem mnemonicParsing="false" onAction="#openStatMenu" text="Average" />
+                  <MenuItem mnemonicParsing="false" onAction="#openStatMenu" text="Count Players" />
               </items>
           </Menu>
           
@@ -50,5 +50,43 @@
         </menus>
       </MenuBar>
    </top>
+   
+   <center>
+      <TabPane fx:id="tabPane" prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="ALL_TABS" BorderPane.alignment="CENTER">
+        <tabs>
+          <Tab text="New Tab">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+            </content>
+          </Tab>
+          <Tab fx:id="newTab" closable="false" text="+">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+            </content>
+          </Tab>
+        </tabs>
+      </TabPane>
+   </center>
+   
+   <bottom>
+      <HBox alignment="CENTER" prefHeight="30.0" prefWidth="600.0" spacing="14.0" BorderPane.alignment="CENTER">
+         <children>
+            <TextField />
+            <Separator orientation="VERTICAL" prefHeight="200.0" />
+            
+            <HBox fx:id="progressBox" visible="false" spacing="10.0">
+                <children>
+                    <Label fx:id="taskNameLabel" text="Task Name" />
+                    <Label fx:id="progressTextLabel" text="Progress Text" />
+                    <ProgressBar fx:id="progressBar" prefHeight="20.0" prefWidth="200.0" progress="0.0" />
+                </children>
+            </HBox>
+            
+            <Separator orientation="VERTICAL" prefHeight="200.0" />
+            <Button mnemonicParsing="false" text="Button" />
+            <Button mnemonicParsing="false" text="Button" />
+         </children>
+      </HBox>
+   </bottom>
    
 </BorderPane>

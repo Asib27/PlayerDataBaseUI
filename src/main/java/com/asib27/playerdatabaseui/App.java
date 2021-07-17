@@ -2,6 +2,7 @@ package com.asib27.playerdatabaseui;
 
 import com.asib27.playerdatabaseui.controllers.SearchScreenController;
 import com.asib27.playerdatabasesystem.*;
+import com.asib27.playerdatabaseui.controllers.MainController;
 
 import java.io.File;
 import javafx.application.Application;
@@ -24,26 +25,16 @@ public class App extends Application implements Service{
 
     @Override
     public void start(Stage stage) throws IOException {
-        BorderPane bp = (BorderPane) loadFXML("/fxml/Main.fxml");
+        /*
+        FXMLLoader fxmlLoader = getFXMLLoader("Main.fxml");
+        BorderPane bp = fxmlLoader.load();
         Driver dv = new SearchMenuDriver(this);
-        bp.setCenter(dv.getGuiPane());
+        MainController mc = fxmlLoader.getController();
+        mc.setContent(dv.getGuiPane());
+        */
+        MainDriver mainDriver = new MainDriver(this);
         
-//        FXMLLoader searchScreenLoader = new FXMLLoader(App.class.getResource("/fxml/SearchScreen.fxml"));
-//        //searchScreenLoader.load();
-//        SplitPane ap = searchScreenLoader.load();
-//        SearchScreenController searchScreenController = searchScreenLoader.getController();
-//
-//        //searchScreenController.setPaneRight((AnchorPane) loadFXML("/fxml/PlayerInfos.fxml"));
-//        searchScreenController.setPaneLeftDown((AnchorPane) loadFXML("/fxml/SearchMenu.fxml"));
-//        searchScreenController.setPaneRight((AnchorPane) loadFXML("/fxml/Chart.fxml"));
-//        
-//        try{
-//            searchScreenController.setPaneLeftUp((AnchorPane) loadFXML("/fxml/PlayerTable.fxml"));
-//        }catch(Exception ex){
-//            ex.printStackTrace();
-//        }
-//        
-        scene = new Scene(bp, 1040, 640);
+        scene = new Scene(mainDriver.getGuiPane(), 1040, 640);
         
         stage.setScene(scene);
         stage.show();

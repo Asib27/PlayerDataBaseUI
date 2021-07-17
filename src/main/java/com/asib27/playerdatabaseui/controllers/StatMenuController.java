@@ -27,7 +27,7 @@ import javafx.scene.control.*;
  *
  * @author USER
  */
-public class StatMenuController implements Initializable {
+public class StatMenuController extends ObserverUtil<StatData> implements Initializable {
     @FXML
     private ComboBox<PlayerAttribute> rowNameBox;
 
@@ -45,7 +45,7 @@ public class StatMenuController implements Initializable {
 
     @FXML
     private Button searchButton;
-
+      
     final private String[] allStatType = {"Count", "Total", "Average"};
     private DataProcessor dataProcessor = new DataProcessor();
     /**
@@ -66,6 +66,10 @@ public class StatMenuController implements Initializable {
         
         ObjectProperty valueProperty = statTypeBox.valueProperty();
         whichFieldBox.visibleProperty().bind(valueProperty.isEqualTo("Average").or(valueProperty.isEqualTo("Total")));
+        
+        searchButton.setOnAction((t) -> {
+            updateAll();
+        });
     }    
     
     public void clearListener(){
@@ -79,11 +83,17 @@ public class StatMenuController implements Initializable {
     public DataProcessor getDataProcessor() {
         return dataProcessor;
     }
+
+    @Override
+    public void updator(SearchObserver t) {
+        t.update(dataProcessor);
+    }
     
-    public class DataProcessor{
+    public class DataProcessor implements DataProcessHelper<StatData>{
         private ArrayList<String> columns = new ArrayList<>();
         
-        public StatData[] createData(PlayerDataBaseInt db){
+        @Override
+        public StatData[] getData(PlayerDataBaseInt db){
             columns.clear();
             ArrayList<StatData> data =  null;
                 
