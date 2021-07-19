@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.asib27.playerdatabaseui.controllers.SlidingScreenController">
+   <center>
+      <StackPane fx:id="stackPane" BorderPane.alignment="CENTER">
+        <children>
+             
+            <SplitPane dividerPositions="0.5">
+              <items>
+                <AnchorPane fx:id="paneLeft" minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+                     
+                </AnchorPane>
+                <AnchorPane fx:id="paneRight" minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" />
+              </items>
+            </SplitPane>
+            
+            <AnchorPane fx:id="FLoatingPane" AnchorPane.bottomAnchor="0.0" StackPane.alignment="BOTTOM_LEFT">
+               <children>
+                  <HBox fx:id="upperControl" prefHeight="35.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <children>
+                        <ToolBar prefHeight="40.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
+                           <items>
+                              <Label text="Search Menu" />
+                           </items>
+                        </ToolBar>
+                        <ToolBar prefHeight="35.0" prefWidth="135.0" HBox.hgrow="NEVER">
+                          <items>
+                            <Button fx:id="UpButton" mnemonicParsing="false" text="v" />
+                          </items>
+                        </ToolBar>
+                     </children>
+                  </HBox>
+                  <AnchorPane fx:id="floatingPaneContent" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="40.0" />
+               </children>
+            </AnchorPane>
+            
+        </children>
+      </StackPane>
+   </center>
+</BorderPane>

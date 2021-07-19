@@ -10,6 +10,7 @@ import com.asib27.playerdatabaseui.MainDriver;
 import com.asib27.playerdatabaseui.Service;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.animation.TranslateTransition;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
 import javafx.concurrent.Worker;
@@ -17,9 +18,13 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Background;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.util.Duration;
 
 /**
  * FXML Controller class
@@ -45,6 +50,9 @@ public class MainController implements Initializable {
     @FXML
     private HBox progressBox;
     
+    @FXML
+    private AnchorPane slider, sideMenu, sliderMain;
+    
     private MainControlDriverInt driver;
     /**
      * Initializes the controller class.
@@ -65,6 +73,26 @@ public class MainController implements Initializable {
     @FXML
     private void openStatMenu(ActionEvent av){
         menuOpenHelper("Stat");
+    }
+    
+    @FXML
+    private void slideInOut(MouseEvent me){
+        TranslateTransition tt = new TranslateTransition(Duration.millis(500), slider);
+        
+        if(slider.getTranslateX() == 0){ //slide out
+            tt.setByX(-300);
+            sideMenu.setStyle("-fx-background-color : white;");
+            sliderMain.setMouseTransparent(true);
+            tabPane.setOpacity(1);
+        }
+        else{ //slide in
+            tt.setByX(300);
+            //sideMenu.setStyle("-fx-background-color : yellow;");
+            sliderMain.setMouseTransparent(false);
+            tabPane.setOpacity(.7);
+        }
+        
+        tt.play();
     }
     
     private void menuOpenHelper(String name){

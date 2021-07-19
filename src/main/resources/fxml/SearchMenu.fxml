@@ -4,7 +4,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane fx:id="borderPane"  prefHeight="400.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.asib27.playerdatabaseui.controllers.SearchMenuController">
+<BorderPane prefHeight="400.0" prefWidth="600.0" fx:id="borderPane"   styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.asib27.playerdatabaseui.controllers.SearchMenuController">
     <stylesheets>
         <URL value="@/styles/searchmenu.css" />
     </stylesheets>
@@ -54,7 +54,7 @@
 
 
    <bottom>
-      <ToolBar prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+      <ToolBar prefHeight="50.0"   BorderPane.alignment="CENTER">
          <items>
             <TextField promptText="hint/error message" />
             <ComboBox fx:id="choiceComboBox" prefWidth="150.0" />

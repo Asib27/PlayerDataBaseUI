@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.asib27.playerdatabaseui.controllers;
+package com.asib27.playerdatabaseui.util;
 
 import java.util.ArrayList;
 
@@ -11,12 +11,12 @@ import java.util.ArrayList;
  *
  * @author USER
  */
-abstract class ObserverUtil<T>{
-    private ArrayList<SearchObserver<T>> searchObservers = new ArrayList<>();
+public abstract class ObserverUtil<T>{
+    private ArrayList<T> searchObservers = new ArrayList<>();
     
     /*Implementation of observer pattern <start>*/
     
-    public void addSearchListener(SearchObserver<T> listener){
+    public void addSearchListener(T listener){
         searchObservers.add(listener);
     }
     
@@ -26,11 +26,11 @@ abstract class ObserverUtil<T>{
         });
     }
     
-    public void removeSearchListener(SearchObserver<T> listener){
+    public void removeSearchListener(T listener){
         searchObservers.remove(listener);
     }
     
-    abstract protected void updator(SearchObserver t);
+    abstract protected void updator(T t);
     
     /*Implementation of observer pattern <finish>*/
 }

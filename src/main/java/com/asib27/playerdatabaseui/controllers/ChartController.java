@@ -7,6 +7,7 @@ package com.asib27.playerdatabaseui.controllers;
 
 import com.asib27.playerdatabaseui.StatData;
 import com.asib27.playerdatabasesystem.*;
+import com.asib27.playerdatabaseui.util.ImageUtil;
 import java.io.File;
 import java.net.URL;
 import java.util.*;
@@ -19,6 +20,7 @@ import javafx.geometry.Side;
 import javafx.scene.chart.*;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.WritableImage;
 import javafx.scene.layout.BorderPane;
 
 
@@ -34,6 +36,9 @@ public class ChartController implements Initializable {
     
     @FXML
     private BorderPane borderPane;
+    
+    @FXML
+    private Button downloadButton;
     
     private Chart chart;
     private ChartHelper chartHelper;
@@ -51,6 +56,11 @@ public class ChartController implements Initializable {
         selectChartBox.valueProperty().bindBidirectional(chartType);
         chartHelper = new ChartHelper();
         borderPane.setCenter(chart);
+        
+        downloadButton.setOnAction((t) -> {
+            WritableImage snapshot = chart.snapshot(null, null);
+            ImageUtil.saveToFile(snapshot);
+        });
     }    
     
     @FXML

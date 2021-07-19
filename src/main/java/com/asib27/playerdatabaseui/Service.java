@@ -5,6 +5,9 @@
  */
 package com.asib27.playerdatabaseui;
 
+import com.asib27.playerdatabaseui.util.PasswordManager;
+import com.asib27.playerdatabaseui.util.DatabaseManager;
+
 /**
  *
  * @author USER

@@ -5,6 +5,7 @@
  */
 package com.asib27.playerdatabaseui;
 
+import com.asib27.playerdatabaseui.util.DatabaseManager;
 import com.asib27.playerdatabaseui.controllers.IntroPageController;
 import com.asib27.playerdatabaseui.controllers.MainControlDriverInt;
 import com.asib27.playerdatabaseui.controllers.MainController;

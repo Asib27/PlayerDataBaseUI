@@ -19,7 +19,7 @@ AnchorPane.topAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.leftAnchor="0
               <items>
                 <Button mnemonicParsing="false" text="Customise Chart" />
                 <ComboBox fx:id="selectChartBox" onAction="#selectionChanged"  prefWidth="150.0" promptText="Select Chart Type" />
-                <Button mnemonicParsing="false" text="Download Chart" />
+                <Button fx:id="downloadButton" mnemonicParsing="false" text="Download Chart" />
               </items>
             </ToolBar>
          </bottom>

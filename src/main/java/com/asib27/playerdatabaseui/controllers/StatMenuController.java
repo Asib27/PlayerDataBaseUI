@@ -5,6 +5,7 @@
  */
 package com.asib27.playerdatabaseui.controllers;
 
+import com.asib27.playerdatabaseui.util.ObserverUtil;
 import com.asib27.playerdatabasesystem.Player;
 import com.asib27.playerdatabasesystem.PlayerAttribute;
 import com.asib27.playerdatabasesystem.PlayerDataBaseInt;
@@ -27,7 +28,7 @@ import javafx.scene.control.*;
  *
  * @author USER
  */
-public class StatMenuController extends ObserverUtil<StatData> implements Initializable {
+public class StatMenuController extends ObserverUtil<SearchObserver<StatData>> implements Initializable {
     @FXML
     private ComboBox<PlayerAttribute> rowNameBox;
 

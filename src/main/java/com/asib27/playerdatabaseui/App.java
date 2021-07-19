@@ -1,5 +1,7 @@
 package com.asib27.playerdatabaseui;
 
+import com.asib27.playerdatabaseui.util.PasswordManager;
+import com.asib27.playerdatabaseui.util.DatabaseManager;
 import com.asib27.playerdatabaseui.controllers.SearchScreenController;
 import com.asib27.playerdatabasesystem.*;
 import com.asib27.playerdatabaseui.controllers.MainController;
@@ -35,6 +37,7 @@ public class App extends Application implements Service{
         MainDriver mainDriver = new MainDriver(this);
         
         scene = new Scene(mainDriver.getGuiPane(), 1040, 640);
+        //scene = new Scene(getFXMLLoader("SlidingScreen.fxml").load());
         
         stage.setScene(scene);
         stage.show();

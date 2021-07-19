@@ -5,6 +5,7 @@
  */
 package com.asib27.playerdatabaseui;
 
+import com.asib27.playerdatabaseui.util.DatabaseManager;
 import com.asib27.playerdatabasesystem.*;
 import com.asib27.playerdatabaseui.controllers.*;
 import java.io.IOException;
@@ -27,7 +28,7 @@ public class StatMenuDriver  implements Driver, SearchObserver<StatData>{
     private DatabaseManager database;
     
     private StatMenuController statMenuController;
-    private SearchScreenController searchScreenController;
+    private SplitedScreenInt searchScreenController;
     private ChartController chartController;
     private PlayerTableController playerTableController;
     
@@ -44,30 +45,42 @@ public class StatMenuDriver  implements Driver, SearchObserver<StatData>{
         database = service.getDatabase();
        
         try {
-            FXMLLoader loader = App.getFXMLLoader("SearchScreen.fxml");
+            FXMLLoader loader = paneFactory("SearchScreen");
             searchScreenPane = loader.load();
             searchScreenController = loader.getController();
             
-            loader = App.getFXMLLoader("statMenu.fxml");
+            loader = paneFactory("statMenu");
             statMenuPane = loader.load();
             statMenuController = loader.getController();
             
-            loader = App.getFXMLLoader("PlayerTable.fxml");
+            loader = paneFactory("PlayerTable");
             playerTablePane = loader.load();
             playerTableController = loader.getController();
             
-            loader = App.getFXMLLoader("chart.fxml");
+            loader = paneFactory("chart");
             chartPane = loader.load();
             chartController = loader.getController();
         } catch (IOException ex) {
             ex.printStackTrace();
         }
         
-        searchScreenController.setPaneRight(chartPane);
-        searchScreenController.setPaneLeftUp(playerTablePane);
-        searchScreenController.setPaneLeftDown(statMenuPane);
+        searchScreenController.setRightPane(chartPane);
+        searchScreenController.setLeftPane(playerTablePane);
+        searchScreenController.setFloatingPane(statMenuPane);
         
         addListener();
+    }
+    
+    static FXMLLoader paneFactory(String name){
+        return switch(name){
+            case "SearchScreen" ->    App.getFXMLLoader("SlidingScreen.fxml");
+            case "SearchMenu"   -> App.getFXMLLoader("SearchMenu.fxml");
+            case "PlayerTable"  -> App.getFXMLLoader("PlayerTable.fxml");
+            case "PlayerInfos"  ->App.getFXMLLoader("PlayerInfos.fxml");
+            case "statMenu" -> App.getFXMLLoader("statMenu.fxml");
+            case "chart" ->    App.getFXMLLoader("chart.fxml");
+            default -> null;
+        };
     }
     
     private void addListener(){
@@ -122,7 +135,7 @@ public class StatMenuDriver  implements Driver, SearchObserver<StatData>{
         playerTableController.getPlayerTable().itemsProperty().removeListener(this::tableDatachanged);
         playerTableController.clearListener();
         chartController.clearListener();
-        searchScreenController.clearListener();
+        //searchScreenController.clearListener();
     }
     
     public static Task getLoader(Service service){
@@ -145,7 +158,7 @@ public class StatMenuDriver  implements Driver, SearchObserver<StatData>{
             result.database = serviceName.getDatabase();
             
             try {
-                FXMLLoader loader = App.getFXMLLoader("SearchScreen.fxml");
+                FXMLLoader loader = paneFactory("SearchScreen");
                 result.searchScreenPane = loader.load();
                 result.searchScreenController = loader.getController();
             } catch (IOException ex) {
@@ -156,10 +169,10 @@ public class StatMenuDriver  implements Driver, SearchObserver<StatData>{
             updateProgress(1, 4);
             
             try {
-                FXMLLoader loader = App.getFXMLLoader("statMenu.fxml");
+                FXMLLoader loader = paneFactory("statMenu");
                 result.statMenuPane = loader.load();
                 result.statMenuController = loader.getController();
-                result.searchScreenController.setPaneLeftDown(result.statMenuPane);
+                result.searchScreenController.setFloatingPane(result.statMenuPane);
 
             } catch (IOException ex) {
                 ex.printStackTrace();
@@ -170,10 +183,10 @@ public class StatMenuDriver  implements Driver, SearchObserver<StatData>{
             updateProgress(2, 4);
             
             try {
-                FXMLLoader loader = App.getFXMLLoader("PlayerTable.fxml");
+                FXMLLoader loader = loader = paneFactory("PlayerTable");;
                 result.playerTablePane = loader.load();
                 result.playerTableController = loader.getController();
-                result.searchScreenController.setPaneLeftUp(result.playerTablePane);
+                result.searchScreenController.setLeftPane(result.playerTablePane);
                 
             } catch (IOException ex) {
                 ex.printStackTrace();
@@ -184,10 +197,10 @@ public class StatMenuDriver  implements Driver, SearchObserver<StatData>{
             updateProgress(3, 4);
             
             try {
-                FXMLLoader loader = App.getFXMLLoader("chart.fxml");
+                FXMLLoader loader = paneFactory("chart");
                 result.chartPane = loader.load();
                 result.chartController = loader.getController();
-                result.searchScreenController.setPaneRight(result.chartPane);
+                result.searchScreenController.setRightPane(result.chartPane);
             
             } catch (IOException ex) {
                 ex.printStackTrace();

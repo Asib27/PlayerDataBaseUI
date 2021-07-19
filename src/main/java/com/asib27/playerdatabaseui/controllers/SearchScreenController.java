@@ -23,7 +23,7 @@ import javafx.scene.layout.Pane;
  *
  * @author USER
  */
-public class SearchScreenController implements Initializable {
+public class SearchScreenController implements Initializable, SplitedScreenInt {
     @FXML
     private AnchorPane paneLeftUp;
 
@@ -51,21 +51,25 @@ public class SearchScreenController implements Initializable {
         leftDowntitlePane.expandedProperty().addListener(this::divisionChangeListener);
     }    
 
-    public void setPaneLeftUp(Pane paneLeft) {
+    @Override
+    public void setLeftPane(Pane paneLeft) {
+        this.paneLeftUp.getChildren().add(paneLeft);
+        
         AnchorPane.setRightAnchor(paneLeft, 0.0);
         AnchorPane.setLeftAnchor(paneLeft, 0.0);
         AnchorPane.setTopAnchor(paneLeft, 0.0);
         AnchorPane.setBottomAnchor(paneLeft, 0.0);
         
-        this.paneLeftUp.getChildren().add(paneLeft);
         
     }
 
-    public void setPaneLeftDown(Pane paneLeft) {
-        leftDowntitlePane.setContent(paneLeft);
+    @Override
+     public void setFloatingPane(Pane pane) {
+        leftDowntitlePane.setContent(pane);
     }
 
-    public void setPaneRight(Pane pane) {
+    @Override
+    public void setRightPane(Pane pane) {
         this.paneRight.getChildren().add(pane);
         
         AnchorPane.setRightAnchor(pane, 0.0);
@@ -74,13 +78,6 @@ public class SearchScreenController implements Initializable {
         AnchorPane.setBottomAnchor(pane, 0.0);
     }
 
-    public SplitPane getMainSplitPane() {
-        return mainSplitPane;
-    }
-
-    public SplitPane getLeftSplitPane() {
-        return leftSplitPane;
-    }
     
     private void divisionChangeListener(ObservableValue<? extends Boolean> cl, Boolean ov, Boolean nv){
         if(nv){

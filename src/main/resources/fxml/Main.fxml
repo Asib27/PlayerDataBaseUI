@@ -2,9 +2,10 @@
 
 <?import java.net.*?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.asib27.playerdatabaseui.controllers.MainController">
+<BorderPane id="AnchorPane" prefHeight="425.0" prefWidth="643.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.asib27.playerdatabaseui.controllers.MainController">
     <stylesheets>
         <URL value="@/styles/main.css" />
     </stylesheets>
@@ -52,20 +53,39 @@
    </top>
    
    <center>
-      <TabPane fx:id="tabPane" prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="ALL_TABS" BorderPane.alignment="CENTER">
-        <tabs>
-          <Tab text="New Tab">
-            <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-            </content>
-          </Tab>
-          <Tab fx:id="newTab" closable="false" text="+">
-            <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-            </content>
-          </Tab>
-        </tabs>
-      </TabPane>
+      <StackPane BorderPane.alignment="CENTER">
+         <children>
+            <TabPane fx:id="tabPane" prefHeight="408.0" prefWidth="310.0" tabClosingPolicy="ALL_TABS" visible="true">
+              <tabs>
+                <Tab text="New Tab">
+                  <content>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                  </content>
+                </Tab>
+                <Tab fx:id="newTab" closable="false" text="+">
+                  <content>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                  </content>
+                </Tab>
+              </tabs>
+            </TabPane>
+            <AnchorPane fx:id="sliderMain" prefHeight="408.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" mouseTransparent="true" onMouseClicked="#slideInOut" >
+                     <children>
+                        <AnchorPane fx:id="slider" id="slider" layoutY="-1.0" prefHeight="410.0" prefWidth="200.0" translateX="-300.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" >
+                            <VBox layoutX="6.0" layoutY="35.0" prefHeight="200.0" prefWidth="100.0" spacing="20.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="35.0" >
+                                <Label prefHeight="36" text="Menu"/>
+                                <Label prefHeight="36" text="Profile"/>
+                                <Label prefHeight="36" text="Notifications"/>
+                                <Label prefHeight="36" text="My Club"/>
+                                <Label prefHeight="36" text="Settings"/>
+                                <Label prefHeight="36" text="Back to Home"/>
+                                <Label prefHeight="36" text="Log Out"/>
+                            </VBox>
+                        </AnchorPane>
+                     </children>
+                  </AnchorPane>
+         </children>
+      </StackPane>
    </center>
    
    <bottom>
@@ -74,7 +94,7 @@
             <TextField />
             <Separator orientation="VERTICAL" prefHeight="200.0" />
             
-            <HBox fx:id="progressBox" visible="false" spacing="10.0">
+            <HBox fx:id="progressBox" spacing="10.0" visible="false">
                 <children>
                     <Label fx:id="taskNameLabel" text="Task Name" />
                     <Label fx:id="progressTextLabel" text="Progress Text" />
@@ -88,5 +108,57 @@
          </children>
       </HBox>
    </bottom>
+   
+   <left>
+      <AnchorPane fx:id="sideMenu" prefHeight="345.0" prefWidth="42.0" BorderPane.alignment="CENTER">
+         <children>
+            <VBox alignment="TOP_CENTER" layoutX="2.0" layoutY="40.0" spacing="20" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="40.0">
+               <children>
+                  <ImageView pickOnBounds="true" preserveRatio="true" onMouseClicked="#slideInOut" >
+                     <image>
+                        <Image url="@../image/icons/menu.png" />
+                     </image>
+                  </ImageView>
+                  
+                  <ImageView fitHeight="36.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../image/icons/user.png" />
+                     </image>
+                  </ImageView>
+                  
+                  <ImageView fitHeight="36.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../image/icons/notification.png" />
+                     </image>
+                  </ImageView>
+                  
+                  <ImageView fitHeight="36.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../image/icons/real_madrid.png" />
+                     </image>
+                  </ImageView>
+                  
+                  <ImageView fitHeight="36.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../image/icons/settings.png" />
+                     </image>
+                  </ImageView>
+                  
+                  <ImageView fitHeight="36.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../image/icons/home.png" />
+                     </image>
+                  </ImageView>
+                  
+                  <ImageView fitHeight="36.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../image/icons/exit.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </VBox>
+         </children>
+      </AnchorPane>
+   </left>
    
 </BorderPane>

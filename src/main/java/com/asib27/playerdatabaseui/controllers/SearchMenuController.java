@@ -5,6 +5,7 @@
  */
 package com.asib27.playerdatabaseui.controllers;
 
+import com.asib27.playerdatabaseui.util.ObserverUtil;
 import com.asib27.playerdatabasesystem.Player;
 import com.asib27.playerdatabasesystem.PlayerAttribute;
 import com.asib27.playerdatabasesystem.PlayerDataBase;
@@ -25,7 +26,7 @@ import javafx.scene.layout.*;
  *
  * @author USER
  */
-public class SearchMenuController extends ObserverUtil<Player> implements Initializable {
+public class SearchMenuController extends ObserverUtil<SearchObserver<Player>> implements Initializable {
     @FXML
     private BorderPane borderPane;
 

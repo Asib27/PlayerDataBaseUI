@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.asib27.playerdatabaseui;
+package com.asib27.playerdatabaseui.util;
 
 import com.asib27.playerdatabasesystem.*;
 import java.io.Serializable;
@@ -20,6 +20,10 @@ public class DatabaseManager implements Serializable{
     public DatabaseManager(PlayerDataBaseInt dataBase, Timestamp timestamp) {
         this.dataBase = dataBase;
         this.timestamp = timestamp;
+    }
+    
+    public DatabaseManager(PlayerDataBaseInt dataBase){
+        this.dataBase = dataBase;
     }
 
     public PlayerDataBaseInt getDataBase() {

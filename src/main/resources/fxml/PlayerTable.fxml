@@ -4,12 +4,12 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane  id="AnchorPane" prefHeight="400.0"  styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.asib27.playerdatabaseui.controllers.PlayerTableController">
+<AnchorPane  id="AnchorPane" prefHeight="400.0"  styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.asib27.playerdatabaseui.controllers.PlayerTableController" AnchorPane.rightAnchor="0.0" AnchorPane.leftAnchor="0.0">
     <stylesheets>
         <URL value="@/styles/playertable.css" />
     </stylesheets>
    <children>
-      <TableView fx:id="playerTable"  layoutY="1.0"  AnchorPane.rightAnchor="0.0" >
+      <TableView fx:id="playerTable" AnchorPane.rightAnchor="0.0" AnchorPane.leftAnchor="0.0" >
         
       </TableView>
    </children>
