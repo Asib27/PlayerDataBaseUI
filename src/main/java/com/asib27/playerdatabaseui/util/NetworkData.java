@@ -35,6 +35,7 @@ public class NetworkData implements Serializable{
             case NOTIFICATION-> data instanceof Notification;
             case SELL_REQUEST->data instanceof PlayerTransaction;
             case BUY_REQUEST-> data instanceof PlayerTransaction;
+            case BUY_REQUEST_APPROVED-> data instanceof PlayerTransaction;
         };
     }
     
@@ -45,4 +46,11 @@ public class NetworkData implements Serializable{
     public NetworkDataEnum getDataType() {
         return dataType;
     }
+
+    @Override
+    public String toString() {
+        return dataType + " " + data.toString();
+    }
+    
+    
 }

@@ -5,7 +5,8 @@
  */
 package com.asib27.playerdatabaseui.Server;
 
-import com.asib27.playerdatabasesystem.PlayerDataBaseInt;
+import com.asib27.playerdatabasesystem.Player;
+import com.asib27.playerdatabasesystem.PlayerAttribute;
 import com.asib27.playerdatabaseui.util.DatabaseManager;
 import com.asib27.playerdatabaseui.util.NetworkData;
 import com.asib27.playerdatabaseui.util.NetworkDataEnum;
@@ -22,7 +23,7 @@ import java.util.Scanner;
  *
  * @author USER
  */
-public class Tester {
+public class TesterChelsea {
     static Scanner sc = new Scanner(System.in);
     
     public static void main(String[] args) throws InterruptedException {
@@ -33,7 +34,7 @@ public class Tester {
             loginCheck(nu);
             
             //database reception
-            databaseReciveCheck(nu);
+            DatabaseManager databaseReciveCheck = databaseReciveCheck(nu);
             
             //request validity check
             System.out.println("Not network data test");
@@ -41,43 +42,12 @@ public class Tester {
             NetworkData nd = (NetworkData) nu.read();
             System.out.println(nd.getDataType() + " " + nd.getData());
             
-            System.out.println("Wrong request test");
-            nu.write(new NetworkData(NetworkDataEnum.DATABASE, nd));
-            nd = (NetworkData) nu.read();
-            System.out.println(nd.getDataType() + " " + nd.getData());
-            
-            System.out.println("Login resend test");
-            nu.write(new NetworkData(NetworkDataEnum.LOGIN, nd));
-            nd = (NetworkData) nu.read();
-            System.out.println(nd.getDataType() + " " + nd.getData());
-            
-            //logout check
-            System.out.println("logout\n");
-            nu.write(new NetworkData(NetworkDataEnum.LOGOUT, nd));
-            nd = (NetworkData) nu.read();
-            System.out.println(nd.getDataType() + " " + nd.getData());
-            
-            //login check 2
-            System.out.println("login check 2");
-            loginCheck(nu);
-            databaseReciveCheck(nu);
-            
             while(true){
                 nd = (NetworkData) nu.read();
                 System.out.println(nd.getDataType() + "  ");
                 Notification n = nd.getData();
                 System.out.println(n);
-                
-                if(n.getType() == Notification.Type.BUY_REQUEST){
-                    System.out.println("\n Sending Buy request approval");
-                    PlayerTransaction pt = n.getData();
-                    
-                    nd = new NetworkData(NetworkDataEnum.BUY_REQUEST_APPROVED, pt);
-                    nu.write(nd);
-                }
-                
             }
-            
         } catch (IOException | ClassNotFoundException ex) {
             ex.printStackTrace();
         }
@@ -87,9 +57,9 @@ public class Tester {
     
     static void loginCheck(NetworkUtil nu) throws IOException, ClassNotFoundException{
         System.out.println("User name");
-        String userName = "Liverpool";
+        String userName = "Chelsea";
         System.out.println("pass");
-        String pass = "Liverpool";
+        String pass = "Chelsea";
 
         System.out.println("Sending " + userName + "---/" +  pass +"/");
         NetworkData data = new NetworkData(NetworkDataEnum.LOGIN, new PasswordManager(userName, pass));
@@ -102,12 +72,14 @@ public class Tester {
         System.out.println("Finish login");
     }
     
-    static void databaseReciveCheck(NetworkUtil nu) throws IOException, ClassNotFoundException{
+    static DatabaseManager databaseReciveCheck(NetworkUtil nu) throws IOException, ClassNotFoundException{
         NetworkData read1 = (NetworkData) nu.read();
 
         System.out.println(read1.getDataType());
         DatabaseManager pdb = read1.getData();
 
         System.out.println(Arrays.toString(pdb.getDataBase().getAllRecords()));
+        
+        return pdb;
     }
 }

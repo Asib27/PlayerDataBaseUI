@@ -23,11 +23,14 @@ import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentSkipListSet;
+import java.util.concurrent.locks.ReadWriteLock;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 /**
  *
@@ -35,7 +38,11 @@ import java.util.concurrent.ConcurrentSkipListSet;
  */
 public class ServerMain extends ObserverUtil<UpdateListener> implements ServerInt{
     private PlayerDataBaseInt database;
+    private NotificationStore notificationStore =  new NotificationStore();
+    private UserMaintainer userMaintainer = new UserMaintainer();
     private final String databaseLocation = "src\\main\\resources\\Server\\database.ser";
+    
+    ReadWriteLock databaseLock = new ReentrantReadWriteLock(true);
     
     ConcurrentHashMap<UserInfo, UpdateListener> activeUsers= new ConcurrentHashMap<>();
     ConcurrentSkipListSet<PlayerTransaction> playersOnSell = new ConcurrentSkipListSet<>();
@@ -64,7 +71,12 @@ public class ServerMain extends ObserverUtil<UpdateListener> implements ServerIn
     
     @Override
     public PlayerDataBaseInt getDatabase() {
-        return database;
+        try{
+            databaseLock.readLock().lock();
+            return database;
+        }finally{
+            databaseLock.readLock().unlock();
+        }
     }
 
     @Override
@@ -81,40 +93,74 @@ public class ServerMain extends ObserverUtil<UpdateListener> implements ServerIn
 
     @Override
     public boolean changePlayerInfo(Player oldPlayerInfo, Player newPlayerInfo) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        //check player infos
+        boolean result = false;
+        try{
+            databaseLock.writeLock().lock();
+            if(database.contains(oldPlayerInfo)){
+                database.removeRecord(oldPlayerInfo);
+                database.addRecord(newPlayerInfo);
+                System.out.println("changed");
+                
+                result =  true;
+            }else{
+                result =  false;
+            }
+        }finally{
+            databaseLock.writeLock().unlock();
+        }
+        
+        if(result) updateAll();
+        
+        return result;
     }
 
     @Override
     public void handleNewLogin(UserInfo userInfo, NetworkUtil networkUtil) {
         ServerReadThread serverReadThread = new ServerReadThread(userInfo, networkUtil, this);
-        serverReadThread.run();
-        
         activeUsers.put(userInfo, serverReadThread);
+        userMaintainer.addNewUser(userInfo);
+        addSearchListener(serverReadThread);
+        
+        serverReadThread.run();
     }
 
     @Override
     public void handleLogout(UserInfo info, NetworkUtil networkUtil) {
+        removeSearchListener(activeUsers.get(info));
         activeUsers.remove(info);
+        userMaintainer.removeUser(info);
     }
 
     @Override
     public void send(NetworkData data, UserInfo user) {
+        notificationStore.addNotification(data, user);
         if(user != null){
             UpdateListener listener = activeUsers.get(user);
             listener.send(data);
         }
         else{
+            //System.out.println("Send");
             activeUsers.keySet().forEach((t) -> {
                 activeUsers.get(t).send(data);
             });
         }
     }
     
+    public void send(String clubName, NetworkData data) {
+        notificationStore.addNotification(clubName, data);
+        ArrayList<UserInfo> users = userMaintainer.getUsers(clubName);
+        
+        users.forEach((t) -> {
+            UpdateListener lis = activeUsers.get(t);
+            lis.send(data);
+        });
+    }
+    
     
 
     @Override
     protected void updator(UpdateListener t) {
+        System.out.println("updator called");
         t.update(database);
     }
     
@@ -144,6 +190,29 @@ public class ServerMain extends ObserverUtil<UpdateListener> implements ServerIn
             ex.printStackTrace();
         } catch (IOException ex) {
             ex.printStackTrace();
+        }
+    }
+
+    
+    public class UserMaintainer{
+        Map<String, ArrayList<UserInfo>> users = new HashMap<>();
+        
+        public void addNewUser(UserInfo user){
+            if(users.containsKey(user.getClubName()))
+                users.get(user.getClubName()).add(user);
+            else{
+                ArrayList<UserInfo> arrayList= new ArrayList<>();
+                arrayList.add(user);
+                users.put(user.getClubName(), arrayList);
+            }
+        }
+        
+        public ArrayList<UserInfo> getUsers(String clubName){
+            return users.get(clubName);
+        }
+        
+        public void removeUser(UserInfo user){
+            users.get(user.getClubName()).remove(user);
         }
     }
 }

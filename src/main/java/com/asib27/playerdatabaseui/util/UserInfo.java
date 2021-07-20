@@ -35,7 +35,10 @@ public class UserInfo implements Comparable<UserInfo>{
 
     @Override
     public boolean equals(Object obj) {
-        return userName.equals(obj);
+        if(!(obj instanceof UserInfo))
+            return false;
+        UserInfo info = (UserInfo) obj;
+        return userName.equals(info.userName);
     }
 
     @Override

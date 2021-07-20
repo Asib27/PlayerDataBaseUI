@@ -6,23 +6,42 @@
 package com.asib27.playerdatabaseui.util;
 
 import com.asib27.playerdatabasesystem.Player;
+import java.io.Serializable;
 
 /**
  *
  * @author USER
  */
-public class PlayerTransaction {
+public class PlayerTransaction implements Serializable, Comparable<PlayerTransaction>{
+    private static final long serialVersionUID = 6283043156433381274L;
+    
     private Player player;
     private double price;
+    
+    private String buyer;
+    private String seller;
+
+    public PlayerTransaction(Player player, double price, String buyer) {
+        this(player, buyer);
+        this.price = price;
+    }
+
+    public PlayerTransaction(Player player, String buyer) {
+        this(player);
+        this.buyer = buyer;
+    }
 
     public PlayerTransaction(Player player, double price) {
-        this.player = player;
+        this(player);
         this.price = price;
     }
 
     public PlayerTransaction(Player player) {
         this.player = player;
+        seller = player.getClub();
     }
+    
+    
 
     public Player getPlayer() {
         return player;
@@ -30,6 +49,28 @@ public class PlayerTransaction {
 
     public double getPrice() {
         return price;
+    }
+
+    public String getBuyer() {
+        return buyer;
+    }
+
+    public void setBuyer(String buyer) {
+        this.buyer = buyer;
+    }
+
+    public String getSeller() {
+        return seller;
+    }    
+
+    @Override
+    public int compareTo(PlayerTransaction o) {
+        return player.compareTo(o.player);
+    }
+
+    @Override
+    public String toString() {
+        return player.toString() + " " + String.valueOf(price);
     }
     
     

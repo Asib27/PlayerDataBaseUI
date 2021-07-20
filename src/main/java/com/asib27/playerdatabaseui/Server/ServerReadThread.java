@@ -114,6 +114,7 @@ public class ServerReadThread implements Runnable, UpdateListener{
             case LOGOUT-> processLogout();
             case SELL_REQUEST-> processSellRequest(nd.getData());
             case BUY_REQUEST-> processBuyRequest(nd.getData());
+            case BUY_REQUEST_APPROVED-> processBuyRequestApprover(nd.getData());
         }
     }
 
@@ -126,6 +127,7 @@ public class ServerReadThread implements Runnable, UpdateListener{
     @Override
     public void send(NetworkData networkData) {
         try {
+            System.out.println("sent to" + userInfo.getUserName());
             networkUtil.write(networkData);
         } catch (IOException ex) {
             ex.printStackTrace();
@@ -135,6 +137,7 @@ public class ServerReadThread implements Runnable, UpdateListener{
     private void processSellRequest(PlayerTransaction pt) throws IOException {
         Player player = pt.getPlayer();
         
+        System.out.println(player);
         if(!database.contains(player)){
             writeErrorMessage("Player with sell request does not exist");
         }
@@ -144,7 +147,7 @@ public class ServerReadThread implements Runnable, UpdateListener{
         
         else{
             server.addPlayerOnSell(pt);
-            String message = pt.getPlayer().getClub() + "wants to sell player";
+            String message = pt.getPlayer().getClub() + " wants to sell " + player.getName();
             Notification notification = new Notification(Notification.Type.SELL_REQUEST, message, pt);
 
             NetworkData nd = new NetworkData(NetworkDataEnum.NOTIFICATION, notification);
@@ -153,7 +156,57 @@ public class ServerReadThread implements Runnable, UpdateListener{
         
     }
 
-    private void processBuyRequest(PlayerTransaction pt) {
-        Set<PlayerTransaction> playerOnSell = server.getPlayerOnSell();
+    private void processBuyRequest(PlayerTransaction pt) throws IOException {
+        Player player = pt.getPlayer();
+        
+        if(!database.contains(player)){
+            writeErrorMessage("PLayer info changed or does not belongs");
+            return ;
+        }
+        
+        if(pt.getBuyer() == null)
+            pt.setBuyer(userInfo.getClubName());
+        
+        String clubname = player.getClub();
+        
+        String message = pt.getBuyer() + " wants to buy " + player.getName();
+        Notification notification = new Notification(Notification.Type.BUY_REQUEST, message, pt);
+        
+        NetworkData data = new NetworkData(NetworkDataEnum.NOTIFICATION, notification);
+        server.send(clubname, data);
+    }
+
+    private void processBuyRequestApprover(PlayerTransaction pt) throws IOException {
+        String buyer = pt.getBuyer();
+        
+        if(buyer == null){
+            writeErrorMessage("Sell request approval does not contain buyer name");
+            return ;
+        }
+        
+        Player oldPlayer = pt.getPlayer();
+        if(!oldPlayer.getClub().equals(userInfo.getClubName())){
+            writeErrorMessage("Request to sell player of other club");
+            return ;
+        }
+        
+        Player newPlayer = new Player(oldPlayer);
+        newPlayer.setClub(buyer);
+        boolean changePlayerInfo = server.changePlayerInfo(oldPlayer, newPlayer);
+        if(changePlayerInfo){
+            String message = "Player sold from " + pt.getSeller() + " to " + pt.getBuyer();
+            Notification notification1 = new Notification(Notification.Type.BUY_SECCESS, message, pt);
+            Notification notification2 = new Notification(Notification.Type.SELL_SUCCEED, message, pt);
+            
+            NetworkData nd1 = new NetworkData(NetworkDataEnum.NOTIFICATION, notification1);
+            NetworkData nd2 = new NetworkData(NetworkDataEnum.NOTIFICATION, notification2);
+            
+            server.send(buyer, nd1);
+            networkUtil.write(nd2);
+        }
+        else{
+            writeErrorMessage("Some Error Occured, Player not selled");
+        }
     }
 }
+

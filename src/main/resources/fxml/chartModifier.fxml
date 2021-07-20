@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.asib27.playerdatabaseui.controllers.ChartModifierController">
+    <stylesheets>
+        <URL value="@/styles/chartmodifier.css" />
+    </stylesheets>
+   <children>
+      <TabPane prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" tabMinWidth="260.0">
+        <tabs>
+          <Tab text="Setup">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="250.0" prefHeight="0.0" prefWidth="250.0">
+                     <children>
+                        <ScrollPane layoutX="7.0" layoutY="7.0" prefHeight="367.0" prefWidth="593.0">
+                          <content>
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="353.0" prefWidth="578.0">
+                                 <children>
+                                    <VBox alignment="TOP_CENTER" layoutX="2.0" layoutY="-2.0" prefHeight="357.0" prefWidth="576.0" spacing="20.0">
+                                       <children>
+                                          <Label text="Chart Type" />
+                                          <ComboBox prefWidth="150.0" />
+                                       </children>
+                                    </VBox>
+                                 </children>
+                              </AnchorPane>
+                          </content>
+                        </ScrollPane>
+                     </children></AnchorPane>
+            </content>
+          </Tab>
+          <Tab text="Customise">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="250.0" prefHeight="0.0" prefWidth="250.0">
+                     <children>
+                        <ScrollPane prefHeight="373.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <content>
+                              <Accordion prefHeight="368.0" prefWidth="599.0">
+                                <panes>
+                                  <TitledPane animated="false" text="Chart Style">
+                                    <content>
+                                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                                    </content>
+                                  </TitledPane>
+                                  <TitledPane animated="false" text="Chart and Axis title">
+                                    <content>
+                                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                                    </content>
+                                  </TitledPane>
+                                  <TitledPane animated="false" text="Series">
+                                    <content>
+                                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                                    </content>
+                                  </TitledPane>
+                                    <TitledPane animated="false" layoutX="10.0" layoutY="60.0" text="Legend">
+                                       <content>
+                                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                                       </content>
+                                    </TitledPane>
+                                    <TitledPane animated="false" layoutX="10.0" layoutY="353.0" text="Horizontal Axis">
+                                       <content>
+                                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                                       </content>
+                                    </TitledPane>
+                                    <TitledPane animated="false" layoutX="10.0" layoutY="353.0" text="Vertical Axis">
+                                       <content>
+                                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                                       </content>
+                                    </TitledPane>
+                                    <TitledPane animated="false" layoutX="10.0" layoutY="353.0" text="Gridlines and Ticks">
+                                       <content>
+                                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                                       </content>
+                                    </TitledPane>
+                                </panes>
+                              </Accordion>
+                           </content>
+                        </ScrollPane>
+                     </children></AnchorPane>
+            </content>
+          </Tab>
+        </tabs>
+      </TabPane>
+   </children>
+</AnchorPane>

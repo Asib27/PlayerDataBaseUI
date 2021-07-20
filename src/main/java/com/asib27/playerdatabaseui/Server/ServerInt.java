@@ -7,6 +7,7 @@ package com.asib27.playerdatabaseui.Server;
 
 import com.asib27.playerdatabasesystem.*;
 import com.asib27.playerdatabaseui.util.*;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -21,4 +22,5 @@ public interface ServerInt {
     public void handleNewLogin(UserInfo info, NetworkUtil networkUtil);
     public void handleLogout(UserInfo info, NetworkUtil networkUtil);
     public void send(NetworkData data, UserInfo user);
+    public void send(String clubName, NetworkData data);
 }

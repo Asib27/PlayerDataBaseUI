@@ -11,7 +11,7 @@ package com.asib27.playerdatabaseui.util;
  */
 public enum NetworkDataEnum {
     SUCCESS(false), FAILED(false), LOGIN(true), LOGOUT(true), DATABASE(false),
-    NOTIFICATION(false), SELL_REQUEST(true), BUY_REQUEST(true);
+    NOTIFICATION(false), SELL_REQUEST(true), BUY_REQUEST(true), BUY_REQUEST_APPROVED(true);
     
     private final boolean serverRequest;
 

@@ -125,8 +125,15 @@ public class LoginThread implements Runnable{
         FileOutputStream fos = null;
         ObjectOutputStream oos = null;
         try {
-            PasswordManager pm = new PasswordManager("abc", "qwerty");
-            pass.put(pm.getUsername(), pm.getHash());
+            PasswordManager[] pm = {new PasswordManager("Arsenal", "arsenal"),
+                    new PasswordManager("Liverpool", "Liverpool"),
+                    new PasswordManager("Chelsea", "Chelsea"),
+                    new PasswordManager("Manchester City", "Manchester City"),
+                    new PasswordManager("Manchester United", "Manchester United")
+            };
+            for (PasswordManager pManager : pm) {
+                pass.put(pManager.getUsername(), pManager.getHash());
+            }
             fos = new FileOutputStream(new File("src\\main\\resources\\Server\\ServerPasswords.ser"));
             
             oos = new ObjectOutputStream(fos);
