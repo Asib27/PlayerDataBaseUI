@@ -5,10 +5,7 @@
  */
 package com.asib27.playerdatabaseui.Server;
 
-import com.asib27.playerdatabaseui.util.NetworkData;
-import com.asib27.playerdatabaseui.util.NetworkDataEnum;
-import com.asib27.playerdatabaseui.util.Notification;
-import com.asib27.playerdatabaseui.util.UserInfo;
+import com.asib27.playerdatabaseui.util.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -73,7 +70,8 @@ public class NotificationStore {
     public ArrayList<Notification> getNotification(String clubName){
         ArrayList<Notification> result = new ArrayList<>(allClub);
         
-        result.addAll(clubNotification.get(clubName));
+        if(clubNotification.containsKey(clubName))
+            result.addAll(clubNotification.get(clubName));
         
         return result;
     }

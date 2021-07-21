@@ -16,6 +16,7 @@ import com.asib27.playerdatabaseui.util.PasswordManager;
 import com.asib27.playerdatabaseui.util.PlayerTransaction;
 import java.io.IOException;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
 
@@ -35,6 +36,7 @@ public class TesterChelsea {
             
             //database reception
             DatabaseManager databaseReciveCheck = databaseReciveCheck(nu);
+            notificationReciveCheck(nu);
             
             //request validity check
             System.out.println("Not network data test");
@@ -81,5 +83,14 @@ public class TesterChelsea {
         System.out.println(Arrays.toString(pdb.getDataBase().getAllRecords()));
         
         return pdb;
+    }
+    
+     private static void notificationReciveCheck(NetworkUtil nu) throws IOException, ClassNotFoundException {
+        NetworkData read1 = (NetworkData) nu.read();
+
+        System.out.println(read1.getDataType());
+        ArrayList<Notification> noti = read1.getData();
+
+        System.out.println(noti);
     }
 }

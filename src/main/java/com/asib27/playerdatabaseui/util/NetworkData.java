@@ -8,6 +8,7 @@ package com.asib27.playerdatabaseui.util;
 import com.asib27.playerdatabasesystem.PlayerDataBaseInt;
 import java.io.Serializable;
 import java.net.URI;
+import java.util.ArrayList;
 
 /**
  *
@@ -31,11 +32,14 @@ public class NetworkData implements Serializable{
             case SUCCESS -> data instanceof String;
             case FAILED -> data instanceof String;
             case LOGOUT-> true;
-            case DATABASE-> data instanceof PlayerDataBaseInt;
+            case DATABASE-> data instanceof DatabaseManager;
             case NOTIFICATION-> data instanceof Notification;
             case SELL_REQUEST->data instanceof PlayerTransaction;
             case BUY_REQUEST-> data instanceof PlayerTransaction;
             case BUY_REQUEST_APPROVED-> data instanceof PlayerTransaction;
+            case BUY_REQUEST_DECLINED-> data instanceof PlayerTransaction;
+            case All_NOTIFICATIONS-> data instanceof ArrayList;
+            case LOGIN_SUCCESS, LOGIN_FAILED-> data instanceof String;
         };
     }
     
@@ -49,7 +53,7 @@ public class NetworkData implements Serializable{
 
     @Override
     public String toString() {
-        return dataType + " " + data.toString();
+        return dataType + "\n" + data.toString();
     }
     
     

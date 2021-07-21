@@ -5,6 +5,9 @@
  */
 package com.asib27.playerdatabaseui;
 
+import com.asib27.playerdatabaseui.ControllerHelper.SplitedScreenInt;
+import com.asib27.playerdatabaseui.ControllerHelper.SearchObserver;
+import com.asib27.playerdatabaseui.ControllerHelper.DataProcessHelper;
 import com.asib27.playerdatabaseui.util.DatabaseManager;
 import com.asib27.playerdatabasesystem.*;
 import com.asib27.playerdatabaseui.controllers.*;
@@ -15,6 +18,7 @@ import javafx.beans.value.*;
 import javafx.collections.*;
 import javafx.concurrent.Task;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.chart.Chart;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 
@@ -23,7 +27,7 @@ import javafx.scene.layout.*;
  * @author USER
  */
 
-public class StatMenuDriver  implements Driver, SearchObserver<StatData>{
+public class StatMenuDriver  implements Driver, SearchObserver<StatData>, chartModifyListener{
     private Service service;
     private DatabaseManager database;
     
@@ -86,6 +90,7 @@ public class StatMenuDriver  implements Driver, SearchObserver<StatData>{
     private void addListener(){
         playerTableController.getPlayerTable().itemsProperty().addListener(this::tableDatachanged);
         statMenuController.addSearchListener(this);
+        chartController.addSearchListener(this);
     }
 
     @Override
@@ -132,6 +137,8 @@ public class StatMenuDriver  implements Driver, SearchObserver<StatData>{
 
     @Override
     public void clearListener() {
+        chartController.removeSearchListener(this);
+        
         playerTableController.getPlayerTable().itemsProperty().removeListener(this::tableDatachanged);
         playerTableController.clearListener();
         chartController.clearListener();
@@ -140,6 +147,18 @@ public class StatMenuDriver  implements Driver, SearchObserver<StatData>{
     
     public static Task getLoader(Service service){
         return new StatMenuLoader(service);
+    }
+
+    @Override
+    public void modifyChart(Chart chart) {
+        FXMLLoader fxmlLoader = App.getFXMLLoader("chartModifier.fxml");
+        try {
+            searchScreenController.setLeftPane(fxmlLoader.load());
+            ChartModifierController chartModifierController = fxmlLoader.getController();
+            chartModifierController.setChart(chart);
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
     }
     
     public static class StatMenuLoader extends Task<StatMenuDriver>{

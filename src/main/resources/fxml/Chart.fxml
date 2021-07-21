@@ -17,7 +17,7 @@ AnchorPane.topAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.leftAnchor="0
          <bottom>
             <ToolBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
               <items>
-                <Button mnemonicParsing="false" text="Customise Chart" />
+                <Button mnemonicParsing="false" text="Customise Chart" onAction="#customiseButtonPressed"/>
                 <ComboBox fx:id="selectChartBox" onAction="#selectionChanged"  prefWidth="150.0" promptText="Select Chart Type" />
                 <Button fx:id="downloadButton" mnemonicParsing="false" text="Download Chart" />
               </items>

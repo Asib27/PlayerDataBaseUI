@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.asib27.playerdatabaseui.controllers;
+package com.asib27.playerdatabaseui.ControllerHelper;
 
 import com.asib27.playerdatabaseui.Driver;
 import javafx.concurrent.Task;

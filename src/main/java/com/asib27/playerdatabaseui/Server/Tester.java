@@ -15,6 +15,7 @@ import com.asib27.playerdatabaseui.util.PasswordManager;
 import com.asib27.playerdatabaseui.util.PlayerTransaction;
 import java.io.IOException;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
 
@@ -34,6 +35,7 @@ public class Tester {
             
             //database reception
             databaseReciveCheck(nu);
+            notificationReciveCheck(nu);
             
             //request validity check
             System.out.println("Not network data test");
@@ -61,6 +63,7 @@ public class Tester {
             System.out.println("login check 2");
             loginCheck(nu);
             databaseReciveCheck(nu);
+            notificationReciveCheck(nu);
             
             while(true){
                 nd = (NetworkData) nu.read();
@@ -72,7 +75,7 @@ public class Tester {
                     System.out.println("\n Sending Buy request approval");
                     PlayerTransaction pt = n.getData();
                     
-                    nd = new NetworkData(NetworkDataEnum.BUY_REQUEST_APPROVED, pt);
+                    nd = new NetworkData(NetworkDataEnum.BUY_REQUEST_DECLINED, pt);
                     nu.write(nd);
                 }
                 
@@ -109,5 +112,14 @@ public class Tester {
         DatabaseManager pdb = read1.getData();
 
         System.out.println(Arrays.toString(pdb.getDataBase().getAllRecords()));
+    }
+
+    private static void notificationReciveCheck(NetworkUtil nu) throws IOException, ClassNotFoundException {
+        NetworkData read1 = (NetworkData) nu.read();
+
+        System.out.println(read1.getDataType());
+        ArrayList<Notification> noti = read1.getData();
+
+        System.out.println(noti);
     }
 }

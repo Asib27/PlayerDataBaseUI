@@ -23,4 +23,5 @@ public interface ServerInt {
     public void handleLogout(UserInfo info, NetworkUtil networkUtil);
     public void send(NetworkData data, UserInfo user);
     public void send(String clubName, NetworkData data);
+    public NotificationStore getNotificationStore();
 }

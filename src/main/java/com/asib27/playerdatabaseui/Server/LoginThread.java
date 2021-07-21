@@ -49,7 +49,7 @@ public class LoginThread implements Runnable{
                 Object read = networkUtil.read();
                 
                 if(!(read instanceof NetworkData)){
-                    networkUtil.write(new NetworkData(NetworkDataEnum.FAILED, "Sent object is not NetworkData"));
+                    networkUtil.write(new NetworkData(NetworkDataEnum.LOGIN_FAILED, "Sent object is not NetworkData"));
                     continue;
                 }
                 
@@ -60,27 +60,27 @@ public class LoginThread implements Runnable{
                     int verification = verify(pm);
                     
                     if(verification == 0){
-                        networkUtil.write(new NetworkData(NetworkDataEnum.SUCCESS, "Login Succesful"));
+                        networkUtil.write(new NetworkData(NetworkDataEnum.LOGIN_SUCCESS, "Login Succesful"));
                         server.handleNewLogin(new UserInfo(pm.getUsername(), pm.getUsername()), networkUtil);
                         break;
                     }
                     else if(verification == -1){
-                        networkUtil.write(new NetworkData(NetworkDataEnum.FAILED, "Server Failure"));
+                        networkUtil.write(new NetworkData(NetworkDataEnum.LOGIN_FAILED, "Server Failure"));
                     }
                     else if(verification == 1){
-                        networkUtil.write(new NetworkData(NetworkDataEnum.FAILED, "Wrong Password"));
+                        networkUtil.write(new NetworkData(NetworkDataEnum.LOGIN_FAILED, "Wrong Password"));
                     }
                     else{
-                        networkUtil.write(new NetworkData(NetworkDataEnum.FAILED, "User name didnot match"));
+                        networkUtil.write(new NetworkData(NetworkDataEnum.LOGIN_FAILED, "User name didnot match"));
                     }
                 }
                 
                 else{
                     if(data.getDataType() != NetworkDataEnum.LOGIN){
-                        networkUtil.write(new NetworkData(NetworkDataEnum.FAILED, "Login request Expected"));
+                        networkUtil.write(new NetworkData(NetworkDataEnum.LOGIN_FAILED, "Login request Expected"));
                     }
                     else{
-                        networkUtil.write(new NetworkData(NetworkDataEnum.FAILED, "Login data is not valid"));
+                        networkUtil.write(new NetworkData(NetworkDataEnum.LOGIN_FAILED, "Login data is not valid"));
                     }
                 }
             }catch(EOFException ex){

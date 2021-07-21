@@ -5,6 +5,8 @@
  */
 package com.asib27.playerdatabaseui.controllers;
 
+import com.asib27.playerdatabaseui.ControllerHelper.SearchObserver;
+import com.asib27.playerdatabaseui.ControllerHelper.DataProcessHelper;
 import com.asib27.playerdatabaseui.util.ObserverUtil;
 import com.asib27.playerdatabasesystem.Player;
 import com.asib27.playerdatabasesystem.PlayerAttribute;

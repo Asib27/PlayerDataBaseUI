@@ -8,6 +8,7 @@ package com.asib27.playerdatabaseui.controllers;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.Initializable;
+import javafx.scene.chart.Chart;
 
 /**
  * FXML Controller class
@@ -15,6 +16,7 @@ import javafx.fxml.Initializable;
  * @author USER
  */
 public class ChartModifierController implements Initializable {
+    Chart chart;
 
     /**
      * Initializes the controller class.
@@ -23,5 +25,12 @@ public class ChartModifierController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
     }    
-    
+
+    public Chart getChart() {
+        return chart;
+    }
+
+    public void setChart(Chart chart) {
+        this.chart = chart;
+    }
 }

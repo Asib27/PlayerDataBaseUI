@@ -7,15 +7,10 @@ package com.asib27.playerdatabaseui.Server;
 
 import com.asib27.playerdatabasesystem.Player;
 import com.asib27.playerdatabasesystem.PlayerDataBaseInt;
-import com.asib27.playerdatabaseui.util.DatabaseManager;
-import com.asib27.playerdatabaseui.util.NetworkData;
-import com.asib27.playerdatabaseui.util.NetworkDataEnum;
-import com.asib27.playerdatabaseui.util.NetworkUtil;
-import com.asib27.playerdatabaseui.util.Notification;
-import com.asib27.playerdatabaseui.util.PlayerTransaction;
-import com.asib27.playerdatabaseui.util.UserInfo;
+import com.asib27.playerdatabaseui.util.*;
 import java.io.IOException;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.Set;
 
 /**
@@ -43,6 +38,7 @@ public class ServerReadThread implements Runnable, UpdateListener{
     public void run() {
         try {
             sendDataBase();
+            sendNotifications();
             
             while(true){
                 Object read = networkUtil.read();
@@ -76,6 +72,13 @@ public class ServerReadThread implements Runnable, UpdateListener{
     private void sendDataBase() throws IOException {
         DatabaseManager db = new DatabaseManager(database);
         networkUtil.write(new NetworkData(NetworkDataEnum.DATABASE, db));
+    }
+    
+    private void sendNotifications() throws IOException{
+        NotificationStore ns = server.getNotificationStore();
+        ArrayList<Notification> notifications = ns.getNotification(userInfo);
+        NetworkData nd = new NetworkData(NetworkDataEnum.All_NOTIFICATIONS, notifications);
+        networkUtil.write(nd);
     }
     
     private NetworkData validityCheck(Object read) throws IOException{
@@ -115,6 +118,7 @@ public class ServerReadThread implements Runnable, UpdateListener{
             case SELL_REQUEST-> processSellRequest(nd.getData());
             case BUY_REQUEST-> processBuyRequest(nd.getData());
             case BUY_REQUEST_APPROVED-> processBuyRequestApprover(nd.getData());
+            case BUY_REQUEST_DECLINED-> processBuyRequestDeclined(nd.getData());
         }
     }
 
@@ -207,6 +211,28 @@ public class ServerReadThread implements Runnable, UpdateListener{
         else{
             writeErrorMessage("Some Error Occured, Player not selled");
         }
+    }
+
+    private void processBuyRequestDeclined(PlayerTransaction pt) throws IOException {
+        String buyer = pt.getBuyer();
+        
+        if(buyer == null){
+            writeErrorMessage("Sell request denial does not contain buyer name");
+            return ;
+        }
+        
+        
+        Player player = pt.getPlayer();
+        if(!player.getClub().equals(userInfo.getClubName())){
+            writeErrorMessage("declinig buy request of other");
+            return ;
+        }
+        
+        
+        String message = userInfo.getClubName() + " declined your buy request of " + pt.getPlayer().getName();
+        Notification n = new Notification(Notification.Type.BUY_DECLINED, message, pt);
+        NetworkData nd = new NetworkData(NetworkDataEnum.NOTIFICATION, n);
+        server.send(buyer, nd);
     }
 }
 

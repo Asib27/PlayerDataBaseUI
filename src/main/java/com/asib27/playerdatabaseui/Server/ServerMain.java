@@ -146,6 +146,7 @@ public class ServerMain extends ObserverUtil<UpdateListener> implements ServerIn
         }
     }
     
+    @Override
     public void send(String clubName, NetworkData data) {
         notificationStore.addNotification(clubName, data);
         ArrayList<UserInfo> users = userMaintainer.getUsers(clubName);
@@ -162,6 +163,11 @@ public class ServerMain extends ObserverUtil<UpdateListener> implements ServerIn
     protected void updator(UpdateListener t) {
         System.out.println("updator called");
         t.update(database);
+    }
+
+    @Override
+    public NotificationStore getNotificationStore() {
+        return notificationStore;
     }
     
     

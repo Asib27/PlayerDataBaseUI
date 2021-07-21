@@ -8,6 +8,7 @@ package com.asib27.playerdatabaseui.controllers;
 import com.asib27.playerdatabaseui.StatData;
 import com.asib27.playerdatabasesystem.*;
 import com.asib27.playerdatabaseui.util.ImageUtil;
+import com.asib27.playerdatabaseui.util.ObserverUtil;
 import java.io.File;
 import java.net.URL;
 import java.util.*;
@@ -30,7 +31,7 @@ import javafx.scene.layout.BorderPane;
  *
  * @author USER
  */
-public class ChartController implements Initializable {
+public class ChartController extends ObserverUtil<chartModifyListener> implements Initializable {
     @FXML
     private ComboBox selectChartBox;
     
@@ -68,6 +69,10 @@ public class ChartController implements Initializable {
         chartHelper.setChart();
     }
     
+    @FXML
+    private void customiseButtonPressed(ActionEvent event){
+        updateAll();
+    }
 
     public String getChartType() {
         return chartType.getValue();
@@ -87,6 +92,11 @@ public class ChartController implements Initializable {
 
     public void setChartHelper(ChartHelper chartHelper) {
         this.chartHelper = chartHelper;
+    }
+
+    @Override
+    protected void updator(chartModifyListener t) {
+        t.modifyChart(chart);
     }
     
     public class ChartHelper{

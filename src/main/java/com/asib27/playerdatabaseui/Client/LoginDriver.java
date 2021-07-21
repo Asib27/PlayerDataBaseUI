@@ -3,12 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.asib27.playerdatabaseui.controllers;
+package com.asib27.playerdatabaseui.Client;
+
+import com.asib27.playerdatabaseui.util.PasswordManager;
 
 /**
  *
  * @author USER
  */
-public interface SearchObserver<T> {
-    public void update(DataProcessHelper<T> dataProcessor);
+public interface LoginDriver {
+    public String sendLoginInfo(PasswordManager passwordManager);
 }

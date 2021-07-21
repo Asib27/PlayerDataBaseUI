@@ -5,6 +5,9 @@
  */
 package com.asib27.playerdatabaseui.controllers;
 
+import com.asib27.playerdatabaseui.Client.LoginDriver;
+import com.asib27.playerdatabaseui.Service;
+import com.asib27.playerdatabaseui.util.PasswordManager;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -40,14 +43,25 @@ public class LoginController implements Initializable {
 
     @FXML
     private VBox vboxContainer;
+    
+    @FXML
+    private Label statusLabel;
+    
+    LoginDriver loginDriver;
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+        addListener();
+    }
+    
+    public void addListener(){
         clubnameBox.prefWidthProperty().bind(vboxContainer.widthProperty().divide(2));
         passwordBox.prefWidthProperty().bind(vboxContainer.widthProperty().divide(2));
+        
+        loginButton.disableProperty().bind(clubnameBox.textProperty().isEmpty().or(passwordBox.textProperty().isEmpty()));
     }
 
     public void initialize(){
@@ -56,6 +70,25 @@ public class LoginController implements Initializable {
     
     @FXML
     void loginButtonPressed(ActionEvent event) {
+        PasswordManager pm = new PasswordManager(clubnameBox.getText(), passwordBox.getText());
         
+        if(loginDriver == null){
+            statusLabel.setText("Error occured : Login Driver is not set");
+        }
+        else{
+            String msg = loginDriver.sendLoginInfo(pm);
+            if(msg != null) statusLabel.setText(msg);
+            else statusLabel.setText("Waiting for server response");
+        }
     }
+    
+    public void setStatus(String msg){
+        statusLabel.setText(msg);
+    }
+
+    public void setLoginDriver(LoginDriver loginDriver) {
+        this.loginDriver = loginDriver;
+    }
+    
+    
 }

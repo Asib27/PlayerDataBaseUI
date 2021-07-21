@@ -60,6 +60,6 @@ public class Notification implements Serializable{
     
     
     public enum Type{
-        MESSAGE, BUY_REQUEST, SELL_SUCCEED, SELL_REQUEST, BUY_SECCESS;
+        MESSAGE, BUY_REQUEST, SELL_SUCCEED, SELL_REQUEST, BUY_SECCESS, BUY_DECLINED;
     }
 }

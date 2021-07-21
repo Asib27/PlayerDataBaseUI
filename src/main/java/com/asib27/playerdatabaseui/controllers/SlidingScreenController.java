@@ -5,6 +5,7 @@
  */
 package com.asib27.playerdatabaseui.controllers;
 
+import com.asib27.playerdatabaseui.ControllerHelper.SplitedScreenInt;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.animation.TranslateTransition;

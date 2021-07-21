@@ -2,12 +2,19 @@
 
 <?import java.net.*?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.asib27.playerdatabaseui.controllers.ChartModifierController">
+<AnchorPane  id="AnchorPane" prefHeight="400.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.asib27.playerdatabaseui.controllers.ChartModifierController">
     <stylesheets>
         <URL value="@/styles/chartmodifier.css" />
     </stylesheets>
+    
+    <fx:define>
+        <Double fx:id="imageWidth" fx:value="20" />
+        <Double fx:id="imageHeight" fx:value="20" />
+    </fx:define>
+    
    <children>
       <TabPane prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" tabMinWidth="260.0">
         <tabs>
@@ -36,43 +43,280 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="250.0" prefHeight="0.0" prefWidth="250.0">
                      <children>
-                        <ScrollPane prefHeight="373.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <ScrollPane hbarPolicy="NEVER" prefHeight="373.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <content>
                               <Accordion prefHeight="368.0" prefWidth="599.0">
                                 <panes>
                                   <TitledPane animated="false" text="Chart Style">
                                     <content>
-                                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                             <children>
+                                                <GridPane layoutX="186.0" layoutY="23.0">
+                                                  <columnConstraints>
+                                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                  </columnConstraints>
+                                                  <rowConstraints>
+                                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                  </rowConstraints>
+                                                   <children>
+                                                      <Label text="Background Color" />
+                                                      <Label text="Font" GridPane.rowIndex="1" />
+                                                      <Label text="Chart Border Color" GridPane.rowIndex="2" />
+                                                      <ColorPicker GridPane.columnIndex="1" />
+                                                      <ColorPicker GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                                      <ComboBox prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                                   </children>
+                                                </GridPane>
+                                             </children></AnchorPane>
                                     </content>
                                   </TitledPane>
                                   <TitledPane animated="false" text="Chart and Axis title">
                                     <content>
-                                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                             <children>
+                                                <GridPane layoutX="187.0" layoutY="43.0">
+                                                  <columnConstraints>
+                                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                  </columnConstraints>
+                                                  <rowConstraints>
+                                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                  </rowConstraints>
+                                                   <children>
+                                                      <Label text="Title Text" />
+                                                      <Label text="Title Font" GridPane.rowIndex="1" />
+                                                      <Label text="Title Font Size" GridPane.rowIndex="2" />
+                                                      <Label text="Title Format" GridPane.rowIndex="3" />
+                                                      <Label text="Title Text Color" GridPane.rowIndex="4" />
+                                                      <TextField GridPane.columnIndex="1" />
+                                                      <ComboBox prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                                      <ComboBox prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                                      <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                                                         <children>
+                                                            <ToggleButton contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" text="Bold">
+                                                               <graphic>
+                                                                  <ImageView fitHeight="$imageHeight" fitWidth="$imageWidth" pickOnBounds="true" preserveRatio="true">
+                                                                     <image>
+                                                                        <Image url="@../image/others/bold.png" />
+                                                                     </image>
+                                                                  </ImageView>
+                                                               </graphic>
+                                                            </ToggleButton>
+                                                            <ToggleButton contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" text="Italic">
+                                                               <graphic>
+                                                                  <ImageView fitHeight="$imageHeight" fitWidth="$imageWidth" pickOnBounds="true" preserveRatio="true">
+                                                                     <image>
+                                                                        <Image url="@../image/others/italic.png" />
+                                                                     </image>
+                                                                  </ImageView>
+                                                               </graphic>
+                                                            </ToggleButton>
+                                                         </children>
+                                                      </HBox>
+                                                      <ColorPicker GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                                   </children>
+                                                </GridPane>
+                                                <ComboBox layoutX="187.0" layoutY="14.0" prefWidth="150.0" />
+                                             </children></AnchorPane>
                                     </content>
                                   </TitledPane>
                                   <TitledPane animated="false" text="Series">
                                     <content>
-                                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="400.0" prefWidth="599.0">
+                                             <children>
+                                                <ComboBox layoutX="14.0" layoutY="14.0" prefWidth="150.0" />
+                                                <GridPane layoutX="199.0" layoutY="6.0" prefHeight="182.0" prefWidth="211.0">
+                                                  <columnConstraints>
+                                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                  </columnConstraints>
+                                                  <rowConstraints>
+                                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                  </rowConstraints>
+                                                   <children>
+                                                      <Label text="Fill Color" />
+                                                      <Label text="Fill Opacity" GridPane.rowIndex="1" />
+                                                      <Label text="Line Color" GridPane.rowIndex="2" />
+                                                      <Label text="Line Opacity" GridPane.rowIndex="3" />
+                                                      <Label text="Line Dash Type" GridPane.rowIndex="4" />
+                                                      <Label text="Line Thikness" GridPane.rowIndex="5" />
+                                                      <ColorPicker GridPane.columnIndex="1" />
+                                                      <ColorPicker GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                                      <ComboBox prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                                      <ComboBox prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                                      <ComboBox prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                                      <ComboBox prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                                                   </children>
+                                                </GridPane>
+                                             </children></AnchorPane>
                                     </content>
                                   </TitledPane>
                                     <TitledPane animated="false" layoutX="10.0" layoutY="60.0" text="Legend">
                                        <content>
-                                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                             <children>
+                                                <GridPane layoutX="190.0" layoutY="24.0">
+                                                  <columnConstraints>
+                                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                  </columnConstraints>
+                                                  <rowConstraints>
+                                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                  </rowConstraints>
+                                                   <children>
+                                                      <Label text="Legend Position" />
+                                                      <Label text="Lagend Font " GridPane.rowIndex="1" />
+                                                      <Label text="Legend Font Size" GridPane.rowIndex="2" />
+                                                      <Label text="Legend Format" GridPane.rowIndex="3" />
+                                                      <Label text="Text Color" GridPane.rowIndex="4" />
+                                                      <ComboBox prefWidth="150.0" GridPane.columnIndex="1" />
+                                                      <ComboBox prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                                      <ComboBox prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                                      <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                                                         <children>
+                                                            <CheckBox mnemonicParsing="false" text="Bold" />
+                                                            <CheckBox mnemonicParsing="false" text="Italic" />
+                                                         </children>
+                                                      </HBox>
+                                                      <ColorPicker GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                                   </children>
+                                                </GridPane>
+                                             </children></AnchorPane>
                                        </content>
                                     </TitledPane>
                                     <TitledPane animated="false" layoutX="10.0" layoutY="353.0" text="Horizontal Axis">
                                        <content>
-                                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                             <children>
+                                                <GridPane layoutX="199.0" layoutY="14.0">
+                                                  <columnConstraints>
+                                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                  </columnConstraints>
+                                                  <rowConstraints>
+                                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                  </rowConstraints>
+                                                   <children>
+                                                      <Label text="Label Font" />
+                                                      <Label text="Label Font Size" GridPane.rowIndex="1" />
+                                                      <Label text="Label Fotmat" GridPane.rowIndex="2" />
+                                                      <Label text="Text Color" GridPane.rowIndex="3" />
+                                                      <ComboBox prefWidth="150.0" GridPane.columnIndex="1" />
+                                                      <ComboBox prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                                      <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                                         <children>
+                                                            <CheckBox mnemonicParsing="false" text="Bold" />
+                                                            <CheckBox mnemonicParsing="false" text="Italic" />
+                                                         </children>
+                                                      </HBox>
+                                                      <ColorPicker GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                                   </children>
+                                                </GridPane>
+                                                <CheckBox layoutX="199.0" layoutY="152.0" mnemonicParsing="false" text="Reverse Axis Order" />
+                                             </children></AnchorPane>
                                        </content>
                                     </TitledPane>
                                     <TitledPane animated="false" layoutX="10.0" layoutY="353.0" text="Vertical Axis">
                                        <content>
-                                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                             <children>
+                                                <GridPane layoutX="179.0" layoutY="5.0" prefHeight="189.0" prefWidth="207.0">
+                                                  <columnConstraints>
+                                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                  </columnConstraints>
+                                                  <rowConstraints>
+                                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                  </rowConstraints>
+                                                   <children>
+                                                      <Label text="Label Font" />
+                                                      <Label text="Font size" GridPane.rowIndex="1" />
+                                                      <Label text="Label Format" GridPane.rowIndex="2" />
+                                                      <Label text="Text Color" GridPane.rowIndex="3" />
+                                                      <Label text="Data Range" GridPane.rowIndex="4" />
+                                                      <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                                         <children>
+                                                            <CheckBox mnemonicParsing="false" text="Bold" />
+                                                            <CheckBox mnemonicParsing="false" text="Italic" />
+                                                         </children>
+                                                      </HBox>
+                                                      <HBox prefHeight="100.0" prefWidth="200.0" spacing="10.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                                                         <children>
+                                                            <TextField promptText="Min" />
+                                                            <TextField promptText="Max" />
+                                                         </children>
+                                                      </HBox>
+                                                      <Label text="Scale Factor" GridPane.rowIndex="5" />
+                                                      <Label text="Number Format" GridPane.rowIndex="6" />
+                                                      <ComboBox prefWidth="150.0" GridPane.columnIndex="1" />
+                                                      <ComboBox prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                                      <ComboBox prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                                                      <ComboBox prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                                                      <ColorPicker GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                                   </children>
+                                                </GridPane>
+                                                <CheckBox layoutX="468.0" layoutY="49.0" mnemonicParsing="false" text="Show Axis Line" />
+                                                <CheckBox layoutX="457.0" layoutY="88.0" mnemonicParsing="false" text="Logarithmic Scale" />
+                                             </children></AnchorPane>
                                        </content>
                                     </TitledPane>
                                     <TitledPane animated="false" layoutX="10.0" layoutY="353.0" text="Gridlines and Ticks">
                                        <content>
-                                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                             <children>
+                                                <ComboBox layoutX="196.0" layoutY="14.0" prefWidth="150.0" />
+                                                <GridPane layoutX="32.0" layoutY="47.0" prefHeight="127.0" prefWidth="227.0">
+                                                  <columnConstraints>
+                                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                  </columnConstraints>
+                                                  <rowConstraints>
+                                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                  </rowConstraints>
+                                                   <children>
+                                                      <Label text="Major Spacing Type" />
+                                                      <Label text="Major Step" GridPane.rowIndex="1" />
+                                                      <Label text="Minor Spacing Type" GridPane.rowIndex="2" />
+                                                      <Label text="Minor Step" GridPane.rowIndex="3" />
+                                                      <ComboBox prefWidth="150.0" GridPane.columnIndex="1" />
+                                                      <ComboBox prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                                      <ComboBox prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                                      <ComboBox prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                                   </children>
+                                                </GridPane>
+                                                <CheckBox layoutX="409.0" layoutY="63.0" mnemonicParsing="false" text="Major Gridlin" />
+                                                <CheckBox layoutX="409.0" layoutY="96.0" mnemonicParsing="false" text="Minor Gridline" />
+                                                <CheckBox layoutX="409.0" layoutY="122.0" mnemonicParsing="false" text="Major Ticks" />
+                                                <CheckBox layoutX="416.0" layoutY="151.0" mnemonicParsing="false" text="Minor TIcks" />
+                                             </children></AnchorPane>
                                        </content>
                                     </TitledPane>
                                 </panes>

@@ -5,14 +5,12 @@
  */
 package com.asib27.playerdatabaseui.controllers;
 
-import javafx.scene.layout.Pane;
+import javafx.scene.chart.Chart;
 
 /**
  *
  * @author USER
  */
-public interface SplitedScreenInt {
-    public void setLeftPane(Pane pane);
-    public void setRightPane(Pane pane);
-    public void setFloatingPane(Pane pane);
+public interface chartModifyListener {
+    public void modifyChart(Chart chart);
 }

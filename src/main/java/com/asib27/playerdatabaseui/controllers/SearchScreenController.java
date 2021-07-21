@@ -5,6 +5,7 @@
  */
 package com.asib27.playerdatabaseui.controllers;
 
+import com.asib27.playerdatabaseui.ControllerHelper.SplitedScreenInt;
 import com.asib27.playerdatabaseui.App;
 import java.io.IOException;
 import java.net.URL;
