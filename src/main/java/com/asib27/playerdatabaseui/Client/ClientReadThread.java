@@ -5,12 +5,15 @@
  */
 package com.asib27.playerdatabaseui.Client;
 
+import com.asib27.playerdatabasesystem.PlayerAttribute;
+import com.asib27.playerdatabaseui.util.DatabaseManager;
 import com.asib27.playerdatabaseui.util.NetworkData;
 import com.asib27.playerdatabaseui.util.NetworkDataEnum;
 import com.asib27.playerdatabaseui.util.NetworkUtil;
 import com.asib27.playerdatabaseui.util.Notification;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.concurrent.BlockingQueue;
 
 /**
@@ -45,9 +48,12 @@ public class ClientReadThread implements Runnable{
             case LOGIN_FAILED-> client.takeLoginResponse(false, nd.getData());
             case SUCCESS-> client.takeErrorMessage(nd.getData());
             case FAILED -> client.takeErrorMessage(nd.getData());
-            case DATABASE-> client.takeDatabase(nd.getData());
+            case DATABASE-> {
+                client.takeDatabase(nd.getData());
+            }
             case NOTIFICATION->client.takeNotifications((Notification)nd.getData());
             case All_NOTIFICATIONS-> client.takeNotifications((ArrayList<Notification>) nd.getData());
+            case PLAYER_ON_SELL-> client.takePlayerOnSell(nd.getData());
         }
     }
     

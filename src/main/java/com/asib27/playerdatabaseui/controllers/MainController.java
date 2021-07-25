@@ -6,22 +6,29 @@
 package com.asib27.playerdatabaseui.controllers;
 
 import com.asib27.playerdatabaseui.ControllerHelper.MainControlDriverInt;
-import com.asib27.playerdatabaseui.Driver;
-import com.asib27.playerdatabaseui.MainDriver;
-import com.asib27.playerdatabaseui.Service;
+import com.asib27.playerdatabaseui.Drivers.Driver;
+import com.asib27.playerdatabaseui.Drivers.SellMenuDriver;
+import com.asib27.playerdatabaseui.MyTab;
+import com.asib27.playerdatabaseui.NotificationBox;
+import com.asib27.playerdatabaseui.util.DatabaseManager;
+import com.asib27.playerdatabaseui.util.Notification;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
+import java.util.Stack;
 import javafx.animation.TranslateTransition;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
-import javafx.concurrent.Worker;
 import javafx.event.ActionEvent;
+import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.*;
+import javafx.scene.effect.Glow;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Background;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -54,7 +61,24 @@ public class MainController implements Initializable {
     @FXML
     private AnchorPane slider, sideMenu, sliderMain;
     
+    @FXML
+    private Button backButton, forwardButton;
+    
+    @FXML
+    private VBox menuLableBox;
+    
+    @FXML
+    private AnchorPane saticMessageBox;
+
+    @FXML
+    private AnchorPane slidingMessageBox;
+    
+    private ObservableList<Node> menuLabels;
+    private ObservableList<Node> notificationLabels;
     private MainControlDriverInt driver;
+    DatabaseManager databaseManager;
+    String currentSliderContent = "menu label";
+    private boolean isSliderOut = false;
     /**
      * Initializes the controller class.
      */
@@ -62,6 +86,23 @@ public class MainController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+        MyTab tab = new MyTab("New Tab");
+        tabPane.getTabs().remove(0);
+        tabPane.getTabs().add(0, tab);
+        tabPane.getSelectionModel().select(tab);
+        
+        bindButtons(tab);
+        tabPane.getSelectionModel().selectedItemProperty().addListener((obs, ov, nv) -> {
+            if(nv instanceof MyTab){
+                MyTab myTab = (MyTab) nv;
+                bindButtons(myTab);
+                myTab.update(databaseManager);
+            }
+        });
+        
+        menuLableBox.addEventHandler(EventType.ROOT, (t) -> {
+            t.consume();
+        });
     }
 
     
@@ -77,17 +118,39 @@ public class MainController implements Initializable {
     }
     
     @FXML
+    private void openBuyMenu(ActionEvent av){
+        menuOpenHelper("Buy");
+    }
+    
+    @FXML
+    private void openSellMenu(){
+        menuOpenHelper("Sell");
+    }
+    
+    @FXML
     private void slideInOut(MouseEvent me){
         TranslateTransition tt = new TranslateTransition(Duration.millis(500), slider);
         
-        if(slider.getTranslateX() == 0){ //slide out
-            tt.setByX(-300);
+        if(isSliderOut){ //slide out
+            isSliderOut = false;
+            
+            tt.setToX(-300);
             sideMenu.setStyle("-fx-background-color : white;");
             sliderMain.setMouseTransparent(true);
             tabPane.setOpacity(1);
+            
+            if(!currentSliderContent.equals("menu label")){
+                tt.setOnFinished((t) -> {
+                    menuLableBox.getChildren().removeAll(notificationLabels);
+                    menuLableBox.getChildren().addAll(menuLabels);   
+                    currentSliderContent = "menu label";
+                });
+            }
         }
         else{ //slide in
-            tt.setByX(300);
+            isSliderOut = true;
+            
+            tt.setToX(0);
             //sideMenu.setStyle("-fx-background-color : yellow;");
             sliderMain.setMouseTransparent(false);
             tabPane.setOpacity(.7);
@@ -96,11 +159,16 @@ public class MainController implements Initializable {
         tt.play();
     }
     
+    @FXML
+    private void homeButtonClicked(MouseEvent me){
+        setContent(driver.GuiDriverFactory("Intro"));
+    }
+    
     private void menuOpenHelper(String name){
         Task<Driver> guiDriver = this.driver.taskFactory(name);
         
         guiDriver.setOnSucceeded((t) -> {
-            setContent(guiDriver.getValue().getGuiPane());
+            setContent(guiDriver.getValue());
         });
         
         setProgressBoxTask(guiDriver);
@@ -109,12 +177,15 @@ public class MainController implements Initializable {
     public void setMainDriver(MainControlDriverInt mainDriver) {
         this.driver = mainDriver;
         
-        tabPane.getTabs().get(0).setContent(mainDriver.GuiDriverFactory("Intro").getGuiPane());
+        MyTab myTab = (MyTab) tabPane.getTabs().get(0);
+        myTab.setContent(driver.GuiDriverFactory("Intro"));
         
         newTab.setOnSelectionChanged((t) -> {
             ObservableList<Tab> tabs = tabPane.getTabs();
-            Tab tab = new Tab("New Tab");
-            tab.setContent(mainDriver.GuiDriverFactory("Intro").getGuiPane());
+            MyTab tab = new MyTab("New Tab");
+            
+            tab.setContent(mainDriver.GuiDriverFactory("Intro"));
+            
             int index = tabs.size()-1;
             tabs.add(index, tab);
             tabPane.getSelectionModel().selectPrevious();
@@ -123,7 +194,6 @@ public class MainController implements Initializable {
     }
     
     public void setProgressBoxTask(Task worker){
-        
         progressBar.progressProperty().bind(worker.progressProperty());
         taskNameLabel.textProperty().bind(worker.titleProperty());
         progressTextLabel.textProperty().bind(worker.messageProperty());
@@ -133,15 +203,19 @@ public class MainController implements Initializable {
         bgThread.start();
     }
     
-    public void setContent(Pane pane){
-        tabPane.getSelectionModel().getSelectedItem().setContent(pane);
+    public void setContent(Driver driver){
+        MyTab selected = (MyTab) tabPane.getSelectionModel().getSelectedItem();
+        selected.setText(driver.getDriverName());
+        selected.setContent(driver);;
     }
     
-    public void setContent(int index, Pane pane){
+    public void setContent(int index, Driver driver){
         ObservableList<Tab> tabs = tabPane.getTabs();
         
         if(index < tabs.size() -1){
-            tabs.get(index).setContent(pane);
+            MyTab tab = (MyTab) tabs.get(index);
+            tab.setText(driver.getDriverName());
+            tab.setContent(driver);
         }
     }
     
@@ -149,5 +223,82 @@ public class MainController implements Initializable {
         progressBar.progressProperty().unbind();
         taskNameLabel.textProperty().unbind();
         progressTextLabel.textProperty().unbind();
+    }
+
+    public TabPane getTabPane() {
+        return tabPane;
+    }
+    
+    @FXML
+    public void backButtonPressed(ActionEvent e){
+        MyTab selected = (MyTab)tabPane.getSelectionModel().getSelectedItem();
+        selected.back();
+    }
+    
+    @FXML
+    public void forwardButtonPressed(ActionEvent e){
+        MyTab selected = (MyTab)tabPane.getSelectionModel().getSelectedItem();
+        selected.forward();
+    }
+    
+    
+    private void bindButtons(MyTab tab){
+        backButton.disableProperty().bind(tab.BackExistsProperty().not());
+        forwardButton.disableProperty().bind(tab.ForwardExistsProperty().not());
+    }
+    
+    public void update(DatabaseManager manager){
+        databaseManager = manager;
+        
+        Tab selectedItem = tabPane.getSelectionModel().getSelectedItem();
+        if(selectedItem instanceof MyTab){
+            MyTab myTab = (MyTab) selectedItem;
+            myTab.update(manager);
+        }
+    }
+    
+    @FXML
+    private void notificationsButtonCLicked(){
+        if(!currentSliderContent.equals("Notifications")){
+            ArrayList<Notification> notifications = driver.getNotifications();
+            
+            Label label = new Label("Notifications");
+            notificationLabels = FXCollections.observableArrayList(label);
+
+            notifications.forEach((t) -> {
+                NotificationBox box = new NotificationBox(t, driver.getService());
+                notificationLabels.add(box);
+            });
+
+            menuLabels = FXCollections.observableArrayList(menuLableBox.getChildren());
+        }
+        
+        if(!currentSliderContent.equals("Notifications")){
+            menuLableBox.getChildren().removeAll(menuLabels);
+            menuLableBox.getChildren().addAll(notificationLabels);
+            currentSliderContent = "Notifications";
+        }
+        
+        if(!isSliderOut)
+            slideInOut(null);
+    }
+    
+    public void setSlidingMessagePane(Pane pane){
+        slidingMessageBox.setTranslateX(-300.0);
+        slidingMessageBox.getChildren().add(pane);
+        
+        AnchorPane.setBottomAnchor(pane, 0.0);
+        AnchorPane.setTopAnchor(pane, 0.0);
+        AnchorPane.setLeftAnchor(pane, 0.0);
+        AnchorPane.setBottomAnchor(pane, 0.0);
+        
+        slideIn(slidingMessageBox);;
+    }
+    
+    public void slideIn(AnchorPane ap){
+        TranslateTransition tt = new TranslateTransition(Duration.millis(300), ap);
+        
+        tt.setToX(0);
+        tt.play();
     }
 }

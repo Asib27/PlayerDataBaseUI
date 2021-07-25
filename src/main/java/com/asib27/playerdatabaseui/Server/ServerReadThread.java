@@ -6,11 +6,13 @@
 package com.asib27.playerdatabaseui.Server;
 
 import com.asib27.playerdatabasesystem.Player;
+import com.asib27.playerdatabasesystem.PlayerAttribute;
 import com.asib27.playerdatabasesystem.PlayerDataBaseInt;
 import com.asib27.playerdatabaseui.util.*;
 import java.io.IOException;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Set;
 
 /**
@@ -39,6 +41,7 @@ public class ServerReadThread implements Runnable, UpdateListener{
         try {
             sendDataBase();
             sendNotifications();
+            sendPlayersOnSell();
             
             while(true){
                 Object read = networkUtil.read();
@@ -61,7 +64,6 @@ public class ServerReadThread implements Runnable, UpdateListener{
     public void update(PlayerDataBaseInt database) {
         this.database = database;
         NetworkData nd = new NetworkData(NetworkDataEnum.DATABASE, new DatabaseManager(database));
-        
         try {
             networkUtil.write(nd);
         } catch (IOException ex) {
@@ -131,7 +133,6 @@ public class ServerReadThread implements Runnable, UpdateListener{
     @Override
     public void send(NetworkData networkData) {
         try {
-            System.out.println("sent to" + userInfo.getUserName());
             networkUtil.write(networkData);
         } catch (IOException ex) {
             ex.printStackTrace();
@@ -141,7 +142,6 @@ public class ServerReadThread implements Runnable, UpdateListener{
     private void processSellRequest(PlayerTransaction pt) throws IOException {
         Player player = pt.getPlayer();
         
-        System.out.println(player);
         if(!database.contains(player)){
             writeErrorMessage("Player with sell request does not exist");
         }
@@ -196,6 +196,8 @@ public class ServerReadThread implements Runnable, UpdateListener{
         
         Player newPlayer = new Player(oldPlayer);
         newPlayer.setClub(buyer);
+
+        server.removePlayerOnSell(pt);
         boolean changePlayerInfo = server.changePlayerInfo(oldPlayer, newPlayer);
         if(changePlayerInfo){
             String message = "Player sold from " + pt.getSeller() + " to " + pt.getBuyer();
@@ -233,6 +235,24 @@ public class ServerReadThread implements Runnable, UpdateListener{
         Notification n = new Notification(Notification.Type.BUY_DECLINED, message, pt);
         NetworkData nd = new NetworkData(NetworkDataEnum.NOTIFICATION, n);
         server.send(buyer, nd);
+    }
+
+    private void sendPlayersOnSell() throws IOException {
+        NetworkData nd = new NetworkData(NetworkDataEnum.PLAYER_ON_SELL, server.getPlayerOnSell());
+        System.out.println(nd );
+        System.out.println("for " + userInfo.getClubName());
+        networkUtil.write(nd);
+    }
+
+    @Override
+    public void updatePlayersOnSell(Set<PlayerTransaction> playerOnSell) {
+        NetworkData nd = new NetworkData(NetworkDataEnum.PLAYER_ON_SELL, playerOnSell);
+        
+        try {
+            networkUtil.write(nd);
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
     }
 }
 

@@ -18,6 +18,7 @@ public interface ServerInt {
     public PlayerDataBaseInt getDatabase();
     public Set<PlayerTransaction> getPlayerOnSell();
     public void addPlayerOnSell(PlayerTransaction player);
+    public void removePlayerOnSell(PlayerTransaction player);
     public boolean changePlayerInfo(Player oldPlayerInfo, Player newPlayerInfo);
     public void handleNewLogin(UserInfo info, NetworkUtil networkUtil);
     public void handleLogout(UserInfo info, NetworkUtil networkUtil);

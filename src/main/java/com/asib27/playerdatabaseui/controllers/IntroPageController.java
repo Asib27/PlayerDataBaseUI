@@ -5,7 +5,8 @@
  */
 package com.asib27.playerdatabaseui.controllers;
 
-import com.asib27.playerdatabaseui.Driver;
+import com.asib27.playerdatabaseui.Drivers.Driver;
+import com.asib27.playerdatabaseui.util.DatabaseManager;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
@@ -31,6 +32,7 @@ public class IntroPageController implements Initializable, Driver{
     @FXML
     private TextField searchTextField;
     
+    final String driverName = "New Tab";
     /**
      * Initializes the controller class.
      */
@@ -48,6 +50,16 @@ public class IntroPageController implements Initializable, Driver{
     @Override
     public void clearListener() {
         ;
+    }
+
+    @Override
+    public String getDriverName() {
+        return driverName;
+    }
+
+    @Override
+    public void update(DatabaseManager databaseManager) {
+        System.out.println("Not implemented yet");
     }
     
 }

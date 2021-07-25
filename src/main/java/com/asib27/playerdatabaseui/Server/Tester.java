@@ -36,6 +36,7 @@ public class Tester {
             //database reception
             databaseReciveCheck(nu);
             notificationReciveCheck(nu);
+            System.out.println(nu.read());
             
             //request validity check
             System.out.println("Not network data test");
@@ -65,9 +66,18 @@ public class Tester {
             databaseReciveCheck(nu);
             notificationReciveCheck(nu);
             
+            
             while(true){
                 nd = (NetworkData) nu.read();
                 System.out.println(nd.getDataType() + "  ");
+                
+                if(nd.getDataType() == NetworkDataEnum.DATABASE){
+                    DatabaseManager databaseManager = nd.getData();
+                    System.out.println(databaseManager.getDataBase());
+                    continue;
+                }
+                    
+                
                 Notification n = nd.getData();
                 System.out.println(n);
                 
@@ -75,7 +85,7 @@ public class Tester {
                     System.out.println("\n Sending Buy request approval");
                     PlayerTransaction pt = n.getData();
                     
-                    nd = new NetworkData(NetworkDataEnum.BUY_REQUEST_DECLINED, pt);
+                    nd = new NetworkData(NetworkDataEnum.BUY_REQUEST_APPROVED, pt);
                     nu.write(nd);
                 }
                 

@@ -37,6 +37,7 @@ public class NetworkUtil implements Closeable{
     }
 
     public void write(Object o) throws IOException {
+        oos.reset();
         oos.writeUnshared(o);
     }
 

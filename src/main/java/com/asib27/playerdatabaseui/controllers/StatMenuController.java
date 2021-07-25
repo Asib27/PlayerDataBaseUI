@@ -14,12 +14,7 @@ import com.asib27.playerdatabasesystem.PlayerDataBaseInt;
 import com.asib27.playerdatabaseui.StatData;
 import java.lang.reflect.Array;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Map;
-import java.util.ResourceBundle;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.*;
 import javafx.beans.property.ObjectProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -50,7 +45,7 @@ public class StatMenuController extends ObserverUtil<SearchObserver<StatData>> i
     private Button searchButton;
       
     final private String[] allStatType = {"Count", "Total", "Average"};
-    private DataProcessor dataProcessor = new DataProcessor();
+    private DataProcessor dataProcessor = null;
     /**
      * Initializes the controller class.
      */
@@ -71,6 +66,7 @@ public class StatMenuController extends ObserverUtil<SearchObserver<StatData>> i
         whichFieldBox.visibleProperty().bind(valueProperty.isEqualTo("Average").or(valueProperty.isEqualTo("Total")));
         
         searchButton.setOnAction((t) -> {
+            dataProcessor = new DataProcessor();
             updateAll();
         });
     }    

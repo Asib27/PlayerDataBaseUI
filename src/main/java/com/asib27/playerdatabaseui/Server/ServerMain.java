@@ -6,6 +6,7 @@
 package com.asib27.playerdatabaseui.Server;
 
 import com.asib27.playerdatabasesystem.Player;
+import com.asib27.playerdatabasesystem.PlayerAttribute;
 import com.asib27.playerdatabasesystem.PlayerDataBase;
 import com.asib27.playerdatabasesystem.PlayerDataBaseInt;
 import com.asib27.playerdatabaseui.util.NetworkData;
@@ -23,6 +24,7 @@ import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -46,6 +48,8 @@ public class ServerMain extends ObserverUtil<UpdateListener> implements ServerIn
     
     ConcurrentHashMap<UserInfo, UpdateListener> activeUsers= new ConcurrentHashMap<>();
     ConcurrentSkipListSet<PlayerTransaction> playersOnSell = new ConcurrentSkipListSet<>();
+    
+    private boolean isDatabaseUpdate;
     
     public static void main(String[] args) {
         //databaseWriter();
@@ -87,6 +91,15 @@ public class ServerMain extends ObserverUtil<UpdateListener> implements ServerIn
     @Override
     public void addPlayerOnSell(PlayerTransaction player) {
         playersOnSell.add(player);
+        isDatabaseUpdate = false;
+        updateAll();
+    }
+
+    @Override
+    public void removePlayerOnSell(PlayerTransaction player) {
+        playersOnSell.remove(player);
+        isDatabaseUpdate = false;
+        updateAll();
     }
     
     
@@ -99,8 +112,6 @@ public class ServerMain extends ObserverUtil<UpdateListener> implements ServerIn
             if(database.contains(oldPlayerInfo)){
                 database.removeRecord(oldPlayerInfo);
                 database.addRecord(newPlayerInfo);
-                System.out.println("changed");
-                
                 result =  true;
             }else{
                 result =  false;
@@ -109,6 +120,7 @@ public class ServerMain extends ObserverUtil<UpdateListener> implements ServerIn
             databaseLock.writeLock().unlock();
         }
         
+        isDatabaseUpdate = true;
         if(result) updateAll();
         
         return result;
@@ -161,8 +173,10 @@ public class ServerMain extends ObserverUtil<UpdateListener> implements ServerIn
 
     @Override
     protected void updator(UpdateListener t) {
-        System.out.println("updator called");
-        t.update(database);
+        if(isDatabaseUpdate)
+            t.update(database);
+        else
+            t.updatePlayersOnSell(playersOnSell);
     }
 
     @Override

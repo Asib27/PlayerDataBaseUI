@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.asib27.playerdatabaseui.controllers.SlidingScreenController">
+<BorderPane prefHeight="640.0" prefWidth="1040.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.asib27.playerdatabaseui.controllers.SlidingScreenController">
    <center>
       <StackPane fx:id="stackPane" BorderPane.alignment="CENTER">
         <children>
              
-            <SplitPane dividerPositions="0.5">
+            <SplitPane fx:id="splitPane" dividerPositions="1.0">
               <items>
                 <AnchorPane fx:id="paneLeft" minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                      
@@ -19,22 +21,32 @@
             
             <AnchorPane fx:id="FLoatingPane" AnchorPane.bottomAnchor="0.0" StackPane.alignment="BOTTOM_LEFT">
                <children>
-                  <HBox fx:id="upperControl" prefHeight="35.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <HBox fx:id="upperControl" onMouseClicked="#collapseFloatingPane"  prefHeight="35.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
-                        <ToolBar prefHeight="40.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
+                        <ToolBar onMouseClicked="#collapseFloatingPane" prefHeight="40.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
                            <items>
                               <Label text="Search Menu" />
                            </items>
                         </ToolBar>
-                        <ToolBar prefHeight="35.0" prefWidth="135.0" HBox.hgrow="NEVER">
+                        <ToolBar onMouseClicked="#collapseFloatingPane" nodeOrientation="RIGHT_TO_LEFT" prefHeight="35.0" prefWidth="135.0" HBox.hgrow="NEVER">
                           <items>
-                            <Button fx:id="UpButton" mnemonicParsing="false" text="v" />
+                            <Button fx:id="UpButton" onAction="#collapseFloatingPane"  contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" text="v">
+                                 <graphic>
+                                    <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../image/others/expand_arrow.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic></Button>
                           </items>
                         </ToolBar>
                      </children>
                   </HBox>
                   <AnchorPane fx:id="floatingPaneContent" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="40.0" />
                </children>
+               <StackPane.margin>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </StackPane.margin>
             </AnchorPane>
             
         </children>

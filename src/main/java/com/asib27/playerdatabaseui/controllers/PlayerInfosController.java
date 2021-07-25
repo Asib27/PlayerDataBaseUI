@@ -12,7 +12,14 @@ import javafx.fxml.Initializable;
 import javafx.scene.layout.AnchorPane;
 
 import com.asib27.playerdatabasesystem.Player;
+import com.asib27.playerdatabaseui.PlayerInfoCard;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
+import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.BorderPane;
+import javafx.util.Duration;
 
 /**
  * FXML Controller class
@@ -22,54 +29,55 @@ import javafx.scene.control.TextField;
 public class PlayerInfosController implements Initializable {
     @FXML
     private AnchorPane mainPane;
-    @FXML
-    private TextField nameField;
     
     @FXML
-    private TextField ageField;
+    private BorderPane playerCard;
     
     @FXML
-    private TextField clubField;
-    
-    @FXML
-    private TextField countryField;
-    
-    @FXML
-    private TextField posField;
-    
-    @FXML
-    private TextField salaryField;
-    
-    @FXML
-    private TextField jurseyField;
+    private Button leftButton, rightButton;
     
     private Player player;
+    private PlayerInfoCard playerInfoCard = new PlayerInfoCard();
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-        Player p1 = new Player();
-        p1.setName("Asib Rahman");
-        nameField.setText(p1.getName());
+        playerCard.setCenter(playerInfoCard);
+        
     }    
 
     public void setPlayer(Player player) {
         this.player = player;
-        
-        nameField.setText(player.getName());
-        ageField.setText(String.valueOf(player.getAge()));
-        clubField.setText(player.getClub());
-        countryField.setText(player.getCountry());
-        posField.setText(String.valueOf(player.getPosition()));
-        jurseyField.setText(String.valueOf(player.getJursey()));
-        salaryField.setText(String.valueOf(player.getSalary()));
+        playerInfoCard.setPlayer(player);
+        playerCard.setCenter(playerInfoCard);
     }
 
     public Player getPlayer() {
         return player;
     }
     
+    @FXML
+    private void closeButtonPressed(){
+        
+    }
+
+    public Button getLeftButton() {
+        return leftButton;
+    }
+
+    public void setLeftButton(Button leftButton) {
+        this.leftButton = leftButton;
+    }
+
+    public Button getRightButton() {
+        return rightButton;
+    }
+
+    public void setRightButton(Button rightButton) {
+        this.rightButton = rightButton;
+    }
+
     
 }

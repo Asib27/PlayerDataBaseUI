@@ -5,6 +5,7 @@
  */
 package com.asib27.playerdatabaseui.ControllerHelper;
 
+import javafx.scene.control.SplitPane;
 import javafx.scene.layout.Pane;
 
 /**
@@ -15,4 +16,6 @@ public interface SplitedScreenInt {
     public void setLeftPane(Pane pane);
     public void setRightPane(Pane pane);
     public void setFloatingPane(Pane pane);
+    public SplitPane getSplitPane();
+    public void setFloatingPointCollapsed(boolean isUp);
 }

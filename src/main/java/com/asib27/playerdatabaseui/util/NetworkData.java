@@ -9,6 +9,7 @@ import com.asib27.playerdatabasesystem.PlayerDataBaseInt;
 import java.io.Serializable;
 import java.net.URI;
 import java.util.ArrayList;
+import java.util.Set;
 
 /**
  *
@@ -40,6 +41,7 @@ public class NetworkData implements Serializable{
             case BUY_REQUEST_DECLINED-> data instanceof PlayerTransaction;
             case All_NOTIFICATIONS-> data instanceof ArrayList;
             case LOGIN_SUCCESS, LOGIN_FAILED-> data instanceof String;
+            case PLAYER_ON_SELL-> data instanceof Set;
         };
     }
     

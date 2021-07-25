@@ -91,4 +91,16 @@ public class SearchScreenController implements Initializable, SplitedScreenInt {
     public void clearListener(){
         leftDowntitlePane.expandedProperty().removeListener(this::divisionChangeListener);
     }
+
+    @Override
+    public SplitPane getSplitPane() {
+        return mainSplitPane;
+    }
+
+    @Override
+    public void setFloatingPointCollapsed(boolean isUp) {
+        leftDowntitlePane.setExpanded(isUp);
+    }
+    
+    
 }

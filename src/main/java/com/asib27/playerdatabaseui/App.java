@@ -1,5 +1,8 @@
 package com.asib27.playerdatabaseui;
 
+import com.asib27.playerdatabaseui.Drivers.Service;
+import com.asib27.playerdatabaseui.Drivers.MainDriver;
+import com.asib27.playerdatabaseui.Drivers.Driver;
 import com.asib27.playerdatabaseui.util.PasswordManager;
 import com.asib27.playerdatabaseui.util.DatabaseManager;
 import com.asib27.playerdatabaseui.controllers.SearchScreenController;
@@ -8,12 +11,14 @@ import com.asib27.playerdatabaseui.Client.ClientInt;
 import com.asib27.playerdatabaseui.Client.ClientReadThread;
 import com.asib27.playerdatabaseui.Client.CollectorThread;
 import com.asib27.playerdatabaseui.Client.LoginDriver;
+import com.asib27.playerdatabaseui.Drivers.MainDriverInt;
 import com.asib27.playerdatabaseui.controllers.LoginController;
 import com.asib27.playerdatabaseui.controllers.MainController;
 import com.asib27.playerdatabaseui.util.NetworkData;
 import com.asib27.playerdatabaseui.util.NetworkDataEnum;
 import com.asib27.playerdatabaseui.util.NetworkUtil;
 import com.asib27.playerdatabaseui.util.Notification;
+import com.asib27.playerdatabaseui.util.PlayerTransaction;
 
 import java.io.File;
 import javafx.application.Application;
@@ -24,11 +29,14 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 import java.util.stream.Collector;
 import javafx.application.Platform;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.scene.chart.PieChart;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
@@ -44,6 +52,11 @@ public class App extends Application implements Service, ClientInt, LoginDriver{
     DatabaseManager databaseManager;
     ArrayList<Notification> allNotifications;
 
+    MainDriverInt mainDriver;
+    String clubName;
+    
+    SimpleObjectProperty<Set<PlayerTransaction>> playerOnSell = new SimpleObjectProperty<>();
+    
     @Override
     public void start(Stage stage) throws IOException {
         Thread netThread = new Thread(new ServerConnector());
@@ -62,7 +75,16 @@ public class App extends Application implements Service, ClientInt, LoginDriver{
         
         stage.setScene(scene);
         stage.show();
+    }    
+
+    @Override
+    public void stop() throws Exception {
+        //super.stop();
+        if(networkUtil != null)
+            networkUtil.write(new NetworkData(NetworkDataEnum.LOGOUT, null));
     }
+    
+    
 
     static void setRoot(String fxml) throws IOException {
         scene.setRoot(loadFXML(fxml));
@@ -78,14 +100,67 @@ public class App extends Application implements Service, ClientInt, LoginDriver{
     }
 
     @Override
-    public boolean authenticate(PasswordManager pass) {
-        return true;
-    }
-
-    @Override
     public DatabaseManager getDatabase() {
         return databaseManager;
     }
+
+    @Override
+    public SimpleObjectProperty playersOnSellProperty() {
+        return playerOnSell;
+    }
+
+    @Override
+    public Set<PlayerTransaction> getPlayersOnSell() {
+        return playerOnSell.getValue();
+    }
+
+    @Override
+    public String getClubName() {
+        return clubName;
+    }
+    
+    public void sendSellRequest(PlayerTransaction playerTransaction){
+        NetworkData nd = new NetworkData(NetworkDataEnum.SELL_REQUEST, playerTransaction);
+        try {
+            networkUtil.write(nd);
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    @Override
+    public void sendBuyRequest(PlayerTransaction playerTransaction) {
+        NetworkData nd = new NetworkData(NetworkDataEnum.BUY_REQUEST, playerTransaction);
+        
+        try {
+            networkUtil.write(nd);
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
+    
+    @Override
+    public void sendBuyRequestAproval(PlayerTransaction playerTransaction){
+        NetworkData nd = new NetworkData(NetworkDataEnum.BUY_REQUEST_APPROVED, playerTransaction);
+        
+        try {
+            networkUtil.write(nd);
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
+    
+    @Override
+    public void sendBuyRequestDenial(PlayerTransaction playerTransaction){
+        NetworkData nd = new NetworkData(NetworkDataEnum.BUY_REQUEST_DECLINED, playerTransaction);
+        
+        try {
+            networkUtil.write(nd);
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
+    
     
     public static FXMLLoader getFXMLLoader(String fxml){
         return new FXMLLoader(App.class.getResource("/fxml/" + fxml));
@@ -93,6 +168,7 @@ public class App extends Application implements Service, ClientInt, LoginDriver{
 
     @Override
     public void takeNotifications(Notification notification) {
+        mainDriver.showNotification(notification);
         this.allNotifications.add(notification);
     }
 
@@ -102,11 +178,24 @@ public class App extends Application implements Service, ClientInt, LoginDriver{
     }
 
     @Override
+    public void takePlayerOnSell(Set<PlayerTransaction> playersOnSell) {
+        this.playerOnSell.setValue(playersOnSell);
+    }
+    
+
+    @Override
+    public ArrayList<Notification> getNotification() {
+        return allNotifications;
+    }
+    
+    
+
+    @Override
     public void takeLoginResponse(boolean isSuccess, String msg) {
         if(isSuccess){
             Platform.runLater(() -> {
                 loginController.setStatus("Login Succesful");
-                MainDriver mainDriver = new MainDriver(this);
+                mainDriver = new MainDriver(this);
                 scene.setRoot(mainDriver.getGuiPane());
             });
             // scene changing code
@@ -120,12 +209,18 @@ public class App extends Application implements Service, ClientInt, LoginDriver{
 
     @Override
     public void takeDatabase(DatabaseManager databasse) {
-        this.databaseManager = databasse;
+        if(databaseManager == null){
+            this.databaseManager = databasse;
+        }
+        else{
+            this.databaseManager = databasse;
+            mainDriver.update(databaseManager);
+        }
     }
 
     @Override
     public void takeErrorMessage(String msg) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        System.out.println(msg);
     }
 
     @Override
@@ -134,6 +229,7 @@ public class App extends Application implements Service, ClientInt, LoginDriver{
             return "Cannot Connect to surver at this moment";
         }
         else{
+            clubName = passwordManager.getUsername();
             NetworkData nd = new NetworkData(NetworkDataEnum.LOGIN, passwordManager);
             try {
                 networkUtil.write(nd);

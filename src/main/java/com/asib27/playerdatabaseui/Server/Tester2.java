@@ -37,6 +37,7 @@ public class Tester2 {
             //database reception
             DatabaseManager databaseReciveCheck = databaseReciveCheck(nu);
             notificationReciveCheck(nu);
+            System.out.println(nu.read());
             
             //request validity check
             System.out.println("Not network data test");

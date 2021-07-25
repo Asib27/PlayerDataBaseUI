@@ -21,8 +21,6 @@ public abstract class ObserverUtil<T>{
     }
     
     protected void updateAll(){
-        System.out.println("Called update all");
-        System.out.println(searchObservers);
         searchObservers.forEach(this::updator);
     }
     

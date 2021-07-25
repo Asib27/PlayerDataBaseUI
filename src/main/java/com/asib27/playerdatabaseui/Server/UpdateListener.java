@@ -8,6 +8,8 @@ package com.asib27.playerdatabaseui.Server;
 import com.asib27.playerdatabasesystem.PlayerDataBaseInt;
 import com.asib27.playerdatabaseui.util.DatabaseManager;
 import com.asib27.playerdatabaseui.util.NetworkData;
+import com.asib27.playerdatabaseui.util.PlayerTransaction;
+import java.util.Set;
 
 /**
  *
@@ -16,4 +18,5 @@ import com.asib27.playerdatabaseui.util.NetworkData;
 public interface UpdateListener {
     public void update(PlayerDataBaseInt database);
     public void send(NetworkData networkData);
+    public void updatePlayersOnSell(Set<PlayerTransaction> playerOnSell);
 }

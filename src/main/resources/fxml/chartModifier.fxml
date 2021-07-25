@@ -5,16 +5,11 @@
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane  id="AnchorPane" prefHeight="400.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.asib27.playerdatabaseui.controllers.ChartModifierController">
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.asib27.playerdatabaseui.controllers.ChartModifierController">
     <stylesheets>
         <URL value="@/styles/chartmodifier.css" />
     </stylesheets>
-    
-    <fx:define>
-        <Double fx:id="imageWidth" fx:value="20" />
-        <Double fx:id="imageHeight" fx:value="20" />
-    </fx:define>
-    
+        
    <children>
       <TabPane prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" tabMinWidth="260.0">
         <tabs>
@@ -100,23 +95,29 @@
                                                       <ComboBox prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                                                       <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
                                                          <children>
-                                                            <ToggleButton contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" text="Bold">
+                                                            <ToggleButton contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" selected="true" text="Bold">
                                                                <graphic>
-                                                                  <ImageView fitHeight="$imageHeight" fitWidth="$imageWidth" pickOnBounds="true" preserveRatio="true">
+                                                                  <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                                                                      <image>
                                                                         <Image url="@../image/others/bold.png" />
                                                                      </image>
                                                                   </ImageView>
                                                                </graphic>
+                                                               <toggleGroup>
+                                                                  <ToggleGroup fx:id="boldGroup" />
+                                                               </toggleGroup>
                                                             </ToggleButton>
-                                                            <ToggleButton contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" text="Italic">
+                                                            <ToggleButton contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" selected="true" text="Italic">
                                                                <graphic>
-                                                                  <ImageView fitHeight="$imageHeight" fitWidth="$imageWidth" pickOnBounds="true" preserveRatio="true">
+                                                                  <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                                                                      <image>
                                                                         <Image url="@../image/others/italic.png" />
                                                                      </image>
                                                                   </ImageView>
                                                                </graphic>
+                                                               <toggleGroup>
+                                                                  <ToggleGroup fx:id="italicGroup" />
+                                                               </toggleGroup>
                                                             </ToggleButton>
                                                          </children>
                                                       </HBox>

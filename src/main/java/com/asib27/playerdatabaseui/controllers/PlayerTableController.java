@@ -41,17 +41,11 @@ public class PlayerTableController implements Initializable {
     public void setData(Player[] allData){
         ObservableList<Player> data = FXCollections.observableArrayList(allData);
         playerTable.setItems(data);
-        
-        
-        playerTable.getSelectionModel().select(0);
     }
     
     public void setData(StatData[] allData){
         ObservableList<StatData> data = FXCollections.observableArrayList(allData);
         playerTable.setItems(data);
-        
-        if(allData.length > 0)
-            playerTable.getSelectionModel().select(0);
     }
     
     public ObservableList selectionModeProperty(){

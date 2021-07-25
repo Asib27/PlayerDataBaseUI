@@ -6,7 +6,7 @@
 package com.asib27.playerdatabaseui.controllers;
 
 import com.asib27.playerdatabaseui.Client.LoginDriver;
-import com.asib27.playerdatabaseui.Service;
+import com.asib27.playerdatabaseui.Drivers.Service;
 import com.asib27.playerdatabaseui.util.PasswordManager;
 import java.net.URL;
 import java.util.ResourceBundle;

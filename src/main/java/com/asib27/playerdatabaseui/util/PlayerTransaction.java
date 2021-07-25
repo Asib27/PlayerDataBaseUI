@@ -63,6 +63,11 @@ public class PlayerTransaction implements Serializable, Comparable<PlayerTransac
         return seller;
     }    
 
+    public void setSeller(String seller) {
+        this.seller = seller;
+    }
+
+
     @Override
     public int compareTo(PlayerTransaction o) {
         return player.compareTo(o.player);

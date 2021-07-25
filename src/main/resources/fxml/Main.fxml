@@ -5,7 +5,7 @@
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane id="AnchorPane" prefHeight="425.0" prefWidth="643.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.asib27.playerdatabaseui.controllers.MainController">
+<BorderPane id="AnchorPane" prefHeight="640.0" prefWidth="1040.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.asib27.playerdatabaseui.controllers.MainController">
     <stylesheets>
         <URL value="@/styles/main.css" />
     </stylesheets>
@@ -29,8 +29,8 @@
           
           <Menu mnemonicParsing="true" text="_Transaction">
             <items>
-              <MenuItem mnemonicParsing="false" text="Buy Player" />
-              <MenuItem mnemonicParsing="false" text="Sell Player" />
+              <MenuItem mnemonicParsing="false" onAction="#openBuyMenu" text="Buy Player" />
+              <MenuItem mnemonicParsing="false" onAction="#openSellMenu" text="Sell Player" />
             </items>
           </Menu>
           
@@ -69,17 +69,17 @@
                 </Tab>
               </tabs>
             </TabPane>
-            <AnchorPane fx:id="sliderMain" prefHeight="408.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" mouseTransparent="true" onMouseClicked="#slideInOut" >
+            <AnchorPane fx:id="sliderMain" mouseTransparent="true" onMouseClicked="#slideInOut" prefHeight="408.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
-                        <AnchorPane fx:id="slider" id="slider" layoutY="-1.0" prefHeight="410.0" prefWidth="200.0" translateX="-300.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" >
-                            <VBox layoutX="6.0" layoutY="35.0" prefHeight="200.0" prefWidth="100.0" spacing="20.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="35.0" >
-                                <Label prefHeight="36" text="Menu"/>
-                                <Label prefHeight="36" text="Profile"/>
-                                <Label prefHeight="36" text="Notifications"/>
-                                <Label prefHeight="36" text="My Club"/>
-                                <Label prefHeight="36" text="Settings"/>
-                                <Label prefHeight="36" text="Back to Home"/>
-                                <Label prefHeight="36" text="Log Out"/>
+                        <AnchorPane id="slider" fx:id="slider" layoutY="-1.0" prefHeight="410.0" prefWidth="200.0" translateX="-300.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                            <VBox fx:id="menuLableBox" layoutX="6.0" layoutY="35.0" prefHeight="200.0" prefWidth="100.0" spacing="20.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="35.0" VBox.vgrow="ALWAYS">
+                                <Label onMouseClicked="#slideInOut" prefHeight="36" text="Menu" />
+                                <Label prefHeight="36" text="Profile" />
+                                <Label onMouseClicked="#notificationsButtonCLicked" prefHeight="36" text="Notifications" />
+                                <Label onMouseClicked="#openSellMenu" prefHeight="36" text="My Club" />
+                                <Label prefHeight="36" text="Settings" />
+                                <Label onMouseClicked="#homeButtonClicked" prefHeight="36" text="Back to Home" />
+                                <Label prefHeight="36" text="Log Out" />
                             </VBox>
                         </AnchorPane>
                      </children>
@@ -91,7 +91,12 @@
    <bottom>
       <HBox alignment="CENTER" prefHeight="30.0" prefWidth="600.0" spacing="14.0" BorderPane.alignment="CENTER">
          <children>
-            <TextField />
+            <StackPane prefHeight="40.0" prefWidth="254.0">
+               <children>
+                  <AnchorPane fx:id="saticMessageBox" prefHeight="200.0" prefWidth="200.0" />
+                  <AnchorPane fx:id="slidingMessageBox" prefHeight="200.0" prefWidth="200.0" translateX="-300.0" />
+               </children>
+            </StackPane>
             <Separator orientation="VERTICAL" prefHeight="200.0" />
             
             <HBox fx:id="progressBox" spacing="10.0" visible="false">
@@ -103,8 +108,23 @@
             </HBox>
             
             <Separator orientation="VERTICAL" prefHeight="200.0" />
-            <Button mnemonicParsing="false" text="Button" />
-            <Button mnemonicParsing="false" text="Button" />
+            <Pane prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
+            <Button fx:id="backButton" mnemonicParsing="false" onAction="#backButtonPressed" text="Back">
+               <graphic>
+                  <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../image/others/prev.png" />
+                     </image>
+                  </ImageView>
+               </graphic></Button>
+            <Button fx:id="forwardButton" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#forwardButtonPressed" text="Forward">
+               <graphic>
+                  <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../image/others/right_button.png" />
+                     </image>
+                  </ImageView>
+               </graphic></Button>
          </children>
       </HBox>
    </bottom>
@@ -114,7 +134,7 @@
          <children>
             <VBox alignment="TOP_CENTER" layoutX="2.0" layoutY="40.0" spacing="20" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="40.0">
                <children>
-                  <ImageView pickOnBounds="true" preserveRatio="true" onMouseClicked="#slideInOut" >
+                  <ImageView onMouseClicked="#slideInOut" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../image/icons/menu.png" />
                      </image>
@@ -126,13 +146,13 @@
                      </image>
                   </ImageView>
                   
-                  <ImageView fitHeight="36.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="36.0" fitWidth="36.0" onMouseClicked="#notificationsButtonCLicked" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../image/icons/notification.png" />
                      </image>
                   </ImageView>
                   
-                  <ImageView fitHeight="36.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="36.0" fitWidth="36.0" onMouseClicked="#openSellMenu" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../image/icons/real_madrid.png" />
                      </image>
@@ -144,7 +164,7 @@
                      </image>
                   </ImageView>
                   
-                  <ImageView fitHeight="36.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="36.0" fitWidth="36.0" onMouseClicked="#homeButtonClicked" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../image/icons/home.png" />
                      </image>

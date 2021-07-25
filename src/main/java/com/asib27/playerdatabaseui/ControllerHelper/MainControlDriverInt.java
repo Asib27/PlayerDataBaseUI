@@ -5,7 +5,10 @@
  */
 package com.asib27.playerdatabaseui.ControllerHelper;
 
-import com.asib27.playerdatabaseui.Driver;
+import com.asib27.playerdatabaseui.Drivers.Driver;
+import com.asib27.playerdatabaseui.Drivers.Service;
+import com.asib27.playerdatabaseui.util.Notification;
+import java.util.ArrayList;
 import javafx.concurrent.Task;
 
 /**
@@ -15,4 +18,6 @@ import javafx.concurrent.Task;
 public interface MainControlDriverInt {
     public Driver GuiDriverFactory(String name);
     public Task<Driver> taskFactory(String name);
+    public ArrayList<Notification> getNotifications();
+    public Service getService();
 }

@@ -13,7 +13,7 @@ public enum NetworkDataEnum {
     SUCCESS(false), FAILED(false), LOGIN(true), LOGOUT(true), DATABASE(false),
     NOTIFICATION(false), SELL_REQUEST(true), BUY_REQUEST(true), BUY_REQUEST_APPROVED(true),
     BUY_REQUEST_DECLINED(true), All_NOTIFICATIONS(false), LOGIN_SUCCESS(false), 
-    LOGIN_FAILED(false);
+    LOGIN_FAILED(false), PLAYER_ON_SELL(false);
     
     private final boolean serverRequest;
 
