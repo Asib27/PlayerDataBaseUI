@@ -5,7 +5,7 @@
  */
 package com.asib27.playerdatabaseui.controllers;
 
-import com.asib27.playerdatabaseui.StatData;
+import com.asib27.playerdatabaseui.ControllerHelper.StatData;
 import com.asib27.playerdatabasesystem.*;
 import com.asib27.playerdatabaseui.util.ImageUtil;
 import com.asib27.playerdatabaseui.util.ObserverUtil;

@@ -24,7 +24,7 @@
                                     <VBox alignment="TOP_CENTER" layoutX="2.0" layoutY="-2.0" prefHeight="357.0" prefWidth="576.0" spacing="20.0">
                                        <children>
                                           <Label text="Chart Type" />
-                                          <ComboBox prefWidth="150.0" />
+                                          <ComboBox fx:id="chartType" prefWidth="150.0" />
                                        </children>
                                     </VBox>
                                  </children>
@@ -60,8 +60,8 @@
                                                       <Label text="Background Color" />
                                                       <Label text="Font" GridPane.rowIndex="1" />
                                                       <Label text="Chart Border Color" GridPane.rowIndex="2" />
-                                                      <ColorPicker GridPane.columnIndex="1" />
-                                                      <ColorPicker GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                                      <ColorPicker fx:id="bgColorChart" GridPane.columnIndex="1" onAction="#changeBgColor"/>
+                                                      <ColorPicker  fx:id="borderColorChart" GridPane.columnIndex="1" GridPane.rowIndex="2" onAction="#changeBorderColor"/>
                                                       <ComboBox prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                                                    </children>
                                                 </GridPane>
@@ -128,6 +128,8 @@
                                              </children></AnchorPane>
                                     </content>
                                   </TitledPane>
+                                  
+                                  
                                   <TitledPane animated="false" text="Series">
                                     <content>
                                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="400.0" prefWidth="599.0">
@@ -164,6 +166,8 @@
                                              </children></AnchorPane>
                                     </content>
                                   </TitledPane>
+                                  
+                                  
                                     <TitledPane animated="false" layoutX="10.0" layoutY="60.0" text="Legend">
                                        <content>
                                           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
@@ -186,21 +190,23 @@
                                                       <Label text="Legend Font Size" GridPane.rowIndex="2" />
                                                       <Label text="Legend Format" GridPane.rowIndex="3" />
                                                       <Label text="Text Color" GridPane.rowIndex="4" />
-                                                      <ComboBox prefWidth="150.0" GridPane.columnIndex="1" />
-                                                      <ComboBox prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                                      <ComboBox prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                                      <ComboBox fx:id="legendPosition" prefWidth="150.0" GridPane.columnIndex="1" />
+                                                      <ComboBox fx:id="legendFont" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1" onAction="#changeLegendFont" />
+                                                      <ComboBox fx:id="legendFontSize" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="2"  onAction="#changeLegendFont" />
                                                       <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
                                                          <children>
-                                                            <CheckBox mnemonicParsing="false" text="Bold" />
-                                                            <CheckBox mnemonicParsing="false" text="Italic" />
+                                                            <CheckBox fx:id="boldLegend" mnemonicParsing="false" text="Bold" onAction="#changeLegendFont"/>
+                                                            <CheckBox fx:id="italicLegend" mnemonicParsing="false" text="Italic" onAction="#changeLegendFont"/>
                                                          </children>
                                                       </HBox>
-                                                      <ColorPicker GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                                      <ColorPicker fx:id="colourPickedLegend" GridPane.columnIndex="1" GridPane.rowIndex="4" onAction="#changeLegendFont"/>
                                                    </children>
                                                 </GridPane>
                                              </children></AnchorPane>
                                        </content>
                                     </TitledPane>
+                                    
+                                    
                                     <TitledPane animated="false" layoutX="10.0" layoutY="353.0" text="Horizontal Axis">
                                        <content>
                                           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
@@ -214,22 +220,22 @@
                                                     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                                     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                                     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                                   </rowConstraints>
                                                    <children>
                                                       <Label text="Label Font" />
                                                       <Label text="Label Font Size" GridPane.rowIndex="1" />
                                                       <Label text="Label Fotmat" GridPane.rowIndex="2" />
                                                       <Label text="Text Color" GridPane.rowIndex="3" />
-                                                      <ComboBox prefWidth="150.0" GridPane.columnIndex="1" />
-                                                      <ComboBox prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                                      <ComboBox fx:id="haxisFont" prefWidth="150.0" GridPane.columnIndex="1" onAction="#changeHaxisFont" />
+                                                      <ComboBox fx:id="haxisFontSize" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1" onAction="#changeHaxisFont"/>
                                                       <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                                                          <children>
-                                                            <CheckBox mnemonicParsing="false" text="Bold" />
-                                                            <CheckBox mnemonicParsing="false" text="Italic" />
+                                                            <CheckBox fx:id="haxisBold" mnemonicParsing="false" text="Bold" onAction="#changeHaxisFont"/>
+                                                            <CheckBox fx:id="haxisItalic" mnemonicParsing="false" text="Italic" onAction="#changeHaxisFont"/>
                                                          </children>
                                                       </HBox>
-                                                      <ColorPicker GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                                      <ColorPicker fx:id="haxisFontColor" GridPane.columnIndex="1" GridPane.rowIndex="3" onAction="#changeHaxisFont"/>
                                                    </children>
                                                 </GridPane>
                                                 <CheckBox layoutX="199.0" layoutY="152.0" mnemonicParsing="false" text="Reverse Axis Order" />

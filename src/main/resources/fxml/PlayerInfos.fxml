@@ -15,15 +15,15 @@
           
           <children>
             <BorderPane fx:id="playerCard" layoutX="20.0" layoutY="0.0" prefHeight="291.0" prefWidth="480.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="0.0" />
-            <Button fx:id="leftButton" layoutX="311.0" layoutY="454.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="120.0" text="Button" />
-            <Button fx:id="rightButton" layoutX="94.0" layoutY="453.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="120.0" text="Button" />
+            <Button fx:id="rightButton" layoutX="311.0" layoutY="454.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="120.0" text="Button" />
+            <Button fx:id="leftButton" layoutX="94.0" layoutY="453.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="120.0" text="Button" visible="false"/>
          </children>
       </AnchorPane>
    </center>
    <top>
       <HBox maxHeight="20.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="20.0" prefWidth="520.0" BorderPane.alignment="CENTER">
         <children>
-          <Button contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" onAction="#closeButtonPressed" text="Button">
+          <Button fx:id="closeButton" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" onAction="#closeButtonPressed" text="Button">
                <graphic>
                   <ImageView pickOnBounds="true" preserveRatio="true">
                      <image>

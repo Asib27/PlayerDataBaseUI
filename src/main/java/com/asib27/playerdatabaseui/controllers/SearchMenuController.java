@@ -55,12 +55,12 @@ public class SearchMenuController extends ObserverUtil<SearchObserver<Player>> i
 
     @FXML
     private TextField agefield;
-
-    @FXML
-    private ComboBox<String> choiceComboBox;
-
-    @FXML
-    private ComboBox<String> fieldComboBox;
+//
+//    @FXML
+//    private ComboBox<String> choiceComboBox;
+//
+//    @FXML
+//    private ComboBox<String> fieldComboBox;
 
     @FXML
     private Button searchButton;
@@ -72,12 +72,12 @@ public class SearchMenuController extends ObserverUtil<SearchObserver<Player>> i
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-        positionComboBox.getItems().addAll("Goalkeeper", "Defender", "Midfielder", "Forward");
-        choiceComboBox.getItems().addAll("Search", "Minimum search", "Maximum search");
-        choiceComboBox.setValue("Search");
+        positionComboBox.getItems().addAll("Goalkeeper", "Defender", "Midfielder", "Forward", null);
+        //choiceComboBox.getItems().addAll("Search", "Minimum search", "Maximum search");
+        //choiceComboBox.setValue("Search");
         //fieldComboBox.getItems().addAll(Arrays.asList(PlayerAttribute.values()));
         
-        fieldComboBox.visibleProperty().bind(choiceComboBox.valueProperty().isNotEqualTo("Search"));
+        //fieldComboBox.visibleProperty().bind(choiceComboBox.valueProperty().isNotEqualTo("Search"));
         addAllListener();
     }    
     
@@ -88,7 +88,7 @@ public class SearchMenuController extends ObserverUtil<SearchObserver<Player>> i
     }
     
     public void clearListener(){
-        fieldComboBox.visibleProperty().unbind();
+        //fieldComboBox.visibleProperty().unbind();
     }
 
     public SearchHelper getSearchHelper() {
@@ -124,7 +124,6 @@ public class SearchMenuController extends ObserverUtil<SearchObserver<Player>> i
             }
             
             if(agefield.getText().length() != 0){
-                System.out.println(agefield.getText());
                 players = dbQuery(players, PlayerAttribute.AGE, Integer.parseInt(agefield.getText()));
             }
             

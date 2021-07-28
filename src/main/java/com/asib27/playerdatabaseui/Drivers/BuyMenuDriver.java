@@ -10,7 +10,7 @@ import com.asib27.playerdatabasesystem.PlayerDataBase;
 import com.asib27.playerdatabasesystem.PlayerDataBaseInt;
 import com.asib27.playerdatabaseui.ControllerHelper.DataProcessHelper;
 import com.asib27.playerdatabaseui.ControllerHelper.SearchObserver;
-import com.asib27.playerdatabaseui.MessageBoxUtil;
+import com.asib27.playerdatabaseui.CustomControls.MessageBoxUtil;
 import com.asib27.playerdatabaseui.controllers.SearchMenuController;
 import com.asib27.playerdatabaseui.util.DatabaseManager;
 import com.asib27.playerdatabaseui.util.PlayerTransaction;
@@ -135,7 +135,13 @@ public class BuyMenuDriver extends TableSearchInfoDriverUtil implements SearchOb
 
     @Override
     public void update(DatabaseManager databaseManager) {
+        SearchMenuController.SearchHelper searchHelper = searchMenuController.getSearchHelper();
         
+        if(searchHelper != null){
+            Platform.runLater(() -> {
+                update(searchHelper);
+            });
+        }
     }
     
     public static class MainLoader extends Task<BuyMenuDriver>{

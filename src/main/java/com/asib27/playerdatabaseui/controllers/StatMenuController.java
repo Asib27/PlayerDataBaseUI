@@ -10,15 +10,27 @@ import com.asib27.playerdatabaseui.ControllerHelper.DataProcessHelper;
 import com.asib27.playerdatabaseui.util.ObserverUtil;
 import com.asib27.playerdatabasesystem.Player;
 import com.asib27.playerdatabasesystem.PlayerAttribute;
+import com.asib27.playerdatabasesystem.PlayerDataBase;
 import com.asib27.playerdatabasesystem.PlayerDataBaseInt;
-import com.asib27.playerdatabaseui.StatData;
+import com.asib27.playerdatabaseui.CustomControls.SearchBoxHelper;
+import com.asib27.playerdatabaseui.CustomControls.SearchHelper;
+import com.asib27.playerdatabaseui.ControllerHelper.StatData;
 import java.lang.reflect.Array;
 import java.net.URL;
 import java.util.*;
+import javafx.animation.PauseTransition;
+import javafx.beans.binding.BooleanBinding;
+import javafx.beans.binding.BooleanExpression;
+import javafx.beans.binding.When;
 import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.ReadOnlyBooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
+import javafx.util.Duration;
 
 /**
  * FXML Controller class
@@ -43,9 +55,25 @@ public class StatMenuController extends ObserverUtil<SearchObserver<StatData>> i
 
     @FXML
     private Button searchButton;
+    
+    @FXML
+    private GridPane gridPane;
+    
+    @FXML
+    private AnchorPane anchorPane;
+    
+    @FXML
+    private TextField errorMessage;
+    
+    @FXML
+    private Button clearButton;
       
     final private String[] allStatType = {"Count", "Total", "Average"};
     private DataProcessor dataProcessor = null;
+    SearchHelper searchHelper = new SearchHelper();
+    
+    
+    
     /**
      * Initializes the controller class.
      */
@@ -59,16 +87,39 @@ public class StatMenuController extends ObserverUtil<SearchObserver<StatData>> i
         rowNameBox.getItems().remove(0);
         colNameBox.getItems().remove(0);
         
+        rowNameBox.setValue(PlayerAttribute.CLUB);
+        statTypeBox.setValue(allStatType[0]);
+        whichFieldBox.setValue(PlayerAttribute.AGE);
+        
         statTypeBox.getItems().addAll(allStatType);
         whichFieldBox.getItems().addAll(PlayerAttribute.AGE, PlayerAttribute.SALARY, PlayerAttribute.HEIGHT ,PlayerAttribute.JURSEY);
         
         ObjectProperty valueProperty = statTypeBox.valueProperty();
         whichFieldBox.visibleProperty().bind(valueProperty.isEqualTo("Average").or(valueProperty.isEqualTo("Total")));
         
+        
+        clearButton.visibleProperty().bind(colNameBox.valueProperty().isNotNull());
+        
         searchButton.setOnAction((t) -> {
-            dataProcessor = new DataProcessor();
-            updateAll();
+            if(searchHelper.isInError()){
+                errorMessage.setVisible(true);
+                errorMessage.setText("Some field does not contain proper data");
+                
+                PauseTransition pt = new PauseTransition(Duration.millis(5000));
+                pt.setOnFinished(eh -> errorMessage.setVisible(false));
+                pt.play();
+            }
+            else{
+                errorMessage.setVisible(false);
+                dataProcessor = new DataProcessor();
+                updateAll();
+            }
         });
+        
+        anchorPane.getChildren().add(searchHelper);
+        searchHelper.setLayoutX(20.0);
+        searchHelper.setLayoutY(130);
+        
     }    
     
     public void clearListener(){
@@ -88,11 +139,18 @@ public class StatMenuController extends ObserverUtil<SearchObserver<StatData>> i
         t.update(dataProcessor);
     }
     
+    @FXML
+    private void clearComboBox(){
+        colNameBox.valueProperty().set(null);
+    }
+    
     public class DataProcessor implements DataProcessHelper<StatData>{
         private ArrayList<String> columns = new ArrayList<>();
         
         @Override
-        public StatData[] getData(PlayerDataBaseInt db){
+        public StatData[] getData(PlayerDataBaseInt database){
+            PlayerDataBaseInt db = new PlayerDataBase(searchHelper.getData(database));
+            
             columns.clear();
             ArrayList<StatData> data =  null;
                 
@@ -174,7 +232,6 @@ public class StatMenuController extends ObserverUtil<SearchObserver<StatData>> i
                     sd.setName(t);
                     return sd;
                 }).forEachOrdered((sd) -> {
-                    System.out.println(sd.getName() + sd.getSeriesValues());
                     data.add(sd);
                     columnNames.addAll(sd.getSeriesValues().keySet());
                 });

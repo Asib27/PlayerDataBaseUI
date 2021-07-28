@@ -3,9 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.asib27.playerdatabaseui;
+package com.asib27.playerdatabaseui.CustomControls;
 
 import com.asib27.playerdatabasesystem.Player;
+import com.asib27.playerdatabaseui.App;
 import com.asib27.playerdatabaseui.controllers.PlayerInfoController;
 import java.io.File;
 import java.io.IOException;

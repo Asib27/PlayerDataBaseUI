@@ -7,8 +7,8 @@ package com.asib27.playerdatabaseui.Drivers;
 
 import com.asib27.playerdatabasesystem.Player;
 import com.asib27.playerdatabasesystem.PlayerAttribute;
-import com.asib27.playerdatabaseui.MessageBoxUtil;
-import com.asib27.playerdatabaseui.PlayerInfoCard;
+import com.asib27.playerdatabaseui.CustomControls.MessageBoxUtil;
+import com.asib27.playerdatabaseui.CustomControls.PlayerInfoCard;
 import com.asib27.playerdatabaseui.util.DatabaseManager;
 import com.asib27.playerdatabaseui.util.PlayerTransaction;
 import java.util.ArrayList;
@@ -49,6 +49,7 @@ public class SellMenuDriver implements Driver{
         tilePane.setPrefColumns(2);
         scrollPane.setContent(tilePane);
         borderPane.setCenter(scrollPane);
+        
     }
     
     
@@ -83,7 +84,6 @@ public class SellMenuDriver implements Driver{
 
     @Override
     public void update(DatabaseManager databaseManager) {
-        //System.out.println("Called");
         Platform.runLater(() -> {
             //ObservableList<Node> children = tilePane.getChildren();
             tilePane.getChildren().removeIf((t) -> {
@@ -116,14 +116,17 @@ public class SellMenuDriver implements Driver{
         BorderPane.setAlignment(sellButton, Pos.CENTER);
         card.setBottom(sellButton);
         
-        card.setStyle("-fx-border-color : black;"
+        card.setStyle("-fx-border-color : blueviolet;"
                 + "-fx-border-width : 2;"
                 + "-fx-border-insets : 10;"
-                + "-fx-border-radius : 2;");
+                + "-fx-border-radius : 5;"
+                + "-fx-insets-color : white");
         
         BorderPane.setMargin(sellButton, new Insets(5));
 
-        
+        sellButton.setStyle("-fx-background-color : blueviolet;"
+                + "-fx-text-fill : white;"
+                + "-fx-border-insets : 5;");
         sellButton.setOnAction((t) -> {
             MessageBoxUtil.playerSellMessageBox(player, service);
         });

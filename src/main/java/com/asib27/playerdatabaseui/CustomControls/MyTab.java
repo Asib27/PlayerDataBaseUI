@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.asib27.playerdatabaseui;
+package com.asib27.playerdatabaseui.CustomControls;
 
 import com.asib27.playerdatabaseui.Drivers.Driver;
 import com.asib27.playerdatabaseui.util.DatabaseManager;
@@ -53,6 +53,7 @@ public class MyTab extends Tab{
         Driver top = driverStack.peek();
         check();
         super.setContent(top.getGuiPane());
+        super.setText(top.getDriverName());
     }
     
     public boolean isBackExist(){

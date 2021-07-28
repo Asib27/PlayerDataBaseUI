@@ -7,6 +7,30 @@
     -fx-color : yellow;
 }
 
-.button{
-	-fx-color : green;
+#loginButton{
+    -fx-color : blueviolet;
+    -fx-border-radius: 0;
+}
+
+#viewPassButton{
+    -fx-color : transparent;
+}
+
+#viewPassButton:selected{
+    -fx-color : transparent;
+}
+
+.separator > .line{
+    -fx-border-style :  solid;
+    -fx-border-width : 1;
+    -fx-border-color : blueviolet;
+}
+
+/* #4730EA */
+
+.text-field{
+    -fx-border-width : 1;
+    -fx-border-color : white;
+    -fx-focus-color : transparent;
+    -fx-faint-focus-color : transparent;
 }

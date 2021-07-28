@@ -5,18 +5,18 @@
  */
 package com.asib27.playerdatabaseui.controllers;
 
+import com.asib27.playerdatabaseui.ControllerHelper.IntroPageButtonPressListener;
 import com.asib27.playerdatabaseui.ControllerHelper.MainControlDriverInt;
 import com.asib27.playerdatabaseui.Drivers.Driver;
-import com.asib27.playerdatabaseui.Drivers.SellMenuDriver;
-import com.asib27.playerdatabaseui.MyTab;
-import com.asib27.playerdatabaseui.NotificationBox;
+import com.asib27.playerdatabaseui.CustomControls.MyTab;
+import com.asib27.playerdatabaseui.CustomControls.NotificationBox;
 import com.asib27.playerdatabaseui.util.DatabaseManager;
 import com.asib27.playerdatabaseui.util.Notification;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
-import java.util.Stack;
 import javafx.animation.TranslateTransition;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
@@ -26,7 +26,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.*;
-import javafx.scene.effect.Glow;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
@@ -39,7 +38,7 @@ import javafx.util.Duration;
  *
  * @author USER
  */
-public class MainController implements Initializable {
+public class MainController implements Initializable, IntroPageButtonPressListener {
     @FXML
     private TabPane tabPane;
 
@@ -125,6 +124,21 @@ public class MainController implements Initializable {
     @FXML
     private void openSellMenu(){
         menuOpenHelper("Sell");
+    }
+    
+    @FXML
+    private void openAboutPage(){
+        setContent(driver.GuiDriverFactory("About"));
+    }
+    
+    @FXML
+    private void exitSystem(){
+        Platform.exit();
+    }
+    
+    @FXML
+    private void openFeedbackPage(){
+        setContent(driver.GuiDriverFactory("Feedback"));
     }
     
     @FXML
@@ -263,6 +277,7 @@ public class MainController implements Initializable {
             ArrayList<Notification> notifications = driver.getNotifications();
             
             Label label = new Label("Notifications");
+            label.setId("notification-label");
             notificationLabels = FXCollections.observableArrayList(label);
 
             notifications.forEach((t) -> {
@@ -300,5 +315,10 @@ public class MainController implements Initializable {
         
         tt.setToX(0);
         tt.play();
+    }
+
+    @Override
+    public void update(String menuType) {
+        menuOpenHelper(menuType);
     }
 }

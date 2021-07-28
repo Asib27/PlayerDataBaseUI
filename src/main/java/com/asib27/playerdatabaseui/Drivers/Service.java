@@ -5,8 +5,10 @@
  */
 package com.asib27.playerdatabaseui.Drivers;
 
+import com.asib27.playerdatabaseui.controllers.FeedbackPageController;
 import com.asib27.playerdatabaseui.util.PasswordManager;
 import com.asib27.playerdatabaseui.util.DatabaseManager;
+import com.asib27.playerdatabaseui.util.Feedback;
 import com.asib27.playerdatabaseui.util.Notification;
 import com.asib27.playerdatabaseui.util.PlayerTransaction;
 import java.util.ArrayList;
@@ -28,4 +30,5 @@ public interface Service {
     public void sendBuyRequest(PlayerTransaction playerTransaction);
     public void sendBuyRequestAproval(PlayerTransaction playerTransaction);
     public void sendBuyRequestDenial(PlayerTransaction playerTransaction);
+    public void sendFeedback(Feedback feedback);
 }

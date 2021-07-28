@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.asib27.playerdatabaseui;
+package com.asib27.playerdatabaseui.CustomControls;
 
 import com.asib27.playerdatabasesystem.Player;
 import com.asib27.playerdatabaseui.Drivers.Service;
@@ -53,12 +53,16 @@ public class MessageBoxUtil {
         });
     }
     
+    /**
+     * Not implemented yet
+     * @param player
+     * @param service 
+     */
     public static void playerSellRequestCancel(Player player, Service service){
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Do you want to cancel selling?", ButtonType.YES, ButtonType.NO);
         Optional<ButtonType> showAndWait = alert.showAndWait();
             
         if(showAndWait.isPresent() && showAndWait.get() == ButtonType.YES){
-            System.out.println("Not implemnted");
             Alert alert2 = new Alert(Alert.AlertType.INFORMATION, "Sell cancelled");
             alert2.setHeaderText("Information");
             alert2.showAndWait();

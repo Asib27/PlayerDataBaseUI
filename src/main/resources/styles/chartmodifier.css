@@ -5,3 +5,11 @@
 .mainFxmlClass {
 
 }
+
+.chart{
+    -fx-background-color : red;
+}
+
+.axis-label{
+    -fx-text-fill : red;
+}

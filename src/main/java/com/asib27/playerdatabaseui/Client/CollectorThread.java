@@ -5,6 +5,7 @@
  */
 package com.asib27.playerdatabaseui.Client;
 
+import com.asib27.playerdatabaseui.util.Feedback;
 import com.asib27.playerdatabaseui.util.NetworkData;
 import com.asib27.playerdatabaseui.util.NetworkUtil;
 import java.io.IOException;
@@ -62,7 +63,11 @@ public class CollectorThread implements Runnable{
     }
 
     private void writeErrorMessage(String msg) {
-        System.out.println(msg);
+        try {
+            networkUtil.write(new Feedback("Error from server", msg));
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
     }
     
 }

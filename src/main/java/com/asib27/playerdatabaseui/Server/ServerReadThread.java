@@ -121,6 +121,7 @@ public class ServerReadThread implements Runnable, UpdateListener{
             case BUY_REQUEST-> processBuyRequest(nd.getData());
             case BUY_REQUEST_APPROVED-> processBuyRequestApprover(nd.getData());
             case BUY_REQUEST_DECLINED-> processBuyRequestDeclined(nd.getData());
+            case FEEDBACK-> processFeedback(nd.getData());
         }
     }
 
@@ -200,7 +201,7 @@ public class ServerReadThread implements Runnable, UpdateListener{
         server.removePlayerOnSell(pt);
         boolean changePlayerInfo = server.changePlayerInfo(oldPlayer, newPlayer);
         if(changePlayerInfo){
-            String message = "Player sold from " + pt.getSeller() + " to " + pt.getBuyer();
+            String message = pt.getPlayer().getName() + " sold from " + pt.getSeller() + " to " + pt.getBuyer();
             Notification notification1 = new Notification(Notification.Type.BUY_SECCESS, message, pt);
             Notification notification2 = new Notification(Notification.Type.SELL_SUCCEED, message, pt);
             
@@ -239,8 +240,6 @@ public class ServerReadThread implements Runnable, UpdateListener{
 
     private void sendPlayersOnSell() throws IOException {
         NetworkData nd = new NetworkData(NetworkDataEnum.PLAYER_ON_SELL, server.getPlayerOnSell());
-        System.out.println(nd );
-        System.out.println("for " + userInfo.getClubName());
         networkUtil.write(nd);
     }
 
@@ -253,6 +252,11 @@ public class ServerReadThread implements Runnable, UpdateListener{
         } catch (IOException ex) {
             ex.printStackTrace();
         }
+    }
+
+    private void processFeedback(Feedback feedback) {
+        System.out.println("User " + userInfo.getClubName() + "send a feedback : ");
+        System.out.println(feedback);
     }
 }
 

@@ -151,7 +151,6 @@ public class ServerMain extends ObserverUtil<UpdateListener> implements ServerIn
             listener.send(data);
         }
         else{
-            //System.out.println("Send");
             activeUsers.keySet().forEach((t) -> {
                 activeUsers.get(t).send(data);
             });

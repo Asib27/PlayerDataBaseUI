@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import java.net.*?>
+<?import javafx.scene.text.*?>
+
+
+<AnchorPane fx:id="anchorPane" prefHeight="376.0" prefWidth="475.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.asib27.playerdatabaseui.controllers.FeedbackPageController">
+    <stylesheets>
+        <URL value="@../styles/feedbackPage.css"/>
+    </stylesheets>
+    
+   <children>
+      <AnchorPane id="contentPane" layoutX="127.0" layoutY="79.0" prefHeight="440.0" prefWidth="764.0" AnchorPane.bottomAnchor="80.0" AnchorPane.leftAnchor="120.0" AnchorPane.rightAnchor="120.0" AnchorPane.topAnchor="80.0">
+          <VBox layoutX="50" layoutY="25" spacing="10" >
+              <Label text="Feedback Title"/>
+              <TextField fx:id="titleField" promptText="Feedback Title Here" />
+              <Label text="Details"/>
+              <TextArea fx:id="detailsField" promptText="Enter Details here" />
+              <Button text="Send Feedback" onAction="#sendFeedback" />
+          </VBox>
+          <Separator layoutX="600.0" layoutY="30.0" orientation="VERTICAL" prefHeight="325.0" prefWidth="3.0" />
+          <TextFlow layoutX="650" layoutY="25" prefWidth="65" lineSpacing="10">
+              <Text id="gratitudeText" text="We love to hear from you" >
+                  <font>
+                      <Font size="30.0" />
+                  </font>
+              </Text>
+          </TextFlow>
+      </AnchorPane>
+   </children>
+</AnchorPane>
+
+
+

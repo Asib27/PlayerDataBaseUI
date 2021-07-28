@@ -3,16 +3,20 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="350.0" prefWidth="450.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.asib27.playerdatabaseui.controllers.PlayerInfoController">
    <children>
+      <SVGPath content="M38.35-8.97C27.22-2.02 27.41 36.28 13.22 37.08-0.97 37.88-4.03 18.68-11.91 17.58" fill="#00000011" layoutX="16.0" layoutY="11.0" stroke="#3b0b75" strokeWidth="2.0" visible="false" />
+      <SVGPath content="M85.13-6.55C72.47-0.13 73.11 39.5 54.81 41.45 36.51 43.4 39.65 35.2 24.5 35.2 9.34 35.2 1.92 41.42-5.82 41.45" fill="#f2eeee" layoutX="10.0" layoutY="8.0" stroke="#7322c9" strokeWidth="2.0" visible="false" />
+      <SVGPath content="M38.91-5.24C31.32-0.32 35.66 26.33 21.96 26.71 8.26 27.09-3 15.37-11.95 15.21" fill="#f7f7f708" layoutX="13.0" layoutY="7.0" stroke="#6b1cbf" strokeWidth="2.0" visible="false" />
       <ImageView fx:id="playerImage" fitHeight="150.0" fitWidth="138.0" layoutX="322.0" layoutY="42.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="50.0">
          <image>
             <Image url="@../image/Players/kevin_de_bruyne.jpg" />
          </image>
       </ImageView>
-      <Label fx:id="nameLabel" layoutX="88.0" layoutY="36.0" prefHeight="36.0" prefWidth="234.0" text="Kevin De Bruyne" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="35.0">
+      <Label fx:id="nameLabel" layoutX="50.0" layoutY="37.0" prefHeight="36.0" prefWidth="234.0" text="Kevin De Bruyne" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="37.0">
          <font>
             <Font size="24.0" />
          </font></Label>

@@ -30,9 +30,6 @@ public class LoginController implements Initializable {
     private Label welcomeLabel;
 
     @FXML
-    private Label nameLabel;
-
-    @FXML
     private TextField clubnameBox;
 
     @FXML
@@ -40,9 +37,6 @@ public class LoginController implements Initializable {
 
     @FXML
     private Button loginButton;
-
-    @FXML
-    private VBox vboxContainer;
     
     @FXML
     private Label statusLabel;
@@ -58,14 +52,7 @@ public class LoginController implements Initializable {
     }
     
     public void addListener(){
-        clubnameBox.prefWidthProperty().bind(vboxContainer.widthProperty().divide(2));
-        passwordBox.prefWidthProperty().bind(vboxContainer.widthProperty().divide(2));
-        
         loginButton.disableProperty().bind(clubnameBox.textProperty().isEmpty().or(passwordBox.textProperty().isEmpty()));
-    }
-
-    public void initialize(){
-        clubnameBox.prefWidthProperty().bind(vboxContainer.widthProperty().divide(2));
     }
     
     @FXML

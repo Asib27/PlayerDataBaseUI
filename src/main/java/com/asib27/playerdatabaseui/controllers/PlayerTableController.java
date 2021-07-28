@@ -10,11 +10,13 @@ import java.util.ResourceBundle;
 import javafx.fxml.Initializable;
 
 import com.asib27.playerdatabasesystem.*;
-import com.asib27.playerdatabaseui.StatData;
+import com.asib27.playerdatabaseui.ControllerHelper.StatData;
 import java.io.File;
 import java.util.Arrays;
+import java.util.function.Predicate;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -28,6 +30,8 @@ public class PlayerTableController implements Initializable {
     @FXML
     private TableView playerTable;
     
+    @FXML
+    private TextField searchField;
     /**
      * Initializes the controller class.
      */
@@ -37,15 +41,19 @@ public class PlayerTableController implements Initializable {
         
     }    
     
-    
-    public void setData(Player[] allData){
-        ObservableList<Player> data = FXCollections.observableArrayList(allData);
-        playerTable.setItems(data);
-    }
-    
-    public void setData(StatData[] allData){
-        ObservableList<StatData> data = FXCollections.observableArrayList(allData);
-        playerTable.setItems(data);
+    public void setData(Predicate<String>[] data){
+        FilteredList<Predicate<String>> filteredList = new FilteredList<>(FXCollections.observableArrayList(data), p->true);
+        
+        searchField.textProperty().addListener((ov, t, t1) -> {
+            filteredList.setPredicate((pre) -> {
+                if(t1 == null || t1.length() == 0)
+                    return true;
+                
+                return pre.test(t1.toLowerCase());
+            });
+        });
+        
+        playerTable.setItems(filteredList);
     }
     
     public ObservableList selectionModeProperty(){

@@ -3,10 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.asib27.playerdatabaseui;
+package com.asib27.playerdatabaseui.ControllerHelper;
 
 import java.util.Map;
 import java.util.TreeMap;
+import java.util.function.Predicate;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -17,7 +18,7 @@ import javafx.beans.property.StringPropertyBase;
  *
  * @author USER
  */
-public class StatData {
+public class StatData implements Predicate<String>{
     private StringProperty name = null;
     private String nm;
     private Map<String, Double> seriesValues;
@@ -80,5 +81,10 @@ public class StatData {
     */
     public double getValue(String key){
         return seriesValues.getOrDefault(key, 0.0);
+    }
+
+    @Override
+    public boolean test(String t) {
+        return nm.toLowerCase().contains(t);
     }
 }

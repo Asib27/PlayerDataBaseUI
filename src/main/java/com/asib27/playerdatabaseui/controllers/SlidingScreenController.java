@@ -139,7 +139,6 @@ public class SlidingScreenController implements Initializable , SplitedScreenInt
 //                this.isUp = false;
 //            }
 //            else{
-//                System.out.println("Here");
 //                FLoatingPane.setTranslateY(( FLoatingPane.getHeight() -  upperControl.getHeight()) );
 //                this.isUp = false;
 //            }

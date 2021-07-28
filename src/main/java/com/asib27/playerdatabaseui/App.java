@@ -14,6 +14,7 @@ import com.asib27.playerdatabaseui.Client.LoginDriver;
 import com.asib27.playerdatabaseui.Drivers.MainDriverInt;
 import com.asib27.playerdatabaseui.controllers.LoginController;
 import com.asib27.playerdatabaseui.controllers.MainController;
+import com.asib27.playerdatabaseui.util.Feedback;
 import com.asib27.playerdatabaseui.util.NetworkData;
 import com.asib27.playerdatabaseui.util.NetworkDataEnum;
 import com.asib27.playerdatabaseui.util.NetworkUtil;
@@ -39,6 +40,7 @@ import javafx.application.Platform;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.scene.chart.PieChart;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 
 /**
@@ -74,14 +76,18 @@ public class App extends Application implements Service, ClientInt, LoginDriver{
         //scene = new Scene(getFXMLLoader("SlidingScreen.fxml").load());
         
         stage.setScene(scene);
+        stage.getIcons().add(new Image(getClass().getResourceAsStream("/image/icons/football_player_logo_dark.png")));
         stage.show();
     }    
 
     @Override
     public void stop() throws Exception {
         //super.stop();
-        if(networkUtil != null)
+        if(networkUtil != null){
             networkUtil.write(new NetworkData(NetworkDataEnum.LOGOUT, null));
+        }
+        
+        mainDriver.clearListener();
     }
     
     
@@ -160,6 +166,16 @@ public class App extends Application implements Service, ClientInt, LoginDriver{
             ex.printStackTrace();
         }
     }
+
+    @Override
+    public void sendFeedback(Feedback feedback) {
+        try {
+            networkUtil.write(new NetworkData(NetworkDataEnum.FEEDBACK, feedback));
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        mainDriver.showMessage("Feedback Sent to the Surver Succesfully");
+    }
     
     
     public static FXMLLoader getFXMLLoader(String fxml){
@@ -220,6 +236,7 @@ public class App extends Application implements Service, ClientInt, LoginDriver{
 
     @Override
     public void takeErrorMessage(String msg) {
+        mainDriver.showMessage(msg);
         System.out.println(msg);
     }
 

@@ -6,34 +6,19 @@
 package com.asib27.playerdatabaseui.Drivers;
 
 import com.asib27.playerdatabaseui.Drivers.Driver;
-import com.asib27.playerdatabaseui.ControllerHelper.SplitedScreenInt;
 import com.asib27.playerdatabaseui.ControllerHelper.SearchObserver;
 import com.asib27.playerdatabaseui.ControllerHelper.DataProcessHelper;
 import com.asib27.playerdatabaseui.util.DatabaseManager;
 import com.asib27.playerdatabasesystem.Player;
-import com.asib27.playerdatabasesystem.PlayerAttribute;
 import com.asib27.playerdatabasesystem.PlayerDataBaseInt;
-import com.asib27.playerdatabaseui.App;
-import com.asib27.playerdatabaseui.MessageBoxUtil;
+import com.asib27.playerdatabaseui.CustomControls.MessageBoxUtil;
 import com.asib27.playerdatabaseui.controllers.*;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
-import java.util.Arrays;
-import javafx.animation.KeyFrame;
-import javafx.animation.KeyValue;
-import javafx.animation.Timeline;
 import javafx.application.Platform;
-import javafx.beans.InvalidationListener;
-import javafx.beans.Observable;
-import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
-import javafx.fxml.*;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.*;
-import javafx.util.Duration;
 
 /**
  *
@@ -76,6 +61,10 @@ public class SearchMenuDriver extends TableSearchInfoDriverUtil implements Drive
         
         playerTableController.setData(getDatabase().getAllRecords());
         searchScreenController.setFloatingPointCollapsed(false);
+        
+        playerInfoController.getCloseButton().setOnAction((t) -> {
+            animateSplitPane(searchScreenController.getSplitPane(), 1);
+        });
     }
     
     private void selectionChangedListener(ListChangeListener.Change change){

@@ -5,3 +5,27 @@
 .mainFxmlClass {
 
 }
+
+.label{
+    -fx-background-color: transparent;
+}
+
+.anchor-pane{
+    -fill : blue;
+    -fx-shape : "M877.87-75.76C724.29-62.04 647.85 241.98 357.9 255.94 67.96 269.9-24.13 438.02-162.06 440.74";
+/*<svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.com/svgjs" width="100" height="50" preserveAspectRatio="none" viewBox="0 0 100 50">
+    <g mask="url(&quot;#SvgjsMask1042&quot;)" fill="none">
+        <rect width="100" height="50" x="0" y="0" fill="#0e2a47"></rect>
+        <path d="M38.91-5.24C31.32-0.32 35.66 26.33 21.96 26.71 8.26 27.09-3 15.37-11.95 15.21" stroke="rgba(131, 51, 194, 0.58)" stroke-width="2"></path>
+        <path d="M85.13-6.55C72.47-0.13 73.11 39.5 54.81 41.45 36.51 43.4 39.65 35.2 24.5 35.2 9.34 35.2 1.92 41.42-5.82 41.45" stroke="rgba(131, 51, 194, 0.58)" stroke-width="2"></path>
+        <path d="M38.35-8.97C27.22-2.02 27.41 36.28 13.22 37.08-0.97 37.88-4.03 18.68-11.91 17.58" stroke="rgba(131, 51, 194, 0.58)" stroke-width="2"></path>
+        <path d="M54.83-8.73C44.85-0.34 50.97 38.59 34.06 39.12 17.16 39.65 4.21 18.24-7.47 17.62" stroke="rgba(131, 51, 194, 0.58)" stroke-width="2"></path>
+        <path d="M81.65-5.71C67.14-4.56 57.04 24.45 31.86 24.49 6.67 24.53-4.94 9.65-17.94 9.49" stroke="rgba(131, 51, 194, 0.58)" stroke-width="2"></path>
+    </g>
+    <defs>
+        <mask id="SvgjsMask1042">
+            <rect width="100" height="50" fill="#ffffff"></rect>
+        </mask>
+    </defs>
+</svg>*/
+}

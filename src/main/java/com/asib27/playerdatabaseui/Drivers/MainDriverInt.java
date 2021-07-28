@@ -13,4 +13,5 @@ import com.asib27.playerdatabaseui.util.Notification;
  */
 public interface MainDriverInt extends Driver{
     void showNotification(Notification notification);
+    void showMessage(String message);
 }

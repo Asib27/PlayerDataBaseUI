@@ -12,7 +12,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.layout.AnchorPane;
 
 import com.asib27.playerdatabasesystem.Player;
-import com.asib27.playerdatabaseui.PlayerInfoCard;
+import com.asib27.playerdatabaseui.CustomControls.PlayerInfoCard;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
@@ -34,7 +34,7 @@ public class PlayerInfosController implements Initializable {
     private BorderPane playerCard;
     
     @FXML
-    private Button leftButton, rightButton;
+    private Button leftButton, rightButton, closeButton;
     
     private Player player;
     private PlayerInfoCard playerInfoCard = new PlayerInfoCard();
@@ -77,6 +77,14 @@ public class PlayerInfosController implements Initializable {
 
     public void setRightButton(Button rightButton) {
         this.rightButton = rightButton;
+    }
+
+    public Button getCloseButton() {
+        return closeButton;
+    }
+
+    public void setCloseButton(Button closeButton) {
+        this.closeButton = closeButton;
     }
 
     

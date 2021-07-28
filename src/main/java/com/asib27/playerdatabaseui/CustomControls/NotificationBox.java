@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.asib27.playerdatabaseui;
+package com.asib27.playerdatabaseui.CustomControls;
 
+import com.asib27.playerdatabaseui.CustomControls.MessageBoxUtil;
 import com.asib27.playerdatabasesystem.Player;
 import com.asib27.playerdatabaseui.Drivers.Service;
 import com.asib27.playerdatabaseui.util.Notification;

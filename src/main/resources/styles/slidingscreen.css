@@ -5,3 +5,19 @@
 .mainFxmlClass {
 
 }
+
+#floatingHeader .tool-bar{
+    -fx-background-color : derive(blueviolet, 50%);
+}
+
+.tool-bar .label{
+    -fx-text-fill : white;
+}
+
+.split-pane:vertical > .split-pane-divider{
+    -fx-background-color : blueviolet;
+}
+
+.split-pane:horizontal > .split-pane-divider{
+    -fx-background-color : blueviolet;
+}

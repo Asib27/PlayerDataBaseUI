@@ -12,7 +12,7 @@ import com.asib27.playerdatabaseui.ControllerHelper.DataProcessHelper;
 import com.asib27.playerdatabaseui.util.DatabaseManager;
 import com.asib27.playerdatabasesystem.*;
 import com.asib27.playerdatabaseui.App;
-import com.asib27.playerdatabaseui.StatData;
+import com.asib27.playerdatabaseui.ControllerHelper.StatData;
 import com.asib27.playerdatabaseui.controllers.*;
 import java.io.IOException;
 import java.util.*;
@@ -97,6 +97,8 @@ public class StatMenuDriver  implements Driver, SearchObserver<StatData>, chartM
         playerTableController.getPlayerTable().itemsProperty().addListener(this::tableDatachanged);
         statMenuController.addSearchListener(this);
         chartController.addSearchListener(this);
+        
+        searchScreenController.getSplitPane().setDividerPosition(0, .5);
     }
 
     @Override

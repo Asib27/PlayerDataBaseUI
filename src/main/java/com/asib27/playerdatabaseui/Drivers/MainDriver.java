@@ -10,7 +10,9 @@ import com.asib27.playerdatabaseui.Drivers.Driver;
 import com.asib27.playerdatabaseui.util.DatabaseManager;
 import com.asib27.playerdatabaseui.controllers.IntroPageController;
 import com.asib27.playerdatabaseui.ControllerHelper.MainControlDriverInt;
-import com.asib27.playerdatabaseui.NotificationBox;
+import com.asib27.playerdatabaseui.CustomControls.NotificationBox;
+import com.asib27.playerdatabaseui.controllers.AboutPageController;
+import com.asib27.playerdatabaseui.controllers.FeedbackPageController;
 import com.asib27.playerdatabaseui.controllers.MainController;
 import com.asib27.playerdatabaseui.util.Notification;
 import java.io.IOException;
@@ -18,6 +20,7 @@ import java.util.ArrayList;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.TextArea;
 import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
@@ -78,6 +81,19 @@ public class MainDriver implements Driver, MainControlDriverInt, MainDriverInt {
             mainController.setSlidingMessagePane(box);
         });
     }
+
+    @Override
+    public void showMessage(String message) {
+        TextArea ta = new TextArea(message);
+        
+        ta.setStyle("-fx-border-width : 1;"
+                + "-fx-border-color : black;");
+        
+        BorderPane bp = new BorderPane(ta);
+        Platform.runLater(() -> {
+            mainController.setSlidingMessagePane(bp);
+        });
+    }
     
     
 
@@ -87,18 +103,21 @@ public class MainDriver implements Driver, MainControlDriverInt, MainDriverInt {
     }
     
     
-    
-    
     @Override
     public Driver GuiDriverFactory(String name){
         if(name.equals("Intro")){
-            FXMLLoader fXMLLoader = App.getFXMLLoader("IntroPage.fxml");
-            try {
-                fXMLLoader.load();
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            }
-            return fXMLLoader.getController();
+            IntroPageController controller = loader("IntroPage.fxml");
+            controller.addSearchListener(mainController);
+            return controller;
+        }
+        else if(name.equals("About")){
+            AboutPageController controller = loader("aboutPage.fxml");
+            return controller;
+        }
+        else if(name.equals("Feedback")){
+            FeedbackPageController controller = loader("feedbackPage.fxml");
+            controller.setService(service);
+            return controller;
         }
         return switch (name) {
             case "Search" -> new SearchMenuDriver(service);
@@ -108,6 +127,17 @@ public class MainDriver implements Driver, MainControlDriverInt, MainDriverInt {
             
             default -> null;
         };
+    }
+    
+    private <T>T loader(String name){
+        FXMLLoader fXMLLoader = App.getFXMLLoader(name);
+        try {
+            fXMLLoader.load();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+            
+        return fXMLLoader.getController();
     }
     
     @Override

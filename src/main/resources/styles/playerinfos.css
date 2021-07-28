@@ -5,3 +5,12 @@
 .mainFxmlClass {
 
 }
+
+.button{
+    -fx-background-color : blueviolet;
+    -fx-text-fill : white;
+}
+
+.button .label{
+    -fx-text-fill : white;
+}

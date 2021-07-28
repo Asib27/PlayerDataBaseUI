@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane fx:id="anchorPane" id="AnchorPane" prefHeight="600.0" prefWidth="1000.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.asib27.playerdatabaseui.controllers.AboutPageController">
+    <stylesheets>
+        <URL value="@/styles/aboutpage.css" />
+    </stylesheets>
+   <children>
+      <AnchorPane id="contentPane" layoutX="127.0" layoutY="79.0" prefHeight="440.0" prefWidth="764.0" AnchorPane.bottomAnchor="80.0" AnchorPane.leftAnchor="120.0" AnchorPane.rightAnchor="120.0" AnchorPane.topAnchor="80.0">
+         <children>
+            <Separator layoutX="381.0" layoutY="30.0" orientation="VERTICAL" prefHeight="353.0" prefWidth="3.0" />
+            <Text fontSmoothingType="LCD" layoutX="57.0" layoutY="143.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Md Asib Rahman" wrappingWidth="267.4700469970703">
+               <font>
+                  <Font name="Arial Unicode MS" size="30.0" />
+               </font>
+            </Text>
+            <Text layoutX="57.0" layoutY="75.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Developed By">
+               <font>
+                  <Font size="22.0" />
+               </font>
+            </Text>
+            <Text layoutX="57.0" layoutY="250.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Department of CSE">
+               <font>
+                  <Font size="25.0" />
+               </font>
+            </Text>
+            <Text layoutX="57.0" layoutY="303.0" strokeType="OUTSIDE" strokeWidth="0.0" text="BUET" wrappingWidth="246.14712524414062">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Text>
+            <Text layoutX="57.0" layoutY="195.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Level 1 , term 1" wrappingWidth="271.0572814941406">
+               <font>
+                  <Font size="25.0" />
+               </font>
+            </Text>
+            <VBox layoutX="412.0" layoutY="51.0" prefHeight="355.0" prefWidth="275.0" spacing="10.0">
+               <children>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="This was assigned to me as the ">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Text>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="term project at end of Level 1">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Text>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text=" term 2 as it is my first project in java. ">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Text>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Please pardon any lind of mistakes">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Text>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="There are many bugs as well as">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Text>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text=" incomplete feature. Might fix ">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Text>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="them later on">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Text>
+               </children>
+            </VBox>
+         </children></AnchorPane>
+   </children>
+</AnchorPane>

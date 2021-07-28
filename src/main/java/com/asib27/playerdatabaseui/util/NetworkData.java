@@ -42,6 +42,7 @@ public class NetworkData implements Serializable{
             case All_NOTIFICATIONS-> data instanceof ArrayList;
             case LOGIN_SUCCESS, LOGIN_FAILED-> data instanceof String;
             case PLAYER_ON_SELL-> data instanceof Set;
+            case FEEDBACK->data instanceof Feedback;
         };
     }
     

@@ -12,19 +12,11 @@
    <top>
       <MenuBar BorderPane.alignment="CENTER">
         <menus>
-          <Menu mnemonicParsing="true" text="_Search">
+          <Menu mnemonicParsing="true" text="_Tools">
             <items>
-                  <MenuItem mnemonicParsing="false" onAction="#openSearchMenu" text="Player Search" />
-                  <MenuItem mnemonicParsing="false" onAction="#openSearchMenu" text="Club Search" />
+                  <MenuItem mnemonicParsing="false" onAction="#openSearchMenu" text="Search" />
+                  <MenuItem mnemonicParsing="false" onAction="#openStatMenu" text="Stattitics" />
             </items>
-          </Menu>
-          
-          <Menu mnemonicParsing="true" text="_Statistics">
-              <items>
-                  <MenuItem mnemonicParsing="false" onAction="#openStatMenu" text="Total" />
-                  <MenuItem mnemonicParsing="false" onAction="#openStatMenu" text="Average" />
-                  <MenuItem mnemonicParsing="false" onAction="#openStatMenu" text="Count Players" />
-              </items>
           </Menu>
           
           <Menu mnemonicParsing="true" text="_Transaction">
@@ -38,13 +30,13 @@
             <items>
               <Menu mnemonicParsing="false" text="Tutorial">
                   <items>
-                      <MenuItem mnemonicParsing="false" text="Text" />
-                      <MenuItem mnemonicParsing="false" text="Video" />
+                      <MenuItem mnemonicParsing="false" text="Text" disable="true"/>
+                      <MenuItem mnemonicParsing="false" text="Video" disable="true" />
                   </items>
               </Menu>
               <SeparatorMenuItem mnemonicParsing="false" />
-              <MenuItem mnemonicParsing="false" text="About" />
-              <MenuItem mnemonicParsing="false" text="Feedback" />
+              <MenuItem mnemonicParsing="false" text="About" onAction="#openAboutPage" />
+              <MenuItem mnemonicParsing="false" text="Feedback" onAction="#openFeedbackPage"/>
             </items>
           </Menu>
           
@@ -72,14 +64,14 @@
             <AnchorPane fx:id="sliderMain" mouseTransparent="true" onMouseClicked="#slideInOut" prefHeight="408.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
                         <AnchorPane id="slider" fx:id="slider" layoutY="-1.0" prefHeight="410.0" prefWidth="200.0" translateX="-300.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
-                            <VBox fx:id="menuLableBox" layoutX="6.0" layoutY="35.0" prefHeight="200.0" prefWidth="100.0" spacing="20.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="35.0" VBox.vgrow="ALWAYS">
+                            <VBox fx:id="menuLableBox" layoutX="6.0" layoutY="35.0" prefHeight="200.0" prefWidth="100.0" spacing="30.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="35.0" VBox.vgrow="ALWAYS">
                                 <Label onMouseClicked="#slideInOut" prefHeight="36" text="Menu" />
-                                <Label prefHeight="36" text="Profile" />
+                                <Label prefHeight="36" text="Profile" visible="false" managed="false" />
                                 <Label onMouseClicked="#notificationsButtonCLicked" prefHeight="36" text="Notifications" />
                                 <Label onMouseClicked="#openSellMenu" prefHeight="36" text="My Club" />
-                                <Label prefHeight="36" text="Settings" />
+                                <Label prefHeight="36" text="Settings" visible="false" managed="false"/>
                                 <Label onMouseClicked="#homeButtonClicked" prefHeight="36" text="Back to Home" />
-                                <Label prefHeight="36" text="Log Out" />
+                                <Label prefHeight="36" text="Exit" onMouseClicked="#exitSystem"  />
                             </VBox>
                         </AnchorPane>
                      </children>
@@ -99,7 +91,7 @@
             </StackPane>
             <Separator orientation="VERTICAL" prefHeight="200.0" />
             
-            <HBox fx:id="progressBox" spacing="10.0" visible="false">
+            <HBox fx:id="progressBox" prefHeight="40.0" prefWidth="494.0" spacing="10.0" visible="false">
                 <children>
                     <Label fx:id="taskNameLabel" text="Task Name" />
                     <Label fx:id="progressTextLabel" text="Progress Text" />
@@ -108,7 +100,6 @@
             </HBox>
             
             <Separator orientation="VERTICAL" prefHeight="200.0" />
-            <Pane prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
             <Button fx:id="backButton" mnemonicParsing="false" onAction="#backButtonPressed" text="Back">
                <graphic>
                   <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
@@ -132,7 +123,7 @@
    <left>
       <AnchorPane fx:id="sideMenu" prefHeight="345.0" prefWidth="42.0" BorderPane.alignment="CENTER">
          <children>
-            <VBox alignment="TOP_CENTER" layoutX="2.0" layoutY="40.0" spacing="20" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="40.0">
+            <VBox alignment="TOP_CENTER" layoutX="2.0" layoutY="40.0" spacing="30" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="40.0">
                <children>
                   <ImageView onMouseClicked="#slideInOut" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -140,7 +131,7 @@
                      </image>
                   </ImageView>
                   
-                  <ImageView fitHeight="36.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="36.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true" visible="false" managed="false">
                      <image>
                         <Image url="@../image/icons/user.png" />
                      </image>
@@ -158,7 +149,7 @@
                      </image>
                   </ImageView>
                   
-                  <ImageView fitHeight="36.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="36.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true" visible="false" managed="false">
                      <image>
                         <Image url="@../image/icons/settings.png" />
                      </image>
@@ -170,7 +161,7 @@
                      </image>
                   </ImageView>
                   
-                  <ImageView fitHeight="36.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="36.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true" onMouseClicked="#exitSystem" >
                      <image>
                         <Image url="@../image/icons/exit.png" />
                      </image>

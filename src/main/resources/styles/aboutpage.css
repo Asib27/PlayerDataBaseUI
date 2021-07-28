@@ -1,0 +1,17 @@
+/*
+ * Empty Stylesheet file.
+ */
+
+.mainFxmlClass {
+
+}
+
+.separator > .line{
+    -fx-border-color :  linear-gradient(from 0% 0% to 0% 50%, reflect, derive(blueviolet, 80%), derive(blueviolet, 0%));
+    -fx-border-radius : 2;
+}
+
+#contentPane{
+    -fx-border-width : 2;
+    -fx-border-color : blueviolet ;
+}
